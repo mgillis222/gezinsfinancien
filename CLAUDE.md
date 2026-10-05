@@ -49,6 +49,11 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Terugbetalingen van reisgenoten (cruise, weekendjes) verlagen de post Reizen.
 - Toronto (8–16 jan 2026, $1.095): werkreis Jef, vergoed via het salaris van januari. Kosten en een even groot
   deel van het salaris van 29 januari tellen als intern.
+- Apple Store 6 mei ($1.206): voorgeschoten voor de zus van Myrthe, telt niet als uitgave. Nog navragen of
+  dit al is terugbetaald.
+- Lily is geboren in 2023 en heeft geen SSN; Bill wel (Amerikaan). Child Tax Credit dus vooral voor Bill.
+  Pre-K voor Lily kan op z'n vroegst vanaf aug 2027, kindergarten vanaf aug 2028.
+- Myrthe zoekt werk (oktober 2026), verwacht rond $120.000 per jaar. De Vista-jaaropgave komt nog.
 - Port Aransas, Carlsbad, Marfa, Galveston en Atlanta waren vakanties of weekendtrips. Eten buiten Katy/Houston
   valt daarom onder Reizen & uitjes.
 - Abonnementen: status per dienst (loopt, jaarlijks, gestopt, eenmalig) staat in scripts/abonnementen.py. Werk die

@@ -244,6 +244,9 @@ def main():
     for bedrag, (cat, sub) in PAYPAL_EUR.items():
         m = pp & ((t["bedrag_orig"] + bedrag).abs() < 0.01)
         t.loc[m, ["categorie", "subcategorie"]] = [cat, sub]
+    # Apple Store 6 mei 2026 ($1.205,85): voorgeschoten voor de zus van Myrthe (bevestigd door Myrthe).
+    zus = t["omschrijving"].str.contains("APPLE STORE #R058", case=False) & (t["datum"] == "2026-05-06")
+    t.loc[zus, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Voorgeschoten voor zus Myrthe (Apple)"]
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
