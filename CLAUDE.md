@@ -47,6 +47,10 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Lening van de ouders (Gillis-Reyniers): €5.000 in mei, €3.600 terug in juni. Telt als intern, niet als
   inkomen. De €60 per maand "Selfcare" telt wel als inkomen.
 - Terugbetalingen van reisgenoten (cruise, weekendjes) verlagen de post Reizen.
+- Boodschappen: Myrthe werkt al met een weekmenu en koopt bewust per winkel wat daar goedkoper is. Daarom
+  staat er geen besparingsvoorstel op boodschappen.
+- Uit eten: Square- en Toast-betalingen zijn niet altijd horeca (zwemles, huidarts). Eten buiten
+  Katy/Houston telt als "Eten tijdens reizen & uitjes", los van het dagelijkse uit eten.
 
 ## Kosten
 - Geen. Alles draait lokaal (Python in WSL); er zijn geen betaalde API-calls.

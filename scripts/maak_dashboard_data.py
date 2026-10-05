@@ -202,8 +202,6 @@ VB["besparen"] = [
      "uitleg": f"DoorDash dit jaar ${round(lekjes['bezorging_doordash'])}. Target: {winkels[1]['bezorgorders']} bezorgorders met ${round(winkels[1]['fooien'])} aan fooien. Eén vaste afhaalronde per week scheelt kosten én impulsaankopen.", "post": "eten"},
     {"id": "uiteten", "naam": "Uit eten en koffie halveren", "bedrag": round(uitEten * 0.5),
      "uitleg": f"Gemiddeld ${round(uitEten)} per maand aan restaurants en koffie in Katy/Houston (eten tijdens reizen en uitjes niet meegerekend).", "post": "eten"},
-    {"id": "boodschappen", "naam": "Boodschappen: weekmenu en één winkel", "bedrag": round(VB["variabel"][0]["bedrag"] * 0.12),
-     "uitleg": "Nu verspreid over Kroger, Trader Joe's, Target, H-E-B, Costco, ALDI en DashMart. 10–15% minder is haalbaar met een weekmenu.", "post": "boodschappen"},
     {"id": "online", "naam": "Online winkelen: 48-uursregel", "bedrag": round(VB["variabel"][1]["bedrag"] * 0.25),
      "uitleg": "Amazon ±96 bestellingen dit jaar, vaak losse kleine orders. Verlanglijst eerst 48 uur laten staan.", "post": "online"},
     {"id": "kleintjes", "naam": "Kleine lekjes dichten", "bedrag": round((lekjes["buitenlandkosten"] + lekjes["knab_kosten"]) / 9 + 5),
