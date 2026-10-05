@@ -31,7 +31,7 @@ REGELS = [
     (r"irs treas.*tax ref", "inkomen", "Inkomen", "Belastingteruggave VS"),
     (r"^knab: picnic", "inkomen", "Inkomen", "Inkomen Myrthe (freelance)"),
     (r"^knab: hr nj griffin", "inkomen", "Inkomen", "Huur woning NL ontvangen"),
-    (r"^knab: fugro", "uitgave", "Eenmalig", "Terugbetaling salaris Fugro NL (Jef)"),
+    (r"^knab: fugro", "sparen", "Sparen & beleggen", "Aandelen Fugro (Jef)"),
     (r"^knab: peeters inneke", "uitgave", "Ondersteuning familie", "Schoonmoeder (Inneke)"),
     (r"^knab: bear graphics", "uitgave", "Kinderen", "Geboortekaartjes Bill"),
     (r"zelle payment to nancy herrera", "uitgave", "Huishouden", "Schoonmaak (Nancy)"),
@@ -39,7 +39,7 @@ REGELS = [
     (r"^knab: (jef michielssen|j\. michielssen)", "intern", "Intern", "Van/naar rekening Jef (buiten overzicht)"),
     (r"zelle payment from|^knab: (gillis - reyniers|van den bergh|michielssen|marie michielssen|de h |de hoon|verheye|pauwels|aab inz tikkie|av ferreira|s\.t\. leo|olivia rowaert|bondroit|koen \|)", "inkomen", "Inkomen", "Van familie/vrienden (of terugbetaling)"),
     (r"^knab: taf bv", "uitgave", "Verzekeringen", "Levensverzekering (NL)"),
-    (r"^knab: international card services", "uitgave", "Nog indelen", "NL-creditcard ICS (afschrift ontbreekt)"),
+    (r"^knab: international card services", "uitgave", "Abonnementen", "ICS-creditcard: ChatGPT (t/m mrt) + jaarbijdrage"),
     (r"^knab: paypal", "uitgave", "Online winkelen", "PayPal vanaf Knab (zie Gmail)"),
     (r"^knab: .*\| betaalautomaat", "uitgave", "Reizen & uitjes", "Pinnen tijdens vakantie Europa"),
     # --- wonen ---
