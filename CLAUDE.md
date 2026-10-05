@@ -146,5 +146,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   (+$183) en opvang één dag minder (−$550). Myrthe wil géén andere voorstellen meer (NL-streaming, telefoon, verzekering,
   Knab, huis/hobby, schoonmaak, boodschappen, bezorgen, uit eten, Claude Max, LinkedIn). Na het opzeggen Disney+ en
   Coursera op "gestopt" zetten in scripts/abonnementen.py.
+
+## Technische tip
 - Geeft Python in WSL "Fatal Python error: init_import_site ... varnames is too small"? Dan is een systeem-cachebestand
   beschadigd. Omzeilen met: export PYTHONPYCACHEPREFIX=/tmp/pycache-gf (vóór het commando).
