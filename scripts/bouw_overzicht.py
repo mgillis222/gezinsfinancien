@@ -315,6 +315,12 @@ def main():
         "uitgave", "Huis & inrichting", "Huis, inrichting, post")
     zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 139.93).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
         "uitgave", "Reizen & uitjes", "Uitjes & tickets")
+    # Zelle-betalingen (antwoorden Myrthe 5 okt 2026).
+    oms = t["omschrijving"]
+    zet(oms.str.contains("Zelle Payment To Karel Dhoore", case=False), "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten")  # weekend Atlanta
+    zet(oms.str.contains("Zelle Payment To (Jelmer De Winter|Sebastiaan VAN Loon)", case=False, regex=True), "uitgave", "Sport & hobby", "Padel")
+    zet(oms.str.contains("Zelle Payment To Xander Zonneveld", case=False), "uitgave", "Giften", "Cadeau (voetbaltickets)")
+    zet((oms.str.strip().str.match(r"^Zelle Payment To\s*\d*$", case=False)) & (t["datum"] == "2026-03-09"), "uitgave", "Reizen & uitjes", "WK-voetbalticket Jef")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
