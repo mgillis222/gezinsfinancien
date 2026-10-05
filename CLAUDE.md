@@ -52,7 +52,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Terugbetalingen van reisgenoten (weekendjes, Tikkie) verlagen de post Reizen. De Virgin-cruise (jan 2027,
   $3.126 via Chase) is van Florien en volledig door haar terugbetaald (€630 + €2.100): telt als Voorgeschoten.
 - Beekse Bergen (Safari Resort, €791,69 op 13 jul) is betaald door John (vader Jef): €792 terug op 8 sep. Voorgeschoten.
-- Toronto (8–16 jan 2026, $1.095): werkreis Jef, vergoed via het salaris van januari. Kosten en een even groot
+- Toronto (8–16 jan 2026, $1.117): werkreis Jef. Vergoed via Fugro-onkostenvergoeding ("FUSA Land Disb Emp Exp":
+  $1.549 op 19 feb en $140 op 19 mrt). Kosten en vergoedingen tellen als intern (Werkreis vergoed). Oude notitie:
   deel van het salaris van 29 januari tellen als intern.
 - Best Buy april ($540, reMarkable) was een cadeau voor Jef, betaald door de familie via Knab (€525); beide intern.
 - Apple Store 6 mei ($1.206) en Tecovas 7 mei ($682): voorgeschoten voor Florien (zus Myrthe). Zij betaalde alles

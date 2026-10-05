@@ -17,7 +17,7 @@ import pandas as pd
 REGELS = [
     # --- intern: aflossingen, eigen rekeningen, wissels ---
     (r"payment to chase card|payment thank you|chase credit crd autopay|automatic payment", "intern", "Intern", "Creditcard aflossen"),
-    (r"e-pay target\.com|target card srvc payment", "intern", "Intern", "Creditcard aflossen"),
+    (r"e-pay target\.com|target card srvc payment|auto payment - thanks", "intern", "Intern", "Creditcard aflossen"),
     (r"online transfer (to|from) (sav|chk)", "intern", "Intern", "Eigen rekening Chase"),
     (r"real time transfer recd.*wise|via wise", "intern", "Intern", "Wise EUR→USD (ontvangen)"),
     (r"^knab: wise", "intern", "Intern", "Wise EUR→USD (verstuurd)"),
@@ -26,6 +26,7 @@ REGELS = [
     (r"interactive brok", "sparen", "Sparen & beleggen", "Interactive Brokers"),
     (r"brand new day", "sparen", "Sparen & beleggen", "Kinderrekening Brand New Day"),
     # --- inkomen ---
+    (r"fusa land disb emp exp", "intern", "Werkreis (vergoed)", "Onkostenvergoeding Fugro (werkreizen)"),
     (r"fusa land disb payroll", "inkomen", "Inkomen", "Salaris Jef"),
     (r"lincoln nationa", "inkomen", "Inkomen", "Uitkering (Lincoln)"),
     (r"irs treas.*tax ref", "inkomen", "Inkomen", "Belastingteruggave VS"),
@@ -221,14 +222,6 @@ def main():
     # De kosten en een even groot deel van het januarisalaris tellen allebei als intern.
     toronto = (t["datum"] >= "2026-01-08") & (t["datum"] <= "2026-01-16") & t["omschrijving"].str.contains(r" ON$|ONTARIO|CANADA|YYZ|\bIAH\b", case=False, regex=True) & (t["bedrag_usd"] < 0)
     t.loc[toronto, ["soort", "categorie", "subcategorie"]] = ["intern", "Werkreis (vergoed)", "Werkreis Toronto Jef"]
-    corr = round(t[toronto]["bedrag_usd"].sum(), 2)
-    if corr:
-        basis = t[(t["subcategorie"] == "Salaris Jef") & (t["datum"] == "2026-01-29")].iloc[[0]].copy()
-        a, b = basis.copy(), basis.copy()
-        a[["omschrijving", "bedrag_orig", "bedrag_usd"]] = ["Correctie: deel salaris was vergoeding werkreis Toronto", corr, corr]
-        b[["omschrijving", "bedrag_orig", "bedrag_usd", "soort", "categorie", "subcategorie"]] = [
-            "Vergoeding werkreis Toronto (in salaris)", -corr, -corr, "intern", "Werkreis (vergoed)", "Vergoeding werkreis (in salaris)"]
-        t = pd.concat([t, a, b], ignore_index=True)
     # PayPal-incasso's vanaf Knab koppelen aan de bestelling uit Gmail (zelfde bedrag in euro).
     PAYPAL_EUR = {2375.00: ("Reizen & uitjes", "Reizen, hotels, vluchten"),          # Booking.com Oostduinkerke
                   134.56: ("Reizen & uitjes", "Reizen, hotels, vluchten"),           # KLM
@@ -267,6 +260,8 @@ def main():
     bijdr = (t["bank"] == "Knab") & (t["bedrag_orig"] > 0) & t["datum"].between("2026-04-09", "2026-04-14") & \
         t["omschrijving"].str.contains("cadeau jef|happy birthday", case=False)
     t.loc[bb | bijdr, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Cadeau Jef (betaald door familie)"]
+    cash = (t["bank"] == "Knab") & ((t["bedrag_orig"] - 296.61).abs() < 0.01) & t["omschrijving"].str.contains("PAYPAL", case=False)
+    t.loc[cash, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Huis & inrichting", "Cashback Philips-espressomachine"]
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
