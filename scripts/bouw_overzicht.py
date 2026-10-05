@@ -66,10 +66,16 @@ REGELS = [
     (r"target", "uitgave", "Boodschappen", "Target (boodschappen + huishouden)"),
     (r"amazon|amzn", "uitgave", "Online winkelen", "Amazon"),
     (r"hellofresh|green ?chef|home ?chef|factor", "uitgave", "Eten & drinken", "Maaltijdboxen"),
+    # Specifieke uitzonderingen vóór de brede eten-regel (Square/Toast-terminals worden ook door niet-horeca gebruikt).
+    (r"practice with bell|dermatolog", "uitgave", "Zorg", "Zorg & medisch"),
+    (r"river forest haven", "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten"),
+    (r"scspacetrader", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
+    (r"github", "uitgave", "Abonnementen", "Streaming, software, nieuws"),
+    (r"^knab: npo", "uitgave", "Abonnementen", "Streaming, software, nieuws"),
     (r"too good to go|farmer'?s fridge|lunchdrop|fooda", "uitgave", "Eten & drinken", "Lunch/snacks onderweg"),
     (r"^dd |doordash|uber \*eats|ubereats", "uitgave", "Eten & drinken", "Bezorging (DoorDash/Uber Eats)"),
     (r"nespresso|athletic br|specs|vinatis|vinify", "uitgave", "Eten & drinken", "Koffie & drank"),
-    (r"tst\*|sq \*|starbucks|restaurant|grill|cafe|coffee|ramen|sushi|taco|burger|pizza|deli|gelato|donut|dessert|poke|steakhouse|wendy|in-n-out|bbq|barbecue|kitchen|bistro|brew|confection|sweet|dish society|byblos|jinya|delices|icehous|oasis|mexican|thai|chop |lynns table|daily gather|uncles|home run food|eric kayser|zoete|zoet genot|olivier|cabane|more than cake|xavirous|le breton|lescombes|winery|armk|aramark|concession", "uitgave", "Eten & drinken", "Uit eten & koffie"),
+    (r"tst\*|sq \*|starbucks|restaurant|grill|cafe|coffee|ramen|sushi|taco|burger|pizza|deli|gelato|donut|dessert|poke|steakhouse|wendy|in-n-out|bbq|barbecue|kitchen|bistro|brew|confection|sweet|dish society|byblos|jinya|delices|icehous|oasis|mexican|thai|chop |lynns table|daily gather|uncles|home run food|eric kayser|zoete|zoet genot|olivier|cabane|more than cake|xavirous|le breton|lescombes|winery|armk|aramark|concession", "uitgave", "Eten & drinken", "Uit eten & koffie"),
     # --- vervoer ---
     (r"hctra|ez tag", "uitgave", "Vervoer", "Tol (EZ TAG)"),
     (r"uber|lyft", "uitgave", "Vervoer", "Uber/taxi"),
@@ -94,7 +100,7 @@ REGELS = [
     (r"^knab: knab$|foreign transaction fee|official checks charge|money order|^knab: knab ", "uitgave", "Bankkosten", "Bank- en wisselkosten"),
     (r"milieudefensie|unicef|enthuse|donation", "uitgave", "Giften", "Goede doelen"),
     (r"tx birth death|consulate|he-government|lexicom", "uitgave", "Overheid & documenten", "Paspoorten, aktes, vertalingen"),
-    (r"github|kovasovic|two t'?s|the shack|pullman market|mexology|scspacetrader", "uitgave", "Eten & drinken", "Uit eten & koffie"),
+    (r"kovasovic|two t'?s|the shack|pullman market|mexology", "uitgave", "Eten & drinken", "Uit eten & koffie"),
     (r"stand for the silent", "uitgave", "Giften", "Goede doelen"),
     (r"zelle payment to", "uitgave", "Nog indelen", "Zelle aan personen"),
     (r"atm withdrawal", "uitgave", "Contant geld", "Pinautomaat"),
@@ -197,6 +203,10 @@ def main():
     ]
     for masker, waarden in regels_fam:
         t.loc[fam & masker, ["soort", "categorie", "subcategorie"]] = waarden
+    # Uit eten buiten de regio Katy/Houston = eten tijdens reizen en uitjes (apart van dagelijks uit eten).
+    lokaal = t["omschrijving"].str.contains(r"katy|houston|sugar ?land|fulshear|richmond|cypress|spring tx|cinco r|^knab:", case=False, regex=True)
+    reis = (t["subcategorie"] == "Uit eten & koffie") & ~lokaal
+    t.loc[reis, "subcategorie"] = "Eten tijdens reizen & uitjes"
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
