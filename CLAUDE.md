@@ -45,21 +45,28 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   - Fugro NL €1.956,84 (4 mei): aankoop aandelen Fugro door Jef (sparen/beleggen). Deze aandelen tellen niet
     mee in het vermogensoverzicht (wens Myrthe).
   - ICS-creditcard (NL): alleen ChatGPT €21,48/mnd t/m maart en €28 jaarbijdrage; geen afschriften nodig.
-- Lening van de ouders (Gillis-Reyniers): €5.000 in mei, €3.600 terug in juni via Knab; volgens Myrthe volledig
-  afbetaald: de rest (±€1.400) is verrekend doordat Myrthe in de VS iets voor hen voorschoot. OPEN: welke
-  aankoop dat was (±$1.600). Tecovas 7 mei ($682) is in elk geval voorgeschoten. Telt als intern, niet als
-  inkomen. De €60 per maand "Selfcare" telt wel als inkomen.
+- Lening van de ouders (Gillis-Reyniers): €5.000 in mei, €3.600 terug in juni via Knab. De overige €1.400 was
+  hun bijdrage aan de boodschappen tijdens hun bezoek in mei (verlaagt Boodschappen). Er staat niets meer open.
+  De €60 per maand "Selfcare" telt als inkomen.
+- Overige binnengekomen bedragen (antwoorden 5 okt): Jelmer De Winter $15 = padel; Maani Yousefzadeh Alasti $150
+  en Carlos Castro $40 = verkoop koffieapparaat; Jozefien Michielssen €125 en €7,36 = terugbetaling Target-
+  spullen; De Hoon-Michielssen €58,40 = Oostduinkerke; Country Inn & Suites Frederick = vakantiehuisje (afschrijving
+  en terugstorting heffen elkaar op); Remote Online Deposit $6,50 = onbekend.
+- Jef reisde voor werk ook naar Washington (Amtrak $140, vergoed op 19 mrt) en North Carolina (geen kosten op
+  onze kaarten gevonden).
+- De Nederlandse rekening van Jef valt buiten het overzicht; alleen overboekingen van en naar die rekening
+  zijn zichtbaar.
+- Myrthe en Jef blijven in Katy wonen. Kroger per artikel is niet nodig.
+- De oude map Projects\Afschriften is op 5 okt 2026 naar de Prullenbak verplaatst; alles staat in data/.
 - Terugbetalingen van reisgenoten (weekendjes, Tikkie) verlagen de post Reizen. De Virgin-cruise (jan 2027,
   $3.126 via Chase) is van Florien en volledig door haar terugbetaald (€630 + €2.100): telt als Voorgeschoten.
 - Beekse Bergen (Safari Resort, €791,69 op 13 jul) is betaald door John (vader Jef): €792 terug op 8 sep. Voorgeschoten.
 - Toronto (8–16 jan 2026, $1.117): werkreis Jef. Vergoed via Fugro-onkostenvergoeding ("FUSA Land Disb Emp Exp":
-  $1.549 op 19 feb en $140 op 19 mrt). Kosten en vergoedingen tellen als intern (Werkreis vergoed). Oude notitie:
-  deel van het salaris van 29 januari tellen als intern.
+  $1.549 op 19 feb en $140 op 19 mrt). Kosten en vergoedingen tellen als intern (Werkreis vergoed).
 - Best Buy april ($540, reMarkable) was een cadeau voor Jef, betaald door de familie via Knab (€525); beide intern.
 - Apple Store 6 mei ($1.206) en Tecovas 7 mei ($682): voorgeschoten voor Florien (zus Myrthe). Zij betaalde alles
   terug op 9 mei ("Afrekening houston", €1.875 ≈ $2.205, van VAN DEN BERGH J + GILLIS F). Het verschil (±$317)
-  zijn andere aankopen voor haar die nog niet gekoppeld zijn. Oude notitie:
-  dit al is terugbetaald.
+  zijn andere aankopen voor haar die nog niet gekoppeld zijn.
 - Lily is geboren in 2023 en heeft geen SSN; Bill wel (Amerikaan). Child Tax Credit dus vooral voor Bill.
   Pre-K voor Lily kan op z'n vroegst vanaf aug 2027, kindergarten vanaf aug 2028.
 - Myrthe zoekt werk (oktober 2026), verwacht rond $120.000 per jaar. De Vista-jaaropgave komt nog.

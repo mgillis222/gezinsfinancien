@@ -262,6 +262,29 @@ def main():
     t.loc[bb | bijdr, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Cadeau Jef (betaald door familie)"]
     cash = (t["bank"] == "Knab") & ((t["bedrag_orig"] - 296.61).abs() < 0.01) & t["omschrijving"].str.contains("PAYPAL", case=False)
     t.loc[cash, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Huis & inrichting", "Cashback Philips-espressomachine"]
+    # Antwoorden Myrthe 5 okt 2026 over binnengekomen bedragen.
+    def zet(masker, soort, cat, sub):
+        t.loc[masker, ["soort", "categorie", "subcategorie"]] = [soort, cat, sub]
+    oms = t["omschrijving"]
+    zet(oms.str.contains("Zelle Payment From Jelmer De Winter", case=False), "uitgave", "Sport & hobby", "Padel (terugbetaald)")
+    zet(oms.str.contains("Zelle Payment From (Maani Yousefzadeh|Carlos Castro)", case=False, regex=True), "inkomen", "Inkomen", "Verkoop spullen (koffieapparaat)")
+    zet((t["bank"] == "Knab") & (t["bedrag_orig"] > 0) & oms.str.contains("MICHIELSSEN JOZEFIEN", case=False), "uitgave", "Boodschappen", "Terugbetaald door Jozefien (Target)")
+    zet((t["bank"] == "Knab") & (t["bedrag_orig"] > 0) & oms.str.contains("DE HOON-MICHIELSSEN", case=False), "uitgave", "Reizen & uitjes", "Terugbetaald door reisgenoten")
+    zet(oms.str.contains("COUNTRY INN & STES FRE", case=False), "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten")
+    # Amtrak Washington (3 feb, $140) = werkreis Jef; Fugro vergoedde op 19 mrt precies $140.
+    zet(oms.str.contains("AMTRAK", case=False) & ((t["bedrag_usd"] + 140).abs() < 0.01), "intern", "Werkreis (vergoed)", "Werkreis Washington Jef")
+    # Lening ouders: €5.000 in (4 mei), €3.600 terug (4 jun). De overige €1.400 was hun bijdrage aan de
+    # boodschappen tijdens hun bezoek in mei. Dat deel verlaagt de boodschappen.
+    inleg = (t["bank"] == "Knab") & (t["bedrag_orig"] == 5000) & (t["subcategorie"] == "Lening ouders (geleend / terugbetaald)")
+    if inleg.any():
+        i = t[inleg].index[0]
+        koers = t.at[i, "eur_usd"]
+        t.at[i, "bedrag_orig"], t.at[i, "bedrag_usd"] = 3600.0, round(3600 * koers, 2)
+        rij = t.loc[[i]].copy()
+        rij[["omschrijving", "bedrag_orig", "bedrag_usd", "soort", "categorie", "subcategorie"]] = [
+            "Knab: Gillis - Reyniers | deel lening = bijdrage boodschappen bezoek mei", 1400.0, round(1400 * koers, 2),
+            "uitgave", "Boodschappen", "Bijdrage ouders boodschappen (bezoek mei)"]
+        t = pd.concat([t, rij], ignore_index=True)
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
