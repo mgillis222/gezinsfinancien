@@ -110,3 +110,10 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Bezoek John en Sylvia (eind sep 2026): voorgeschoten $1.047 (lijst in data/voorgeschoten_john_sylvia_sep2026.csv),
   zij betalen €925 terug. Deze posten en de terugbetaling als Voorgeschoten indelen zodra ze in de afschriften staan.
   Tot 4 okt was de €925 nog niet op Knab binnen.
+
+## Hypotheek woning NL (Vista, contract 3240894, stand 5 okt 2026)
+- Cornelis van der Lijnstraat 145, Den Haag. Annuïteitenhypotheek sinds 29 mrt 2021, looptijd tot 1 apr 2051.
+- Hoofdsom €510.000, restschuld €429.994, marktwaarde €569.000 (LTV 75,6%): overwaarde ±€139.000.
+- Rente 1,48% vast tot 1 apr 2041. Maandbedrag €1.744,61 = rente €530,33 + aflossing €1.214,28.
+- In het overzicht telt de rente als uitgave (Woning NL) en de aflossing als sparen. De vooruitblik toont het
+  saldo met én zonder aflossing. Bron: data/hypotheek/Leninggegevens voor contract 3240894.pdf.

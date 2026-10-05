@@ -134,7 +134,8 @@ VB = {
     ],
     "vast": [
         {"id": "huur", "naam": "Huur Cottondale Ct", "bedrag": 3100},
-        {"id": "woningnl", "naam": "Woning NL: hypotheek, VvE, belastingen (gem. feb–aug; Knab-export begint 4 jan)", "bedrag": round(-vol[(vol.categorie == "Woning NL") & (vol.periode >= "2026-02")]["bedrag_usd"].sum() / 7)},
+        {"id": "woningnl", "naam": "Woning NL: hypotheekrente, VvE, belastingen", "bedrag": round(-vol[(vol.categorie == "Woning NL") & (vol.periode >= "2026-02")]["bedrag_usd"].sum() / 7)},
+        {"id": "aflos", "naam": "Aflossing hypotheek NL (€1.214, vermogensopbouw)", "bedrag": round(1214.28 * koers), "sparen": True},
         {"id": "opvang", "naam": "Primrose: Lily + Bill ($630 per week)", "bedrag": round(630 * 52 / 12)},
         {"id": "schoonmoeder", "naam": "Ondersteuning schoonmoeder (€800)", "bedrag": round(800 * koers)},
         {"id": "schoonmaak", "naam": "Schoonmaak (Nancy)", "bedrag": gem(vol.subcategorie == "Schoonmaak (Nancy)")},
@@ -174,7 +175,8 @@ uit = {"bijgewerkt": pd.Timestamp.today().strftime("%Y-%m-%d"), "volledige_maand
        "categorieen": cats, "inkomen": inkomen, "sparen": sparen, "winkels": winkels, "fsa": fsa,
        "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB,
        "reserve": {"schenking_eur": 90000, "noot": "Schenking ouders, staat op Belgische spaarrekening op naam van de ouders; op te vragen."},
-       "vermogen": [{"naam": "Chase CD (deposito, t/m 30-07-2026)", "usd": 10000},
+       "vermogen": [{"naam": "Overwaarde woning NL (marktwaarde €569.000 − schuld €429.994, okt 2026)", "eur": 139006.41},
+                    {"naam": "Chase CD (deposito, t/m 30-07-2026)", "usd": 10000},
                     {"naam": "Beleggingsrekening VS (4 okt)", "usd": 5877},
                     {"naam": "Kinderrekening Brand New Day (4 okt)", "eur": 5559.62}]}
 with open("data/verwerkt/dashboard.json", "w", encoding="utf-8") as f:

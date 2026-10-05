@@ -285,6 +285,19 @@ def main():
             "Knab: Gillis - Reyniers | deel lening = bijdrage boodschappen bezoek mei", 1400.0, round(1400 * koers, 2),
             "uitgave", "Boodschappen", "Bijdrage ouders boodschappen (bezoek mei)"]
         t = pd.concat([t, rij], ignore_index=True)
+    # Vista-hypotheek (contract 3240894): €1.744,61 per maand = rente €530,33 + aflossing €1.214,28 (stand okt 2026,
+    # annuïteit, 1,48% vast tot 2041). Rente is een uitgave; aflossing is vermogensopbouw (sparen).
+    hyp = (t["subcategorie"] == "Hypotheek") & ((t["bedrag_orig"] + 1744.61).abs() < 0.01)
+    if hyp.any():
+        afl = t[hyp].copy()
+        t.loc[hyp, "bedrag_orig"] = -530.33
+        t.loc[hyp, "bedrag_usd"] = (-530.33 * t.loc[hyp, "eur_usd"]).round(2)
+        t.loc[hyp, "subcategorie"] = "Hypotheekrente"
+        afl["bedrag_orig"] = -1214.28
+        afl["bedrag_usd"] = (-1214.28 * afl["eur_usd"]).round(2)
+        afl[["soort", "categorie", "subcategorie"]] = ["sparen", "Sparen & beleggen", "Aflossing hypotheek NL"]
+        afl["omschrijving"] = afl["omschrijving"] + " (deel: aflossing)"
+        t = pd.concat([t, afl], ignore_index=True)
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]

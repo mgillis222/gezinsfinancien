@@ -323,6 +323,7 @@ function rekenen() {
   const ink = som(VB.inkomen), vast = som(VB.vast), vari = som(VB.variabel);
   const bes = VB.besparen.filter(b => vinkjes[b.id]).reduce((a, b) => a + b.bedrag, 0);
   const uit = vast + vari - bes, saldo = ink - uit;
+  const aflos = VB.vast.filter(x => x.sparen).reduce((a, x) => a + val(x), 0);
   $("#vb-inkomen-tot").textContent = usd(ink); $("#vb-vast-tot").textContent = usd(vast); $("#vb-var-tot").textContent = usd(vari);
   const nAang = Object.keys(waarden).filter(k => [...VB.inkomen, ...VB.vast, ...VB.variabel].some(x => x.id === k && eigen(x) != null)).length;
   const nVink = VB.besparen.filter(b => vinkjes[b.id]).length;
@@ -333,7 +334,8 @@ function rekenen() {
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:end">
       <div><span class="sub small">Saldo per maand vanaf oktober</span><div class="big num" style="color:var(${saldo < 0 ? "--bad" : "--good"})">${usd(saldo)}</div>
       ${saldo < 0 ? `<span class="pill bad">▼ tekort · ${usd(-saldo * 12)} per jaar</span>` : `<span class="pill good">▲ ruimte · ${usd(saldo * 12)} per jaar</span>`}</div>
-      <div class="small sub" style="text-align:right">Inkomen ${usd(ink)}<br>Uitgaven ${usd(uit)}${bes ? `<br>waarvan bespaard ${usd(bes)}` : ""}</div></div>
+      <div class="small sub" style="text-align:right">Inkomen ${usd(ink)}<br>Uitgaven ${usd(uit)}${bes ? `<br>waarvan bespaard ${usd(bes)}` : ""}${aflos ? `<br>waarvan aflossing hypotheek ${usd(aflos)}` : ""}</div></div>
+    ${aflos ? `<p class="small sub">Van de uitgaven is ${usd(aflos)} aflossing op de hypotheek in NL. Dat geld bouw je op als overwaarde. Zonder die aflossing is het saldo <b class="num">${usd(saldo + aflos)}</b> per maand.</p>` : ""}
     <div><div class="small muted">Inkomen</div><div class="stack"><div style="width:${ink / tot * 100}%;background:var(--s-in)"></div></div></div>
     <div><div class="small muted">Uitgaven: vast · variabel</div><div class="stack"><div style="width:${vast / tot * 100}%;background:var(--s-out)"></div><div style="width:${Math.max(0, vari - bes) / tot * 100}%;background:color-mix(in srgb, var(--s-out) 55%, var(--surface))"></div></div></div>`;
 }
