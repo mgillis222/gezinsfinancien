@@ -180,7 +180,7 @@ VB = {
     "variabel": [
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
         {"id": "online", "naam": "Online winkelen (Amazon, PayPal, webshops)", "bedrag": gem(vol.categorie == "Online winkelen")},
-        {"id": "eten", "naam": "Uit eten, koffie, bezorging, maaltijdboxen", "bedrag": gem(vol.categorie == "Eten & drinken")},
+        {"id": "eten", "naam": "Eten & drinken: uit eten, eten op reis, bezorging, maaltijdboxen", "bedrag": gem(vol.categorie == "Eten & drinken")},
         {"id": "reizen", "naam": "Reizen & uitjes", "bedrag": gem(vol.categorie == "Reizen & uitjes")},
         {"id": "vervoer", "naam": "Vervoer (benzine, tol, Uber, auto)", "bedrag": gem(vol.categorie == "Vervoer")},
         {"id": "kleding", "naam": "Kleding & persoonlijk", "bedrag": gem(vol.categorie == "Kleding & persoonlijk")},
@@ -201,7 +201,7 @@ VB["besparen"] = [
     {"id": "bezorging", "naam": "Minder bezorgen: DoorDash/DashMart en Target same-day", "bedrag": round(bezorg * 0.7 + 15),
      "uitleg": f"DoorDash dit jaar ${round(lekjes['bezorging_doordash'])}. Target: {winkels[1]['bezorgorders']} bezorgorders met ${round(winkels[1]['fooien'])} aan fooien. Eén vaste afhaalronde per week scheelt kosten én impulsaankopen.", "post": "eten"},
     {"id": "uiteten", "naam": "Uit eten en koffie halveren", "bedrag": round(uitEten * 0.5),
-     "uitleg": f"Gemiddeld ${round(uitEten)} per maand aan restaurants, koffie en snacks onderweg.", "post": "eten"},
+     "uitleg": f"Gemiddeld ${round(uitEten)} per maand aan restaurants en koffie in Katy/Houston (eten tijdens reizen en uitjes niet meegerekend).", "post": "eten"},
     {"id": "boodschappen", "naam": "Boodschappen: weekmenu en één winkel", "bedrag": round(VB["variabel"][0]["bedrag"] * 0.12),
      "uitleg": "Nu verspreid over Kroger, Trader Joe's, Target, H-E-B, Costco, ALDI en DashMart. 10–15% minder is haalbaar met een weekmenu.", "post": "boodschappen"},
     {"id": "online", "naam": "Online winkelen: 48-uursregel", "bedrag": round(VB["variabel"][1]["bedrag"] * 0.25),
