@@ -61,30 +61,8 @@ inkomen.sort(key=lambda c: -c["totaal"])
 sparen = [{"d": r.datum, "o": r.subcategorie, "b": round(-r.bedrag_usd, 2)} for r in t[t.soort == "sparen"].sort_values("datum").itertuples()]
 
 # ---------- artikelen (Amazon, Target en overige webshops) ----------
-AMAZON_REGELS = [
-    (r"baby|infant|toddler|crib|nipple|breast|lactation|nursing|postpartum|swaddle|pacifier|bottle brush|bath tub|frida|momcozy|lansinoh|medela|colostrum|flange|stroller|car seat|booster|registry|tripp trapp|high chair", "Baby & zwangerschap"),
-    (r"kids|toy|puzzle|game|sticker|coloring|crayon|bath bomb|beach toys|bubble|pop tubes|monster truck|spidey|little people|matching memory|bluey|keyboard|casio", "Kinderen & speelgoed"),
-    (r"saline|nasal|scar|sunscreen|repellent|shampoo|supplement|lecithin|vitamin|nail clipper|toothbrush|hair dryer|mirror|makeup|waist tightener|underwear", "Verzorging & gezondheid"),
-    (r"banana|cheese|oatmilk|cranberry|juice|olive oil|pear|pita|muffin|onion|crystal light|coca-cola|impossible|figs|brie|boursin|cottage|coffee", "Boodschappen"),
-    (r"rv |camper|trailer|fuse|leveling|dinette|fluid film|breakaway|canopy tent|solar shower|carabiner|refrigerator vent|camping|door latch", "Camper & kamperen"),
-    (r"paint|primer|polycrylic|sandpaper|roller|drop cloth|tack cloth|heat gun|painters tape|contact paper|countertop|window covering|vinyl wrap", "Klussen (verf, camper/huis)"),
-    (r"curtain|sheet|mattress|bed frame|duvet|comforter|doormat|mat |hooks|ice cube|mason jar|pizza stone|egg|air fryer|bread bags|melon baller|squeegee|faucet cover|zipper pouch|storage|insect trap|humidifier|fan", "Huis & keuken"),
-    (r"bike|tire|cleat|shimano|camelbak|pilates|exercise ball|yoga|swim goggles|cycling", "Sport & fietsen"),
-    (r"yarn|crochet|stuffing|fiberfill|sewing|velcro|beads|journal|notebook|pens", "Hobby & schrijven"),
-    (r"charger|power bank|battery|cable|headphones|earbuds|shokz", "Elektronica"),
-    (r"gift card|thank you cards|valentine|welcome to texas|book|cards", "Cadeaus, boeken & kaarten"),
-    (r"shirt|carhartt|socks|mailer", "Kleding & overig"),
-]
-def amazon_cat(naam):
-    for pat, c in AMAZON_REGELS:
-        if re.search(pat, naam, re.I): return c
-    return "Overig"
-
-ao = pd.read_csv("data/bestellingen/amazon_bestellingen_2026.csv")
-aa = pd.read_csv("data/bestellingen/amazon_artikelen_2026.csv")
-aa = aa[~aa["order_id"].isin(ao[ao["geannuleerd"] == "ja"]["order_id"])]
-aa["regeltotaal"] = aa["aantal"] * aa["prijs_per_stuk"]
-aa["cat"] = aa["artikel"].map(amazon_cat)
+from artikelen import amazon_artikelen
+ao, aa = amazon_artikelen()
 TARGET_CAT = {"boodschappen": "Boodschappen", "drogisterij-verzorging": "Verzorging & gezondheid", "huishouden-schoonmaak": "Huishouden & schoonmaak",
               "speelgoed": "Kinderen & speelgoed", "huis-tuin": "Huis & keuken", "baby-luiers-voeding": "Baby & zwangerschap", "kleding": "Kleding & overig",
               "elektronica": "Elektronica", "cadeaus": "Cadeaus, boeken & kaarten", "restaurant-bezorging": "Uit eten & bezorging", "maaltijdbox": "Maaltijdbox"}
@@ -168,7 +146,6 @@ VB = {
     ],
     "variabel": [
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
-        {"id": "online", "naam": "Online winkelen (Amazon, PayPal, webshops)", "bedrag": gem(vol.categorie == "Online winkelen")},
         {"id": "eten", "naam": "Eten & drinken: uit eten, eten op reis, bezorging, maaltijdboxen", "bedrag": gem(vol.categorie == "Eten & drinken")},
         {"id": "reizen", "naam": "Reizen & uitjes", "bedrag": gem(vol.categorie == "Reizen & uitjes")},
         {"id": "vervoer", "naam": "Vervoer (benzine, tol, Uber, auto)", "bedrag": gem(vol.categorie == "Vervoer")},
@@ -187,7 +164,7 @@ VB["besparen"] = [
      "uitleg": "Netflix NL, Videoland, NPO, Podimo, Storytel en Prime Video lopen nog via Knab: samen $" + str(round(lekjes["nl_streaming"])) + " dit jaar.", "post": "abo"},
     {"id": "aiabo", "naam": "Claude Max terug naar Pro, LinkedIn en Coursera stoppen", "bedrag": round((106.6 - 21.32) + 43.29 + 49),
      "uitleg": "Sinds 15 sep Max ($107/mnd) in plaats van Pro ($21). LinkedIn Premium $43/mnd, Coursera $49/mnd vanaf 28 sep.", "post": "abo"},
-    {"id": "online", "naam": "Online winkelen: 48-uursregel", "bedrag": round(VB["variabel"][1]["bedrag"] * 0.25),
+    {"id": "online", "naam": "Amazon en webshops: 48-uursregel", "bedrag": round(-vol[vol["omschrijving"].str.contains("amazon|amzn|temu|etsy|walmart.com|wayfair", case=False) & (vol.soort == "uitgave") & (vol.categorie != "Abonnementen")]["bedrag_usd"].sum() / N * 0.25),
      "uitleg": "Amazon ±96 bestellingen dit jaar, vaak losse kleine orders. Verlanglijst eerst 48 uur laten staan.", "post": "online"},
     {"id": "kleintjes", "naam": "Kleine lekjes dichten", "bedrag": round((lekjes["buitenlandkosten"] + lekjes["knab_kosten"]) / 9 + 5),
      "uitleg": f"Buitenlandkosten op Chase 9862 (${lekjes['buitenlandkosten']}): gebruik in het buitenland de Freedom Unlimited 7970. Knab-pakketkosten op 3 rekeningen (${lekjes['knab_kosten']}). Rente Target-kaart (${lekjes['rente_target']}): Auto Pay staat nu goed.", "post": "overig"},

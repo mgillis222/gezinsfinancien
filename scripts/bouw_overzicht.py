@@ -40,7 +40,7 @@ REGELS = [
     (r"zelle payment from|^knab: (gillis - reyniers|van den bergh|michielssen|marie michielssen|de h |de hoon|verheye|pauwels|aab inz tikkie|av ferreira|s\.t\. leo|olivia rowaert|bondroit|koen \|)", "inkomen", "Inkomen", "Van familie/vrienden (of terugbetaling)"),
     (r"^knab: taf bv", "uitgave", "Verzekeringen", "Levensverzekering (NL)"),
     (r"^knab: international card services", "uitgave", "Abonnementen", "ICS-creditcard: ChatGPT (t/m mrt) + jaarbijdrage"),
-    (r"^knab: paypal", "uitgave", "Online winkelen", "PayPal vanaf Knab (zie Gmail)"),
+    (r"^knab: paypal", "uitgave", "Nog indelen", "PayPal vanaf Knab (zie Gmail)"),
     (r"^knab: .*\| betaalautomaat", "uitgave", "Reizen & uitjes", "Pinnen tijdens vakantie Europa"),
     # --- wonen ---
     (r"spencerspizzy|zelle payment to spencer moore", "uitgave", "Wonen VS", "Huur Cottondale Ct"),
@@ -98,7 +98,12 @@ REGELS = [
     (r"etsy|el baker art|motiff|yarn", "uitgave", "Sport & hobby", "Hobby (haken, kunst)"),
     (r"ikea|home depot|lowe'?s|harbor freight|wayfair|sur la table|officemax|postnet|ups store|usps|postnl|bpost|pakske", "uitgave", "Huis & inrichting", "Huis, inrichting, post"),
     (r"apple store|bestbuy|best buy", "uitgave", "Elektronica", "Elektronica"),
-    (r"temu|groupon|five below|walmart\.com|bol\.?com|fotoproducten|photoaid|passport", "uitgave", "Online winkelen", "Overige webshops"),
+    (r"groupon", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),                       # SeaWorld, Costco-lidmaatschap
+    (r"five below", "uitgave", "Kinderen", "Kinderen (activiteiten, kleding, spullen)"),
+    (r"walmart\.com", "uitgave", "Zorg", "Drogisterij & verzorging"),                      # vitamines, oorkappen
+    (r"bol\.?com", "uitgave", "Sport & hobby", "Boeken & e-books"),
+    (r"fotoproducten|photoaid|passport", "uitgave", "Overheid & documenten", "Paspoorten, aktes, vertalingen"),
+    (r"temu", "uitgave", "Huis & inrichting", "Temu (inhoud onbekend)"),
     # --- abonnementen ---
     (r"claude|anthropic|openai|chatgpt", "uitgave", "Abonnementen", "AI (Claude e.d.)"),
     (r"microsoft|linkedin|nord|apple\.com/bill|disney|netflix|spotify|podimo|videoland|npo|prime video|amazon prime|storytel|hbo|consumentenbond|correspondent|coursera|google|amazon media|canvascompa", "uitgave", "Abonnementen", "Streaming, software, nieuws"),
@@ -247,6 +252,8 @@ def main():
     t.loc[terug, ["soort", "categorie", "subcategorie"]] = ["inkomen", "Inkomen", "Ontvangen, nog benoemen"]
     # Interne overboekingen tussen Knab-rekeningen: alleen intern als ze tussen 1133/9994/5171 gaan.
     # Positieve bedragen bij een 'uitgave'-categorie zijn terugbetalingen/refunds: die blijven in de categorie (verlagen de uitgaven).
+    from artikelen import verdeel_amazon
+    t = verdeel_amazon(t)
     t["periode"] = t["datum"].dt.strftime("%Y-%m")
     t["twijfel"] = t["subcategorie"].isin(TWIJFEL_SUB) | (t["categorie"] == "Nog indelen")
     t = t.sort_values(["datum", "bank", "rekening"])

@@ -60,6 +60,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   of uit eten (uit eten is ±$150/mnd aan losse gelegenheden).
 - WL1 Cafe Houston = lunch van Jef op het werk (meestal neemt hij lunch mee). Methodist-kantine (mei) = Zorg
   (bevalling). Eten op vliegveld IAH = reisdag.
+- "Online winkelen" is geen categorie: Amazon-afschrijvingen worden per maand verdeeld naar wat er besteld is
+  (scripts/artikelen.py); webshops en PayPal-betalingen gaan naar de categorie van wat er gekocht is.
 - Uit eten: Square- en Toast-betalingen zijn niet altijd horeca (zwemles, huidarts). Eten buiten
   Katy/Houston telt als "Eten tijdens reizen & uitjes", los van het dagelijkse uit eten.
 
