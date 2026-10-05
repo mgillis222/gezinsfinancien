@@ -247,6 +247,14 @@ def main():
     # Apple Store 6 mei 2026 ($1.205,85): voorgeschoten voor de zus van Myrthe (bevestigd door Myrthe).
     zus = t["omschrijving"].str.contains("APPLE STORE #R058", case=False) & (t["datum"] == "2026-05-06")
     t.loc[zus, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Voorgeschoten voor zus Myrthe (Apple)"]
+    # Tecovas 7 mei 2026 ($681,99): niet voor ons, voorgeschoten (bevestigd door Myrthe).
+    tec = t["omschrijving"].str.contains("TECOVAS", case=False) & ((t["bedrag_usd"] + 681.99).abs() < 0.01)
+    t.loc[tec, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Voorgeschoten: Tecovas (niet voor ons)"]
+    # Best Buy april 2026 (reMarkable, $540,17): verjaardagscadeau voor Jef, betaald door ouders/familie via Knab.
+    bb = t["omschrijving"].str.contains("BESTBUY|BEST BUY", case=False) & ((t["bedrag_usd"] + 540.17).abs() < 0.01)
+    bijdr = (t["bank"] == "Knab") & (t["bedrag_orig"] > 0) & t["datum"].between("2026-04-09", "2026-04-14") & \
+        t["omschrijving"].str.contains("cadeau jef|happy birthday", case=False)
+    t.loc[bb | bijdr, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Cadeau Jef (betaald door familie)"]
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
