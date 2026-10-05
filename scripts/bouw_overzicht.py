@@ -51,6 +51,8 @@ REGELS = [
     (r"^knab: ziggo", "uitgave", "Woning NL", "Ziggo (eindafrekening)"),
     # --- kinderen ---
     (r"primrose school", "uitgave", "Kinderopvang", "Primrose (Lily & Bill)"),
+    # FSA-terugbetalingen (naam beheerder nog onbekend): verlagen de nettokosten van de opvang.
+    (r"dependent care|dep care|dcfsa|\bfsa\b|wex health|navia|healthequity|inspira|payflex|optum financial|further benefits|benefit ?strategies", "uitgave", "Kinderopvang", "FSA-terugbetaling (Dependent Care)"),
     (r"ymca houston|little gym|kid to kid|scholastic|sharkeys cuts for kids|mckenna childrens|bugaboo|babylist|hanna|love ?to ?dream|little unicorn|artipoppe", "uitgave", "Kinderen", "Kinderen (activiteiten, kleding, spullen)"),
     # --- vaste lasten VS ---
     (r"cinco mud|gexa energy|centerpoint|cpenergy|utility payment fee", "uitgave", "Nutsvoorzieningen", "Water/stroom/gas"),

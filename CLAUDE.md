@@ -50,3 +50,11 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 
 ## Kosten
 - Geen. Alles draait lokaal (Python in WSL); er zijn geen betaalde API-calls.
+
+## FSA (via werkgever Jef)
+- Dependent Care FSA (opvang, max $7.500/jaar per huishouden in 2026): in oktober 2026 is $4.900 teruggevraagd.
+  Terugbetalingen tellen als negatieve kinderopvangkosten (regel in bouw_overzicht.py; de naam van de beheerder
+  op het afschrift is nog onbekend).
+- Health Care FSA (max $3.400): bijna op, ongeveer $33 over (okt 2026). Zorgkosten die met de FSA-kaart zijn
+  betaald (waarschijnlijk Visa -3649, o.a. Houston Methodist) staan niet in de bankafschriften; de inleg gaat
+  vóór belasting van het salaris af.
