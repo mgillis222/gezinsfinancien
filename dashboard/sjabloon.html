@@ -313,6 +313,8 @@ function koppelZoek(det, c) {
 const VB = D.vooruitblik;
 let waarden = laden("waarden", {}), vinkjes = laden("vinkjes", {});
 // Een eigen aanpassing geldt alleen zolang het standaardbedrag uit de afschriften hetzelfde is.
+// Besloten besparingen staan standaard aan; een eigen vinkje (aan of uit) gaat daarvoor.
+const aan = b => vinkjes[b.id] ?? !!b.besloten;
 const eigen = x => (waarden[x.id] && waarden[x.id].basis === x.bedrag) ? waarden[x.id].v : null;
 function regels(lijst, doel) {
   $(doel).innerHTML = lijst.map(x => `<label class="line" for="vb-${x.id}"><span>${esc(x.naam)}</span>
@@ -323,12 +325,12 @@ function rekenen() {
   const val = x => { const v = parseFloat($("#vb-" + x.id).value); return isNaN(v) ? 0 : v; };
   const som = l => l.reduce((a, x) => a + val(x), 0);
   const ink = som(VB.inkomen), vast = som(VB.vast), vari = som(VB.variabel);
-  const bes = VB.besparen.filter(b => vinkjes[b.id]).reduce((a, b) => a + b.bedrag, 0);
+  const bes = VB.besparen.filter(aan).reduce((a, b) => a + b.bedrag, 0);
   const uit = vast + vari - bes, saldo = ink - uit;
   const aflos = VB.vast.filter(x => x.sparen).reduce((a, x) => a + val(x), 0);
   $("#vb-inkomen-tot").textContent = usd(ink); $("#vb-vast-tot").textContent = usd(vast); $("#vb-var-tot").textContent = usd(vari);
   const nAang = Object.keys(waarden).filter(k => [...VB.inkomen, ...VB.vast, ...VB.variabel].some(x => x.id === k && eigen(x) != null)).length;
-  const nVink = VB.besparen.filter(b => vinkjes[b.id]).length;
+  const nVink = VB.besparen.filter(b => vinkjes[b.id] !== undefined && vinkjes[b.id] !== !!b.besloten).length;
   $("#vb-status").textContent = (nAang || nVink) ? `Met jouw aanpassingen: ${nAang} bedrag(en) gewijzigd, ${nVink} besparing(en) aangevinkt.` : "Dit zijn de cijfers uit de afschriften, zonder aanpassingen.";
   vbSaldo = saldo; renderTiles();
   const tot = Math.max(ink, uit);
@@ -336,14 +338,14 @@ function rekenen() {
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:end">
       <div><span class="sub small">Saldo per maand vanaf oktober</span><div class="big num" style="color:var(${saldo < 0 ? "--bad" : "--good"})">${usd(saldo)}</div>
       ${saldo < 0 ? `<span class="pill bad">▼ tekort · ${usd(-saldo * 12)} per jaar</span>` : `<span class="pill good">▲ ruimte · ${usd(saldo * 12)} per jaar</span>`}</div>
-      <div class="small sub" style="text-align:right">Inkomen ${usd(ink)}<br>Uitgaven ${usd(uit)}${bes ? `<br>waarvan bespaard ${usd(bes)}` : ""}${aflos ? `<br>waarvan aflossing hypotheek ${usd(aflos)}` : ""}</div></div>
+      <div class="small sub" style="text-align:right">Inkomen ${usd(ink)}<br>Uitgaven ${usd(uit)}${bes ? `<br>waarvan bespaard ${usd(bes)}` : ""}</div></div>
     <div><div class="small muted">Inkomen</div><div class="stack"><div style="width:${ink / tot * 100}%;background:var(--s-in)"></div></div></div>
     <div><div class="small muted">Uitgaven: vast · variabel</div><div class="stack"><div style="width:${vast / tot * 100}%;background:var(--s-out)"></div><div style="width:${Math.max(0, vari - bes) / tot * 100}%;background:color-mix(in srgb, var(--s-out) 55%, var(--surface))"></div></div></div>`;
 }
 function renderVooruit() {
   regels(VB.inkomen, "#vb-inkomen"); regels(VB.vast, "#vb-vast"); regels(VB.variabel, "#vb-var");
-  $("#vb-save").innerHTML = VB.besparen.map(b => `<label class="save" for="sv-${b.id}"><input type="checkbox" id="sv-${b.id}" ${vinkjes[b.id] ? "checked" : ""}>
-    <span><b>${esc(b.naam)}</b><span class="small sub">${esc(b.uitleg)}</span></span><span class="amt">${usd(b.bedrag)}/mnd</span></label>`).join("") +
+  $("#vb-save").innerHTML = VB.besparen.map(b => `<label class="save" for="sv-${b.id}"><input type="checkbox" id="sv-${b.id}" ${aan(b) ? "checked" : ""}>
+    <span><b>${esc(b.naam)}</b>${b.besloten ? ' <span class="pill good">besloten</span>' : ""}<span class="small sub">${esc(b.uitleg)}</span></span><span class="amt">${usd(b.bedrag)}/mnd</span></label>`).join("") +
     `<div class="line tot"><span>Alles samen</span><span class="num" style="color:var(--good)">${usd(VB.besparen.reduce((a, b) => a + b.bedrag, 0))} per maand</span></div>`;
   const alle = [...VB.inkomen, ...VB.vast, ...VB.variabel];
   alle.forEach(x => $("#vb-" + x.id).addEventListener("input", e => {
