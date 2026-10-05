@@ -46,7 +46,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
     mee in het vermogensoverzicht (wens Myrthe).
   - ICS-creditcard (NL): alleen ChatGPT €21,48/mnd t/m maart en €28 jaarbijdrage; geen afschriften nodig.
 - Lening van de ouders (Gillis-Reyniers): €5.000 in mei, €3.600 terug in juni via Knab; volgens Myrthe volledig
-  afbetaald (de rest buiten Knab om). Er staat niets meer open. Telt als intern, niet als
+  afbetaald: de rest (±€1.400) is verrekend doordat Myrthe in de VS iets voor hen voorschoot. OPEN: welke
+  aankoop dat was (±$1.600), zodat die als voorgeschoten kan tellen. Telt als intern, niet als
   inkomen. De €60 per maand "Selfcare" telt wel als inkomen.
 - Terugbetalingen van reisgenoten (cruise, weekendjes) verlagen de post Reizen.
 - Toronto (8–16 jan 2026, $1.095): werkreis Jef, vergoed via het salaris van januari. Kosten en een even groot
