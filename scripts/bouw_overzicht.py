@@ -52,7 +52,7 @@ REGELS = [
     # --- kinderen ---
     (r"primrose school", "uitgave", "Kinderopvang", "Primrose (Lily & Bill)"),
     # FSA-terugbetalingen (naam beheerder nog onbekend): verlagen de nettokosten van de opvang.
-    (r"dependent care|dep care|dcfsa|\bfsa\b|wex health|navia|healthequity|inspira|payflex|optum financial|further benefits|benefit ?strategies", "uitgave", "Kinderopvang", "FSA-terugbetaling (Dependent Care)"),
+    (r"dependent care|dep care|dcfsa|\bfsa\b|healthequity", "intern", "Intern", "FSA-terugbetaling (eigen geld)"),
     (r"ymca houston|little gym|kid to kid|scholastic|sharkeys cuts for kids|mckenna childrens|bugaboo|babylist|hanna|love ?to ?dream|little unicorn|artipoppe", "uitgave", "Kinderen", "Kinderen (activiteiten, kleding, spullen)"),
     # --- vaste lasten VS ---
     (r"cinco mud|gexa energy|centerpoint|cpenergy|utility payment fee", "uitgave", "Nutsvoorzieningen", "Water/stroom/gas"),
@@ -133,6 +133,38 @@ def lees_knab():
     out["bank"] = "Knab"; out["valuta"] = "EUR"
     return out
 
+def lees_fsa():
+    """HealthEquity-exports (data/fsa/). Inleg via salaris = inkomen (deel van het salaris van Jef);
+    zorgbetalingen met de FSA-kaart = uitgave Zorg; 'Pay Me Back' naar Jef = intern (eigen geld terug)."""
+    rijen = []
+    for f in glob.glob("data/fsa/*.csv*"):
+        d = pd.read_csv(f, skiprows=4, encoding="utf-8-sig")
+        prog = d["Program"].iloc[0]
+        betaaldagen = []
+        for _, r in d.iterrows():
+            datum = pd.to_datetime(r["Reference Date"]).strftime("%Y-%m-%d")
+            b, typ, oms = float(r["Amount"]), r["Transaction Type"], str(r["Description"]).replace("&amp;", "&")
+            if typ == "Funding" and "Payroll" in oms:
+                betaaldagen.append(datum)
+                rijen.append((datum, prog, f"FSA {prog}: inleg via salaris", b, "inkomen", "Inkomen", "Salaris Jef (via FSA-inleg)"))
+            elif typ == "Funding":   # Health FSA: jaarbedrag staat op dag 1 klaar; inleg per salaris volgt hieronder
+                continue
+            elif typ == "Payment":
+                rijen.append((datum, prog, f"FSA {prog}: uitbetaald aan {oms}", b, "intern", "Intern", "FSA-terugbetaling (eigen geld)"))
+            else:
+                rijen.append((datum, prog, f"FSA-kaart: {oms}", b, "uitgave", "Zorg", "Zorg via Health FSA-kaart"))
+        if prog == "Healthcare":
+            # Inleg $3.400/jaar = $130,77 per salaris; gebruik de salarisdata uit de Dependent Care-export.
+            dc = glob.glob("data/fsa/*Dependent*")
+            if dc:
+                dd = pd.read_csv(dc[0], skiprows=4, encoding="utf-8-sig")
+                for x in dd[dd["Description"].str.contains("Payroll", na=False)]["Reference Date"]:
+                    rijen.append((pd.to_datetime(x).strftime("%Y-%m-%d"), "Healthcare", "FSA Healthcare: inleg via salaris (3400/26)",
+                                  round(3400 / 26, 2), "inkomen", "Inkomen", "Salaris Jef (via FSA-inleg)"))
+    out = pd.DataFrame(rijen, columns=["datum", "rekening", "omschrijving", "bedrag_orig", "soort", "categorie", "subcategorie"])
+    out["bank"] = "HealthEquity"; out["valuta"] = "USD"; out["soort_rekening"] = "fsa"; out["afschrift"] = "HealthEquity"
+    return out
+
 def deel_in(omschr):
     for patroon, soort, cat, sub in REGELS:
         if re.search(patroon, omschr, re.I):
@@ -147,6 +179,9 @@ def main():
     # Knab: tegenpartij vooraan zodat de ^knab:-regels werken; omschrijving in lower voor matchen
     ind = t["omschrijving"].map(lambda s: deel_in(re.sub(r"\s+", " ", str(s)).strip()))
     t[["soort", "categorie", "subcategorie"]] = pd.DataFrame(ind.tolist(), index=t.index)
+    # FSA-rekeningen (HealthEquity) zijn al ingedeeld bij het inlezen.
+    f = lees_fsa(); f["datum"] = pd.to_datetime(f["datum"]); f["eur_usd"] = None; f["bedrag_usd"] = f["bedrag_orig"]
+    t = pd.concat([t, f], ignore_index=True)
     # Geld dat naar familie/vrienden gaat is geen negatief inkomen maar een gift/cadeau.
     gift = (t["subcategorie"] == "Van familie/vrienden (of terugbetaling)") & (t["bedrag_usd"] < 0)
     t.loc[gift, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Giften", "Cadeaus aan familie/vrienden"]
