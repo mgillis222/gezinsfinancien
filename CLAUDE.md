@@ -122,6 +122,6 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   straat €625k (nr 7) en €650k (nr 1). Schatting: €625k–€690k, midden €655.000 (Vista hanteert €569.000).
   Let op: verkocht in verhuurde staat is de waarde lager. Voor zekerheid: taxatie.
 - Zelle (5 okt 2026): Karel Dhoore $314 = weekend Atlanta (voorgeschoten door Karel); Zelle 9 mrt $220 = WK-ticket
-  Jef; Jelmer De Winter en Sebastiaan van Loon = padel; Xander Zonneveld $42 = cadeau voetbaltickets. OPEN: zijn
-  AXS.com ($210, 22 feb) en StubHub ($156, 10 apr) ook WK-tickets? Nog onbekend: Abisola $3,25, Liv Williams $15,
+  Jef; Jelmer De Winter en Sebastiaan van Loon = padel; Xander Zonneveld $42 = cadeau voetbaltickets. AXS.com ($210,
+  22 feb) = rodeo-tickets; StubHub ($156, 10 apr) = Earth, Wind & Fire, cadeau verjaardag Jef. Nog onbekend: Abisola $3,25, Liv Williams $15,
   Zelle 832-492-6487 $30 (6 jul), opname $25 + money order $5 (16 apr).
