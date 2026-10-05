@@ -1,0 +1,404 @@
+<title>Gezinsfinanciën 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: één smalle leeskolom (max 1080px) met een vaste sectienavigatie; samenvatting eerst, details uitklapbaar. */
+:root {
+  --bg: #f6f7f5; --surface: #fcfcfb; --surface-2: #eef1ee; --fg: #14201c; --fg-2: #4a5550; --muted: #7d8783;
+  --line: #dde2dd; --axis: #c3c8c2; --accent: #0f6b5c; --accent-soft: #d6ebe5;
+  --s-in: #2a78d6; --s-out: #eb6834; --s-bar: #2a78d6;
+  --good: #006300; --good-mark: #0ca30c; --bad: #b42d2d; --bad-mark: #d03b3b; --warn: #8a5a00; --warn-mark: #fab219;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1312; --surface: #1a1d1c; --surface-2: #232826; --fg: #f2f4f2; --fg-2: #c3c9c5; --muted: #8d9692;
+  --line: #2c3230; --axis: #3b423f; --accent: #4cc2a8; --accent-soft: #1d3a33;
+  --s-in: #3987e5; --s-out: #d95926; --s-bar: #3987e5;
+  --good: #0ca30c; --good-mark: #0ca30c; --bad: #e66767; --bad-mark: #d03b3b; --warn: #fab219; --warn-mark: #fab219; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1312; --surface: #1a1d1c; --surface-2: #232826; --fg: #f2f4f2; --fg-2: #c3c9c5; --muted: #8d9692;
+  --line: #2c3230; --axis: #3b423f; --accent: #4cc2a8; --accent-soft: #1d3a33;
+  --s-in: #3987e5; --s-out: #d95926; --s-bar: #3987e5;
+  --good: #0ca30c; --good-mark: #0ca30c; --bad: #e66767; --bad-mark: #d03b3b; --warn: #fab219; --warn-mark: #fab219; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--font-body); margin: 0 }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 64px }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15 }
+h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 700; letter-spacing: -0.01em }
+h2 { font-size: 24px; font-weight: 700 }
+h3 { font-size: 17px; font-weight: 700 }
+p { margin: 0; max-width: 68ch }
+.sub { color: var(--fg-2) }
+.small { font-size: 14px } .muted { color: var(--muted) }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap }
+header.top { display: grid; gap: 8px; padding-block: 8px 20px }
+.eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700 }
+nav.secties { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line);
+  display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; margin-bottom: 24px; scrollbar-width: none }
+nav.secties a { color: var(--fg-2); text-decoration: none; font-size: 14px; font-weight: 600; padding: 6px 10px; border-radius: 999px; white-space: nowrap }
+nav.secties a:hover, nav.secties a:focus-visible { background: var(--surface-2); color: var(--fg); outline: none }
+section { display: grid; gap: 16px; padding-block: 28px; border-top: 1px solid var(--line); scroll-margin-top: 56px }
+section > header { display: grid; gap: 6px }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 4px; min-width: 0 }
+.tile .label { font-size: 14px; color: var(--fg-2) }
+.tile .value { font-family: var(--font-display); font-size: 30px; font-weight: 700; letter-spacing: -0.01em }
+.tile .note { font-size: 13px; color: var(--muted) }
+.tile.alert { border-color: var(--bad-mark); box-shadow: inset 4px 0 0 var(--bad-mark) }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px; width: fit-content }
+.pill.bad { color: var(--bad); background: color-mix(in srgb, var(--bad-mark) 14%, transparent) }
+.pill.good { color: var(--good); background: color-mix(in srgb, var(--good-mark) 14%, transparent) }
+.pill.warn { color: var(--warn); background: color-mix(in srgb, var(--warn-mark) 20%, transparent) }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-width: 0 }
+.chart { position: relative; width: 100% }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible }
+.chart text { fill: var(--muted); font: 12px var(--font-body); font-variant-numeric: tabular-nums }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--fg-2) }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px }
+.tip { position: absolute; pointer-events: none; background: var(--fg); color: var(--bg); border-radius: 8px; padding: 8px 10px; font-size: 13px;
+  line-height: 1.35; white-space: nowrap; transform: translate(-50%, calc(-100% - 10px)); z-index: 4 }
+.tip b { display: block; font-size: 14px }
+.catlist { display: grid; gap: 2px }
+.catrow { display: grid; grid-template-columns: minmax(130px, 220px) 1fr 96px 24px; gap: 12px; align-items: center; padding: 8px 6px;
+  border-radius: 8px; cursor: pointer; background: none; border: 0; color: inherit; font: inherit; text-align: left; width: 100% }
+.catrow:hover, .catrow:focus-visible { background: var(--surface-2); outline: none }
+.catrow .bar { height: 14px; background: var(--s-bar); border-radius: 0 4px 4px 0; min-width: 2px }
+.catrow .chev { color: var(--muted); transition: transform .15s }
+.catrow[aria-expanded="true"] .chev { transform: rotate(90deg) }
+.detail { padding: 8px 6px 20px; display: grid; gap: 14px }
+.subgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; font-size: 14px }
+.kv span:nth-child(even) { text-align: right; font-variant-numeric: tabular-nums }
+.tablewrap { overflow-x: auto; max-height: 360px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px }
+table { border-collapse: collapse; width: 100%; font-size: 14px }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top }
+th { position: sticky; top: 0; background: var(--surface-2); font-weight: 600; color: var(--fg-2); z-index: 1 }
+td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap }
+input[type="search"], input[type="number"] { font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--axis);
+  border-radius: 8px; padding: 6px 10px; min-width: 0 }
+input[type="search"] { width: 100%; max-width: 360px }
+input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.calc { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start }
+.calc h3 { margin-bottom: 8px }
+.line { display: grid; grid-template-columns: 1fr 110px; gap: 8px; align-items: center; padding-block: 4px; font-size: 14px }
+.line input { width: 110px; text-align: right; font-variant-numeric: tabular-nums }
+.line.tot { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 8px; font-weight: 700 }
+.line.tot span:last-child { text-align: right }
+.save { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); align-items: start }
+.save input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--accent) }
+.save b { display: block; font-size: 15px }
+.save .amt { font-weight: 700; color: var(--good); font-variant-numeric: tabular-nums }
+.result { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px }
+.result .big { font-family: var(--font-display); font-size: 34px; font-weight: 700 }
+.stack { height: 22px; display: flex; gap: 2px; border-radius: 4px; overflow: hidden; background: var(--surface-2) }
+.stack div { height: 100% }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap }
+.tabs button { font: inherit; font-weight: 600; font-size: 14px; color: var(--fg-2); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 14px; cursor: pointer }
+.tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface) }
+.meter { height: 12px; background: var(--surface-2); border-radius: 999px; overflow: hidden }
+.meter div { height: 100%; background: var(--accent) }
+.todo { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none }
+.todo li { display: grid; grid-template-columns: 96px 1fr; gap: 12px; font-size: 15px }
+.todo .when { font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px }
+footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); display: grid; gap: 4px }
+@media (max-width: 560px) {
+  .catrow { grid-template-columns: 1fr 84px 20px; } .catrow .bar-wrap { grid-column: 1 / -1; grid-row: 2 }
+  .todo li { grid-template-columns: 1fr }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Huishouden Gillis–Michielssen · Katy, TX</span>
+    <h1>Gezinsfinanciën 2026</h1>
+    <p class="sub" id="intro"></p>
+  </header>
+
+  <nav class="secties" aria-label="Secties">
+    <a href="#samenvatting">Samenvatting</a><a href="#maanden">Per maand</a><a href="#categorieen">Waar gaat het heen</a>
+    <a href="#vooruit">Vanaf oktober</a><a href="#winkels">Winkels in detail</a><a href="#fsa">FSA</a>
+    <a href="#abonnementen">Abonnementen</a><a href="#vermogen">Vermogen</a><a href="#twijfel">Nog beoordelen</a>
+  </nav>
+
+  <section id="samenvatting">
+    <header><h2>Samenvatting</h2><p class="sub small" id="sam-sub"></p></header>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section id="maanden">
+    <header><h2>Per maand</h2>
+      <p class="sub">Inkomen tegenover uitgaven. Overboekingen tussen eigen rekeningen, creditcardaflossingen, de EUR→USD-wissels en sparen tellen niet mee.</p></header>
+    <div class="card"><div class="legend"><span><i style="background:var(--s-in)"></i>Inkomen</span><span><i style="background:var(--s-out)"></i>Uitgaven</span></div>
+      <div class="chart" id="mchart"></div></div>
+    <div class="tablewrap" style="max-height:none"><table id="mtable"></table></div>
+  </section>
+
+  <section id="categorieen">
+    <header><h2>Waar gaat het geld heen</h2>
+      <p class="sub">Gemiddeld per maand over jan–aug. Klik op een categorie voor de winkels en alle transacties.</p></header>
+    <div class="card catlist" id="catlist"></div>
+  </section>
+
+  <section id="vooruit">
+    <header><h2>Een gewone maand vanaf oktober</h2>
+      <p class="sub">Met de nieuwe vaste lasten: opvang voor Lily én Bill ($630 per week) en de ondersteuning van je schoonmoeder. De variabele posten zijn het gemiddelde van jan–aug. Pas de bedragen aan en vink besparingen aan; de pagina rekent mee en onthoudt je keuzes in deze browser.</p></header>
+    <div class="result" id="vb-result"></div>
+    <div class="calc">
+      <div class="card"><h3>Inkomen per maand</h3><div id="vb-inkomen"></div></div>
+      <div class="card"><h3>Vaste lasten</h3><div id="vb-vast"></div></div>
+      <div class="card"><h3>Variabele uitgaven</h3><div id="vb-var"></div></div>
+    </div>
+    <div class="card"><h3>Besparingsplan</h3><p class="sub small">Elke regel is onderbouwd met jullie eigen cijfers. Aangevinkt = meegerekend hierboven.</p><div id="vb-save"></div>
+      <p class="small muted" style="margin-top:10px">Grote keuzes zoals de woning in NL, de opvang of reizen staan hier niet in. Daar beslissen jullie zelf over; de vooruitblik laat zien wat ze kosten.</p></div>
+  </section>
+
+  <section id="winkels">
+    <header><h2>Winkels in detail</h2><p class="sub">Per artikel, uit de bestelgeschiedenis van Amazon en de bevestigingsmails van Target en DoorDash.</p></header>
+    <div class="tabs" role="tablist" id="wtabs"></div>
+    <div id="wbody" class="two"></div>
+    <div><input type="search" id="wzoek" placeholder="Zoek een artikel, bijv. diapers of coffee" aria-label="Zoek een artikel"></div>
+    <div class="tablewrap"><table id="wtable"></table></div>
+  </section>
+
+  <section id="fsa">
+    <header><h2>FSA via Fugro (HealthEquity)</h2><p class="sub">Belastingvrij geld voor opvang en zorg. De inleg gaat elke twee weken van het salaris van Jef af.</p></header>
+    <div class="two" id="fsa-body"></div>
+    <div class="card"><h3>Te doen</h3><ul class="todo" id="fsa-todo" style="margin-top:10px"></ul></div>
+  </section>
+
+  <section id="abonnementen">
+    <header><h2>Abonnementen</h2><p class="sub">Alles wat dit jaar terugkwam, met het laatst betaalde bedrag. NL-diensten lopen via Knab en zijn omgerekend.</p></header>
+    <div class="tablewrap" style="max-height:none"><table id="abtable"></table></div>
+  </section>
+
+  <section id="vermogen">
+    <header><h2>Vermogen en reserve</h2><p class="sub">Spaargeld en beleggingen tellen niet als uitgave. Bedragen zijn momentopnames.</p></header>
+    <div class="tiles" id="verm"></div>
+  </section>
+
+  <section id="twijfel">
+    <header><h2>Nog beoordelen</h2><p class="sub">Kleine posten die ik niet zeker kon indelen. Loop ze samen door; dan pas ik de regels aan.</p></header>
+    <div class="tablewrap"><table id="twtable"></table></div>
+  </section>
+
+  <footer>
+    <span id="foot"></span>
+    <span>Bronnen: Chase (betaalrekening 9708, spaar 0103, kaarten 9862 · 6010 · 7970), Target Circle Card, Knab (3 rekeningen), HealthEquity, Amazon-bestelgeschiedenis en Gmail-bevestigingen.</span>
+  </footer>
+</div>
+
+<script>
+const D = /*__DATA__*/null;
+const MND = ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+const $ = s => document.querySelector(s);
+const usd = (n, d = 0) => (n < 0 ? "−$" : "$") + Math.abs(n).toLocaleString("nl-NL", { minimumFractionDigits: d, maximumFractionDigits: d });
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const mlabel = p => MND[+p.slice(5) - 1];
+const datum = d => { const [y, m, dd] = d.split("-"); return `${+dd} ${MND[+m - 1]}`; };
+const opslaan = (k, v) => { try { localStorage.setItem("gf26-" + k, JSON.stringify(v)); } catch (e) {} };
+const laden = (k, f) => { try { const v = localStorage.getItem("gf26-" + k); return v == null ? f : JSON.parse(v); } catch (e) { return f; } };
+
+const vol = D.maanden.filter(m => m.volledig);
+const n = vol.length;
+const gemIn = vol.reduce((a, m) => a + m.inkomen, 0) / n;
+const gemUit = vol.reduce((a, m) => a + m.uitgaven, 0) / n;
+$("#intro").textContent = `Alle rekeningen in de VS en Nederland samen, in dollars (euro's tegen de ECB-dagkoers). Volledige maanden: januari t/m augustus; september is deels binnen. Bijgewerkt ${datum(D.bijgewerkt)} ${D.bijgewerkt.slice(0, 4)}.`;
+$("#foot").textContent = `Gemaakt met jullie eigen afschriften. Koers in de vooruitblik: €1 = $${D.vooruitblik.koers.toFixed(4).replace(".", ",")}.`;
+
+/* ---------- samenvatting ---------- */
+function tile(label, value, note, cls = "", pill = "") {
+  return `<div class="tile ${cls}"><span class="label">${label}</span><span class="value num">${value}</span>${pill}<span class="note">${note}</span></div>`;
+}
+let vbSaldo = 0;
+function renderTiles() {
+  const over = gemIn - gemUit;
+  $("#sam-sub").textContent = "Gemiddeld per maand over januari t/m augustus 2026.";
+  $("#tiles").innerHTML =
+    tile("Inkomen per maand", usd(gemIn), "Salaris Jef, huur NL, freelance Myrthe (mei), uitkering, FSA-inleg") +
+    tile("Uitgaven per maand", usd(gemUit), "Inclusief eenmalige posten zoals de camper ($4.341)") +
+    tile("Over per maand", usd(over), "Jan–aug was per saldo positief, vooral door freelance-inkomen in mei", "",
+      over >= 0 ? `<span class="pill good">▲ overschot</span>` : `<span class="pill bad">▼ tekort</span>`) +
+    tile("Vanaf oktober", usd(vbSaldo), "Gewone maand met opvang voor twee kinderen en de ondersteuning van je schoonmoeder. Zie ‘Vanaf oktober’.",
+      vbSaldo < 0 ? "alert" : "", vbSaldo < 0 ? `<span class="pill bad">▼ tekort per maand</span>` : `<span class="pill good">▲ sluitend</span>`);
+}
+
+/* ---------- maandgrafiek ---------- */
+function renderMaanden() {
+  const ms = D.maanden.filter(m => m.periode <= "2026-09");
+  const W = 760, H = 260, L = 52, R = 8, T = 12, B = 30;
+  const max = Math.ceil(Math.max(...ms.flatMap(m => [m.inkomen, m.uitgaven])) / 5000) * 5000;
+  const y = v => T + (H - T - B) * (1 - v / max);
+  const gw = (W - L - R) / ms.length, bw = Math.min(26, (gw - 14) / 2);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Inkomen en uitgaven per maand">`;
+  for (let v = 0; v <= max; v += 5000) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v ? "$" + v / 1000 + "k" : "0"}</text>`;
+  ms.forEach((m, i) => {
+    const cx = L + gw * i + gw / 2;
+    [["inkomen", "var(--s-in)", -1], ["uitgaven", "var(--s-out)", 1]].forEach(([k, c, d]) => {
+      const x = cx + (d < 0 ? -bw - 1 : 1), yy = y(m[k]), h = y(0) - yy;
+      s += `<path d="M${x},${y(0)} v${-(h - 4)} q0,-4 4,-4 h${bw - 8} q4,0 4,4 v${h - 4} z" fill="${c}" ${m.volledig ? "" : 'opacity=".45"'}/>`;
+    });
+    s += `<rect x="${L + gw * i}" y="${T}" width="${gw}" height="${H - T - B}" fill="transparent" data-i="${i}" class="hit"/>`;
+    s += `<text x="${cx}" y="${H - 10}" text-anchor="middle">${mlabel(m.periode)}${m.volledig ? "" : "*"}</text>`;
+  });
+  s += `<line x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--axis)"/></svg><div class="tip" hidden></div>`;
+  const el = $("#mchart"); el.innerHTML = s + `<p class="small muted">* september is nog niet compleet: niet van alle kaarten is het afschrift binnen.</p>`;
+  const tip = el.querySelector(".tip");
+  el.querySelectorAll(".hit").forEach(r => {
+    const show = () => {
+      const m = ms[+r.dataset.i], saldo = m.inkomen - m.uitgaven, box = el.getBoundingClientRect(), rb = r.getBoundingClientRect();
+      tip.innerHTML = `<b>${mlabel(m.periode)} 2026${m.volledig ? "" : " (deels)"}</b>Inkomen ${usd(m.inkomen)}<br>Uitgaven ${usd(m.uitgaven)}<br>Saldo ${usd(saldo)}`;
+      tip.style.left = (rb.left - box.left + rb.width / 2) + "px"; tip.style.top = (rb.top - box.top + 10) + "px"; tip.hidden = false;
+    };
+    r.addEventListener("mouseenter", show); r.addEventListener("click", show); r.addEventListener("mouseleave", () => tip.hidden = true);
+  });
+  const cats = [...new Set(ms.flatMap(m => Object.keys(m.per_categorie)))];
+  let t = `<thead><tr><th>Maand</th><th class="r">Inkomen</th><th class="r">Uitgaven</th><th class="r">Saldo</th><th class="r">Gespaard</th><th>Grootste uitgaven</th></tr></thead><tbody>`;
+  ms.forEach(m => {
+    const top = Object.entries(m.per_categorie).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => `${esc(k)} ${usd(v)}`).join(" · ");
+    const sal = m.inkomen - m.uitgaven;
+    t += `<tr><td>${mlabel(m.periode)}${m.volledig ? "" : "*"}</td><td class="r">${usd(m.inkomen)}</td><td class="r">${usd(m.uitgaven)}</td><td class="r" style="color:var(${sal < 0 ? "--bad" : "--good"})">${sal < 0 ? "▼ " : "▲ "}${usd(sal)}</td><td class="r">${usd(m.sparen)}</td><td class="small">${top}</td></tr>`;
+  });
+  $("#mtable").innerHTML = t + "</tbody>";
+}
+
+/* ---------- categorieën ---------- */
+function renderCats() {
+  const cats = D.categorieen.filter(c => c.per_maand_gem > 0.5).sort((a, b) => b.per_maand_gem - a.per_maand_gem);
+  const max = cats[0].per_maand_gem;
+  $("#catlist").innerHTML = cats.map((c, i) => `
+    <button class="catrow" aria-expanded="false" data-i="${i}">
+      <span><b>${esc(c.naam)}</b></span>
+      <span class="bar-wrap"><div class="bar" style="width:${(c.per_maand_gem / max * 100).toFixed(1)}%"></div></span>
+      <span class="num" style="text-align:right">${usd(c.per_maand_gem)}</span><span class="chev" aria-hidden="true">›</span>
+    </button><div class="detail" hidden id="cat-${i}"></div>`).join("");
+  $("#catlist").querySelectorAll(".catrow").forEach(b => b.addEventListener("click", () => {
+    const open = b.getAttribute("aria-expanded") === "true", c = cats[+b.dataset.i], det = $("#cat-" + b.dataset.i);
+    b.setAttribute("aria-expanded", !open); det.hidden = open;
+    if (!open && !det.dataset.klaar) { det.innerHTML = catDetail(c, b.dataset.i); det.dataset.klaar = 1; koppelZoek(det, c); }
+  }));
+}
+function catDetail(c, i) {
+  const subs = c.subcategorieen.map(s => `<div class="card"><h3>${esc(s.naam)}</h3>
+    <p class="small muted" style="margin:2px 0 8px">${usd(s.totaal)} in 2026 · gem. ${usd(s.per_maand_gem)} per maand</p>
+    <div class="kv">${s.tegenpartijen.slice(0, 8).map(p => `<span>${esc(p.naam)} <span class="muted">(${p.aantal}×)</span></span><span>${usd(p.totaal)}</span>`).join("")}</div></div>`).join("");
+  return `<div class="subgrid">${subs}</div>
+    <input type="search" placeholder="Zoek in ${esc(c.naam.toLowerCase())}" aria-label="Zoek in transacties" id="zoek-${i}">
+    <div class="tablewrap"><table><thead><tr><th>Datum</th><th>Omschrijving</th><th>Soort</th><th class="r">Bedrag</th></tr></thead><tbody></tbody></table></div>`;
+}
+function koppelZoek(det, c) {
+  const tb = det.querySelector("tbody"), inp = det.querySelector("input");
+  const teken = q => { const r = c.transacties.filter(x => !q || (x.o + " " + x.s).toLowerCase().includes(q));
+    tb.innerHTML = r.slice(0, 400).map(x => `<tr><td class="num">${datum(x.d)}</td><td>${esc(x.o)}<div class="small muted">${esc(x.r)}</div></td><td class="small">${esc(x.s)}</td>
+      <td class="r">${usd(x.b, 2)}${x.v === "EUR" ? `<div class="small muted">€${x.bo.toLocaleString("nl-NL", { minimumFractionDigits: 2 })}</div>` : ""}</td></tr>`).join("")
+      || `<tr><td colspan="4" class="muted">Geen transacties gevonden voor “${esc(q)}”.</td></tr>`; };
+  inp.addEventListener("input", () => teken(inp.value.trim().toLowerCase())); teken("");
+}
+
+/* ---------- vooruitblik + besparingsplan ---------- */
+const VB = D.vooruitblik;
+const waarden = laden("waarden", {}), vinkjes = laden("vinkjes", {});
+function regels(lijst, doel) {
+  $(doel).innerHTML = lijst.map(x => `<label class="line" for="vb-${x.id}"><span>${esc(x.naam)}</span>
+    <input type="number" id="vb-${x.id}" step="10" min="0" value="${Math.round(waarden[x.id] ?? x.bedrag)}"></label>`).join("") +
+    `<div class="line tot"><span>Totaal</span><span class="num" id="${doel.slice(1)}-tot"></span></div>`;
+}
+function rekenen() {
+  const val = x => { const v = parseFloat($("#vb-" + x.id).value); return isNaN(v) ? 0 : v; };
+  const som = l => l.reduce((a, x) => a + val(x), 0);
+  [...VB.inkomen, ...VB.vast, ...VB.variabel].forEach(x => waarden[x.id] = val(x)); opslaan("waarden", waarden);
+  const ink = som(VB.inkomen), vast = som(VB.vast), vari = som(VB.variabel);
+  const bes = VB.besparen.filter(b => vinkjes[b.id]).reduce((a, b) => a + b.bedrag, 0);
+  const uit = vast + vari - bes, saldo = ink - uit;
+  $("#vb-inkomen-tot").textContent = usd(ink); $("#vb-vast-tot").textContent = usd(vast); $("#vb-var-tot").textContent = usd(vari);
+  vbSaldo = saldo; renderTiles();
+  const tot = Math.max(ink, uit);
+  $("#vb-result").innerHTML = `
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:end">
+      <div><span class="sub small">Saldo per maand vanaf oktober</span><div class="big num" style="color:var(${saldo < 0 ? "--bad" : "--good"})">${usd(saldo)}</div>
+      ${saldo < 0 ? `<span class="pill bad">▼ tekort · ${usd(-saldo * 12)} per jaar</span>` : `<span class="pill good">▲ ruimte · ${usd(saldo * 12)} per jaar</span>`}</div>
+      <div class="small sub" style="text-align:right">Inkomen ${usd(ink)}<br>Uitgaven ${usd(uit)}${bes ? `<br>waarvan bespaard ${usd(bes)}` : ""}</div></div>
+    <div><div class="small muted">Inkomen</div><div class="stack"><div style="width:${ink / tot * 100}%;background:var(--s-in)"></div></div></div>
+    <div><div class="small muted">Uitgaven: vast · variabel</div><div class="stack"><div style="width:${vast / tot * 100}%;background:var(--s-out)"></div><div style="width:${Math.max(0, vari - bes) / tot * 100}%;background:color-mix(in srgb, var(--s-out) 55%, var(--surface))"></div></div></div>`;
+}
+function renderVooruit() {
+  regels(VB.inkomen, "#vb-inkomen"); regels(VB.vast, "#vb-vast"); regels(VB.variabel, "#vb-var");
+  $("#vb-save").innerHTML = VB.besparen.map(b => `<label class="save" for="sv-${b.id}"><input type="checkbox" id="sv-${b.id}" ${vinkjes[b.id] ? "checked" : ""}>
+    <span><b>${esc(b.naam)}</b><span class="small sub">${esc(b.uitleg)}</span></span><span class="amt">${usd(b.bedrag)}/mnd</span></label>`).join("") +
+    `<div class="line tot"><span>Alles samen</span><span class="num" style="color:var(--good)">${usd(VB.besparen.reduce((a, b) => a + b.bedrag, 0))} per maand</span></div>`;
+  document.querySelectorAll("#vooruit input[type=number]").forEach(i => i.addEventListener("input", rekenen));
+  VB.besparen.forEach(b => $("#sv-" + b.id).addEventListener("change", e => { vinkjes[b.id] = e.target.checked; opslaan("vinkjes", vinkjes); rekenen(); }));
+  rekenen();
+}
+
+/* ---------- winkels ---------- */
+let wi = laden("winkel", 0);
+function renderWinkels() {
+  $("#wtabs").innerHTML = D.winkels.map((w, i) => `<button role="tab" aria-selected="${i === wi}" data-i="${i}">${esc(w.winkel)}</button>`).join("");
+  $("#wtabs").querySelectorAll("button").forEach(b => b.addEventListener("click", () => { wi = +b.dataset.i; opslaan("winkel", wi); renderWinkels(); }));
+  const w = D.winkels[wi], max = Math.max(...w.per_categorie.map(c => c.totaal), 1);
+  const extra = w.bezorgorders ? ` · ${w.bezorgorders} keer bezorgd, ${usd(w.fooien, 2)} aan fooien` : "";
+  $("#wbody").innerHTML = `
+    <div class="card"><h3>${esc(w.winkel)} in 2026</h3>
+      <p class="big num" style="font-family:var(--font-display);font-size:28px;font-weight:700;margin-top:4px">${usd(w.ordertotaal)}</p>
+      <p class="small sub">${w.orders} bestellingen · ${w.artikelregels} artikelregels${extra}</p><p class="small muted" style="margin-top:8px">${esc(w.noot)}</p>
+      <h3 style="margin-top:14px">Waaraan (artikelen met prijs)</h3>
+      <div style="display:grid;gap:6px;margin-top:8px">${w.per_categorie.map(c => `<div style="display:grid;grid-template-columns:minmax(120px,170px) 1fr 70px;gap:8px;align-items:center;font-size:14px">
+        <span>${esc(c.naam)}</span><div class="bar" style="height:10px;width:${c.totaal / max * 100}%;background:var(--s-bar);border-radius:0 4px 4px 0;min-width:2px"></div><span class="num" style="text-align:right">${usd(c.totaal)}</span></div>`).join("")}</div></div>
+    <div class="card"><h3>Meeste geld naartoe</h3><div class="kv" style="margin-top:8px">${w.top_artikelen.slice(0, 15).map(a => `<span>${esc(a.naam)}${a.keer > 1 ? ` <span class="muted">(${a.keer}×)</span>` : ""}</span><span>${usd(a.totaal)}</span>`).join("")}</div></div>`;
+  tekenArtikelen();
+}
+function tekenArtikelen() {
+  const w = D.winkels[wi], q = $("#wzoek").value.trim().toLowerCase();
+  const r = w.alle_artikelen.filter(a => !q || (a.a + " " + a.c).toLowerCase().includes(q));
+  const som = r.reduce((s, a) => s + (a.b || 0), 0);
+  $("#wtable").innerHTML = `<thead><tr><th>Datum</th><th>Artikel</th><th>Categorie</th><th class="r">Aantal</th><th class="r">Bedrag</th></tr></thead><tbody>` +
+    (r.slice(0, 500).map(a => `<tr><td class="num">${datum(a.d)}</td><td>${esc(a.a)}</td><td class="small">${esc(a.c)}</td><td class="r">${a.n ?? ""}</td><td class="r">${a.b == null ? '<span class="muted">—</span>' : usd(a.b, 2)}</td></tr>`).join("")
+     || `<tr><td colspan="5" class="muted">Geen artikelen gevonden voor “${esc(q)}”.</td></tr>`) +
+    `</tbody><tfoot><tr><th colspan="4">${r.length} regels${q ? ` met “${esc(q)}”` : ""}</th><th class="r">${usd(som, 2)}</th></tr></tfoot>`;
+}
+$("#wzoek").addEventListener("input", tekenArtikelen);
+
+/* ---------- FSA ---------- */
+function renderFsa() {
+  const f = D.fsa, dcSaldo = f.dc.ingelegd - f.dc.uitbetaald, dcRest = f.dc.jaar - f.dc.ingelegd, hcRest = f.hc.jaar - f.hc.uitgegeven;
+  $("#fsa-body").innerHTML = `
+    <div class="card"><h3>Dependent Care FSA (opvang)</h3>
+      <p class="small sub" style="margin:4px 0 10px">${usd(f.dc.per_salaris, 2)} per salaris = ${usd(f.dc.jaar)} per jaar, het maximum. Opvang betaald in 2026: ${usd(f.opvang_betaald_2026)}.</p>
+      <div class="meter" aria-label="Ingelegd"><div style="width:${f.dc.ingelegd / f.dc.jaar * 100}%"></div></div>
+      <div class="kv" style="margin-top:10px"><span>Ingelegd t/m 24 sep</span><span>${usd(f.dc.ingelegd, 2)}</span><span>Uitbetaald op 16 sep</span><span>${usd(f.dc.uitbetaald, 2)}</span>
+        <span>Nu op de rekening</span><span>${usd(dcSaldo, 2)}</span><span>Komt er nog bij dit jaar</span><span>${usd(dcRest, 2)}</span>
+        <span><b>Nog terug te vragen</b></span><span><b>${usd(dcSaldo + dcRest, 2)}</b></span></div></div>
+    <div class="card"><h3>Health Care FSA (zorg)</h3>
+      <p class="small sub" style="margin:4px 0 10px">${usd(f.hc.jaar)} voor 2026, al vanaf januari beschikbaar. Vooral de bevalling (Houston Methodist), fysiotherapie en tandarts.</p>
+      <div class="meter" aria-label="Gebruikt"><div style="width:${f.hc.uitgegeven / f.hc.jaar * 100}%"></div></div>
+      <div class="kv" style="margin-top:10px"><span>Uitgegeven (netto)</span><span>${usd(f.hc.uitgegeven, 2)}</span><span><b>Over</b></span><span><b>${usd(hcRest, 2)}</b></span></div>
+      <span class="pill warn" style="margin-top:10px">⚠ vervalt op 31 december</span></div>`;
+  $("#fsa-todo").innerHTML = [
+    ["vóór 31 dec", `Besteed de laatste ${usd(hcRest, 2)} van de Health Care FSA, bijvoorbeeld aan zonnebrand, pleisters of koortsmiddelen (filter op ‘FSA eligible’).`],
+    ["november", "Open enrollment bij Fugro: zet de Dependent Care FSA voor 2027 weer op $7.500. Met twee kinderen bij Primrose haal je dat ruim."],
+    ["per kwartaal", `Dien de opvangfacturen van Primrose in voor de rest van het jaar: nog ${usd(dcSaldo + dcRest, 0)} terug te krijgen.`],
+    ["vóór 15 mrt 2027", "Laatste dag om opvangkosten van 2026 te claimen."],
+  ].map(([w, t]) => `<li><span class="when">${w}</span><span>${t}</span></li>`).join("");
+}
+
+/* ---------- abonnementen, vermogen, twijfel ---------- */
+function renderRest() {
+  const ab = [...D.abonnementen].sort((a, b) => b.totaal - a.totaal);
+  $("#abtable").innerHTML = `<thead><tr><th>Dienst</th><th>Laatst betaald</th><th class="r">Laatste bedrag</th><th class="r">Keer</th><th class="r">Totaal 2026</th></tr></thead><tbody>` +
+    ab.map(a => `<tr><td>${esc(a.naam)}</td><td class="num">${datum(a.laatst)}</td><td class="r">${usd(a.bedrag, 2)}</td><td class="r">${a.keer}</td><td class="r">${usd(a.totaal, 2)}</td></tr>`).join("") +
+    `</tbody><tfoot><tr><th colspan="4">Samen in 2026</th><th class="r">${usd(ab.reduce((s, a) => s + a.totaal, 0), 2)}</th></tr></tfoot>`;
+  const k = D.vooruitblik.koers;
+  $("#verm").innerHTML = D.vermogen.map(v => tile(esc(v.naam), v.usd ? usd(v.usd) : "€" + v.eur.toLocaleString("nl-NL"), v.eur ? `≈ ${usd(v.eur * k)}` : "")).join("") +
+    tile("Reserve: schenking ouders", "€" + D.reserve.schenking_eur.toLocaleString("nl-NL"), `≈ ${usd(D.reserve.schenking_eur * k)} · ${esc(D.reserve.noot)}`);
+  $("#twtable").innerHTML = `<thead><tr><th>Datum</th><th>Omschrijving</th><th>Voorlopig ingedeeld als</th><th class="r">Bedrag</th></tr></thead><tbody>` +
+    D.twijfel.map(x => `<tr><td class="num">${datum(x.d)}</td><td>${esc(x.o)}<div class="small muted">${esc(x.r)}</div></td><td class="small">${esc(x.s)}</td><td class="r">${usd(x.b, 2)}</td></tr>`).join("") + "</tbody>";
+}
+
+renderMaanden(); renderCats(); renderVooruit(); renderWinkels(); renderFsa(); renderRest();
+</script>

@@ -58,3 +58,11 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   Het plan loopt t/m 15 maart 2027 (tot dan claimen).
 - Health Care FSA ($3.400): $32,94 over op 5 okt 2026. Het plan loopt af op 31 dec 2026. Deze zorgkosten
   (o.a. Houston Methodist) staan niet in de bankafschriften; de inleg gaat vóór belasting van het salaris af.
+
+## Overzichtspagina
+- Privépagina op claude.ai: https://claude.ai/artifact/EhF8DHrDuXL63EF3otnSx3 (alleen voor Myrthe; delen gaat via
+  het Share-menu op de pagina).
+- Bijwerken: nieuwe afschriften in data/afschriften/ zetten en daarna draaien:
+  pdf_naar_tekst.py → lees_chase.py → bouw_overzicht.py → maak_dashboard_data.py → maak_pagina.py,
+  en dashboard/overzicht.html opnieuw publiceren op dezelfde URL.
+- dashboard/sjabloon.html staat in Git; dashboard/overzicht.html bevat de cijfers en staat er niet in.
