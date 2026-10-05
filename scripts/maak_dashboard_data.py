@@ -175,7 +175,7 @@ uit = {"bijgewerkt": pd.Timestamp.today().strftime("%Y-%m-%d"), "volledige_maand
        "categorieen": cats, "inkomen": inkomen, "sparen": sparen, "winkels": winkels, "fsa": fsa,
        "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB,
        "reserve": {"schenking_eur": 90000, "noot": "Schenking ouders, staat op Belgische spaarrekening op naam van de ouders; op te vragen."},
-       "vermogen": [{"naam": "Overwaarde woning NL (marktwaarde €569.000 − schuld €429.994, okt 2026)", "eur": 139006.41},
+       "vermogen": [{"naam": "Overwaarde woning NL (geschatte waarde €655.000 − schuld €429.994, okt 2026; bandbreedte €195k–€260k)", "eur": 225006.41},
                     {"naam": "Chase CD (deposito, t/m 30-07-2026)", "usd": 10000},
                     {"naam": "Beleggingsrekening VS (4 okt)", "usd": 5877},
                     {"naam": "Kinderrekening Brand New Day (4 okt)", "eur": 5559.62}]}

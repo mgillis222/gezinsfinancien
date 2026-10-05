@@ -117,3 +117,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Rente 1,48% vast tot 1 apr 2041. Maandbedrag €1.744,61 = rente €530,33 + aflossing €1.214,28.
 - In het overzicht telt de rente als uitgave (Woning NL) en de aflossing als sparen. De vooruitblik toont het
   saldo met én zonder aflossing. Bron: data/hypotheek/Leninggegevens voor contract 3240894.pdf.
+- Waardeschatting woning (5 okt 2026): 115–120 m², bouwjaar 1931, label D, 5 kamers, WOZ €485.000. Buurtgemiddelde
+  Bezuidenhout-Oost €5.690/m² verkocht (okt 2026, +4% per jaar); online schattingen €551k–€705k; vraagprijzen in de
+  straat €625k (nr 7) en €650k (nr 1). Schatting: €625k–€690k, midden €655.000 (Vista hanteert €569.000).
+  Let op: verkocht in verhuurde staat is de waarde lager. Voor zekerheid: taxatie.
