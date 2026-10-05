@@ -155,7 +155,9 @@ VB = {
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
         {"id": "eten", "naam": "Eten & drinken: uit eten, eten op reis, bezorging, maaltijdboxen", "bedrag": gem(vol.categorie == "Eten & drinken")},
         {"id": "reizen", "naam": "Reizen & uitjes: weekendjes, uitjes, eten onderweg", "bedrag": gem(vol.categorie == "Reizen & uitjes")},
-        {"id": "grotevak", "naam": "Grote vakantie (jaarbudget ÷ 12, op basis van deze zomer)", "bedrag": round(GROTE_VAK_JAAR / 12)},
+        # Komende maanden geen grote vakantie die geld kost (Myrthe, 5 okt 2026): Florida (dec) en skiën (mrt) betalen
+        # de ouders van Myrthe, Parijs (feb) is al betaald. Ter vergelijking: deze zomer ±GROTE_VAK_JAAR.
+        {"id": "grotevak", "naam": "Grote vakantie (niets gepland: Florida en skiën betaald door ouders, Parijs al betaald)", "bedrag": 0},
         {"id": "vervoer", "naam": "Vervoer (benzine, tol, Uber, auto)", "bedrag": gem(vol.categorie == "Vervoer")},
         {"id": "kleding", "naam": "Kleding & persoonlijk", "bedrag": gem(vol.categorie == "Kleding & persoonlijk")},
         {"id": "kinderen", "naam": "Kinderen (activiteiten, spullen)", "bedrag": gem((vol.categorie == "Kinderen") & (vol.subcategorie != "Geboortekaartjes Bill"))},

@@ -130,3 +130,6 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Vooruitblik = structurele maand: gemiddelde jan–aug zonder eenmalige posten (camper, babyuitzet, geboortekaartjes,
   paspoort Bill, inrichting na verhuizing jan–feb, bijdrage ouders mei) en zonder grote vakantie; die laatste telt als
   jaarbudget ÷ 12 (zomer 2026: ±$6.600). Regels in scripts/eenmalig.py.
+- Vakanties komende maanden kosten niets extra: Florida (dec 2026) en skiën (mrt 2027) worden betaald door de ouders
+  van Myrthe; Parijs (feb 2027: KLM $2.305 en hotel €250) is al betaald in september. Grote vakantie in de
+  vooruitblik = $0.
