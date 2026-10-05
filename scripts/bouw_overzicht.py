@@ -224,6 +224,21 @@ def main():
         b[["omschrijving", "bedrag_orig", "bedrag_usd", "soort", "categorie", "subcategorie"]] = [
             "Vergoeding werkreis Toronto (in salaris)", -corr, -corr, "intern", "Werkreis (vergoed)", "Vergoeding werkreis (in salaris)"]
         t = pd.concat([t, a, b], ignore_index=True)
+    # PayPal-incasso's vanaf Knab koppelen aan de bestelling uit Gmail (zelfde bedrag in euro).
+    PAYPAL_EUR = {2375.00: ("Reizen & uitjes", "Reizen, hotels, vluchten"),          # Booking.com Oostduinkerke
+                  134.56: ("Reizen & uitjes", "Reizen, hotels, vluchten"),           # KLM
+                  120.96: ("Reizen & uitjes", "Reizen, hotels, vluchten"), 80.25: ("Reizen & uitjes", "Reizen, hotels, vluchten"),
+                  7.00: ("Reizen & uitjes", "Reizen, hotels, vluchten"),             # Uber Frankrijk (sep)
+                  98.60: ("Kleding & persoonlijk", "Kinderkleding tweedehands (Sellpy)"), 16.37: ("Kleding & persoonlijk", "Kinderkleding tweedehands (Sellpy)"),
+                  25.81: ("Kleding & persoonlijk", "Kinderkleding tweedehands (Sellpy)"),
+                  153.73: ("Kleding & persoonlijk", "Kleding, schoenen, verzorging"), 31.06: ("Kleding & persoonlijk", "Kleding, schoenen, verzorging"),
+                  56.29: ("Kleding & persoonlijk", "Kleding, schoenen, verzorging"), 87.88: ("Kleding & persoonlijk", "Kleding, schoenen, verzorging"),
+                  19.99: ("Abonnementen", "Streaming, software, nieuws"), 31.34: ("Abonnementen", "Streaming, software, nieuws"),
+                  30.00: ("Huis & inrichting", "Huis, inrichting, post")}
+    pp = t["subcategorie"] == "PayPal vanaf Knab (zie Gmail)"
+    for bedrag, (cat, sub) in PAYPAL_EUR.items():
+        m = pp & ((t["bedrag_orig"] + bedrag).abs() < 0.01)
+        t.loc[m, ["categorie", "subcategorie"]] = [cat, sub]
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
