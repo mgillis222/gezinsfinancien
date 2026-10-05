@@ -39,7 +39,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Bevestigd door Myrthe (2026-10-05):
   - Cashier's check 9 jan ($4.341): pop-up camper (eenmalig).
   - Inneke Peeters (schoonmoeder): vaste ondersteuning van €800 per maand sinds 25 juni 2026.
-  - Nancy Herrera: schoonmaak. Avertano Rendon en Evelyna Rozenfeld: oppas.
+  - Nancy Herrera: schoonmaak. Avertano Rendon: tuinman. Evelyna Rozenfeld: oppas.
   - Bear Graphics: geboortekaartjes Bill.
   - Chase 6010 had in maart en augustus geen afschrift (geen uitgaven).
   - Fugro NL €1.956,84 (4 mei): aankoop aandelen Fugro door Jef (sparen/beleggen). Deze aandelen tellen niet

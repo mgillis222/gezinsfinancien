@@ -140,6 +140,7 @@ VB = {
         {"id": "schoonmoeder", "naam": "Ondersteuning schoonmoeder (€800)", "bedrag": round(800 * koers)},
         {"id": "schoonmaak", "naam": "Schoonmaak (Nancy)", "bedrag": gem(vol.subcategorie == "Schoonmaak (Nancy)")},
         {"id": "oppas", "naam": "Oppas", "bedrag": gem(vol.subcategorie == "Oppas")},
+        {"id": "tuin", "naam": "Tuinman (Avertano)", "bedrag": gem(vol.subcategorie == "Tuinman (Avertano)")},
         {"id": "nuts", "naam": "Water, stroom, gas", "bedrag": gem(vol.categorie == "Nutsvoorzieningen")},
         {"id": "tel", "naam": "Telefoon & internet", "bedrag": gem(vol.categorie == "Telefoon & internet")},
         {"id": "verz", "naam": "Verzekeringen (auto, leven, reis)", "bedrag": gem(vol.categorie == "Verzekeringen")},
@@ -154,7 +155,7 @@ VB = {
         {"id": "kinderen", "naam": "Kinderen (activiteiten, spullen)", "bedrag": gem((vol.categorie == "Kinderen") & (vol.subcategorie != "Geboortekaartjes Bill"))},
         {"id": "zorg", "naam": "Zorg (eigen betalingen, buiten FSA)", "bedrag": gem((vol.categorie == "Zorg") & (vol.bank != "HealthEquity"))},
         {"id": "huis", "naam": "Huis, sport, hobby, elektronica", "bedrag": gem(vol.categorie.isin(["Huis & inrichting", "Sport & hobby", "Elektronica"]))},
-        {"id": "overig", "naam": "Overig (giften, documenten, bank, contant)", "bedrag": gem(vol.categorie.isin(["Giften", "Overheid & documenten", "Bankkosten", "Contant geld", "Huishouden"]) & (vol.subcategorie != "Schoonmaak (Nancy)"))},
+        {"id": "overig", "naam": "Overig (giften, documenten, bank, contant)", "bedrag": gem(vol.categorie.isin(["Giften", "Overheid & documenten", "Bankkosten", "Contant geld", "Huishouden"]) & ~vol.subcategorie.isin(["Schoonmaak (Nancy)", "Tuinman (Avertano)"]))},
     ],
 }
 # Besparingskansen: bedragen per maand, onderbouwd met de data.
