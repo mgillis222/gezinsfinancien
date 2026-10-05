@@ -349,6 +349,10 @@ def main():
     # YMCA-lidmaatschap (sportschool, elke 1e van de maand $129, sinds aug $132,15) = vaste last; zwemlessen blijven Kinderen.
     ymca = t["omschrijving"].str.contains("YMCA", case=False) & t["bedrag_usd"].round(2).isin([-129.00, -132.15])
     zet(ymca, "uitgave", "Sport & hobby", "Sportschool YMCA (lidmaatschap)")
+    # Huur van februari is per ongeluk te laat betaald (2 maart). Toewijzen aan februari (bevestigd door Myrthe).
+    feb_huur = (t["subcategorie"] == "Huur Cottondale Ct") & (t["datum"] == "2026-03-02")
+    t.loc[feb_huur, "omschrijving"] = t.loc[feb_huur, "omschrijving"] + " (huur februari, te laat betaald op 2 mrt)"
+    t.loc[feb_huur, "datum"] = pd.Timestamp("2026-02-28")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
