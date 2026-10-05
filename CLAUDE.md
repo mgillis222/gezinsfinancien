@@ -55,6 +55,11 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   lijst bij bij opzeggen of nieuwe abonnementen. In de vooruitblik telt het bedrag dat nu loopt, niet het gemiddelde.
 - Boodschappen: Myrthe werkt al met een weekmenu en koopt bewust per winkel wat daar goedkoper is. Daarom
   staat er geen besparingsvoorstel op boodschappen.
+- Bezorging (DashMart, Target same-day) is een bewuste keuze: Myrthe bestelt zo als er goede deals of
+  bezorgbonussen zijn, niet uit impuls. DoorDash telt als Boodschappen. Geen besparingsvoorstel op bezorgen
+  of uit eten (uit eten is ±$150/mnd aan losse gelegenheden).
+- WL1 Cafe Houston = lunch van Jef op het werk (meestal neemt hij lunch mee). Methodist-kantine (mei) = Zorg
+  (bevalling). Eten op vliegveld IAH = reisdag.
 - Uit eten: Square- en Toast-betalingen zijn niet altijd horeca (zwemles, huidarts). Eten buiten
   Katy/Houston telt als "Eten tijdens reizen & uitjes", los van het dagelijkse uit eten.
 

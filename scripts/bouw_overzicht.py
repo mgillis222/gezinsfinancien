@@ -68,6 +68,10 @@ REGELS = [
     (r"amazon|amzn", "uitgave", "Online winkelen", "Amazon"),
     (r"hellofresh|green ?chef|home ?chef|factor", "uitgave", "Eten & drinken", "Maaltijdboxen"),
     # Specifieke uitzonderingen vóór de brede eten-regel (Square/Toast-terminals worden ook door niet-horeca gebruikt).
+    (r"aramark methodist|amk hmw cafe", "uitgave", "Zorg", "Ziekenhuis (bevalling)"),
+    (r"spacecntrhoustoncafe|armk dp concessions", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
+    (r"wl1 cafe", "uitgave", "Eten & drinken", "Lunch Jef op werk"),
+    (r"^dd |doordash", "uitgave", "Boodschappen", "DoorDash/DashMart (deals)"),
     (r"practice with bell|dermatolog", "uitgave", "Zorg", "Zorg & medisch"),
     (r"river forest haven", "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten"),
     (r"scspacetrader", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
@@ -206,11 +210,11 @@ def main():
         t.loc[fam & masker, ["soort", "categorie", "subcategorie"]] = waarden
     # Uit eten buiten de regio Katy/Houston = eten tijdens reizen en uitjes (apart van dagelijks uit eten).
     lokaal = t["omschrijving"].str.contains(r"katy|houston|sugar ?land|fulshear|richmond|cypress|spring tx|cinco r|^knab:", case=False, regex=True)
-    reis = (t["subcategorie"] == "Uit eten & koffie") & ~lokaal
+    reis = (t["subcategorie"] == "Uit eten & koffie") & (~lokaal | t["omschrijving"].str.contains(r"\bIAH\b|airport", case=False, regex=True))
     t.loc[reis, ["categorie", "subcategorie"]] = ["Reizen & uitjes", "Eten tijdens reizen & uitjes"]
     # Werkreis Jef naar Toronto (8-16 jan 2026): via het salaris vergoed (bevestigd door Myrthe).
     # De kosten en een even groot deel van het januarisalaris tellen allebei als intern.
-    toronto = (t["datum"] >= "2026-01-08") & (t["datum"] <= "2026-01-16") & t["omschrijving"].str.contains(r" ON$|ONTARIO|CANADA|YYZ", case=False, regex=True) & (t["bedrag_usd"] < 0)
+    toronto = (t["datum"] >= "2026-01-08") & (t["datum"] <= "2026-01-16") & t["omschrijving"].str.contains(r" ON$|ONTARIO|CANADA|YYZ|\bIAH\b", case=False, regex=True) & (t["bedrag_usd"] < 0)
     t.loc[toronto, ["soort", "categorie", "subcategorie"]] = ["intern", "Werkreis (vergoed)", "Werkreis Toronto Jef"]
     corr = round(t[toronto]["bedrag_usd"].sum(), 2)
     if corr:
