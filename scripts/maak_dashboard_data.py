@@ -176,8 +176,8 @@ def b(id, naam, bedrag, uitleg, soort):
 VB["besparen"] = [
     b("abo", "Abonnementen: Coursera, NL-streaming en Disney+ stoppen", 49 + 42 + 14,
       "Coursera $49 (na de cursus), Netflix NL, Videoland, Podimo, Prime Video NL en NPO samen ±$42, Disney+ $14. Claude Max en LinkedIn blijven.", "makkelijk"),
-    b("tel", "Telefoon: goedkopere aanbieder op hetzelfde netwerk", 45,
-      "Twee AT&T-lijnen kosten nu ±$90 per maand. Mint of Visible: ±$15–25 per lijn.", "makkelijk"),
+    b("tel", "Telefoon Myrthe: goedkopere prepaid op hetzelfde netwerk", 15,
+      "AT&T Prepaid kost $35 per maand; Mint of Visible ±$15–25. De $55 van AT&T is jullie wifi thuis, die blijft.", "makkelijk"),
     b("verz", "Autoverzekering vergelijken bij verlenging (half december)", 45,
       "GEICO kostte $1.870 voor een half jaar. Vraag een paar offertes op voordat hij verlengt.", "makkelijk"),
     b("knab", "Knab: minder rekeningen", 7, "Pakketkosten €6 per maand; met minder rekeningen wordt dat lager.", "makkelijk"),
