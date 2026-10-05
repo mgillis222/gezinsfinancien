@@ -105,3 +105,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   pdf_naar_tekst.py → lees_chase.py → bouw_overzicht.py → maak_dashboard_data.py → maak_pagina.py,
   en dashboard/overzicht.html opnieuw publiceren op dezelfde URL.
 - dashboard/sjabloon.html staat in Git; dashboard/overzicht.html bevat de cijfers en staat er niet in.
+
+## Openstaand voor de volgende update (afschriften sep/okt)
+- Bezoek John en Sylvia (eind sep 2026): voorgeschoten $1.047 (lijst in data/voorgeschoten_john_sylvia_sep2026.csv),
+  zij betalen €925 terug. Deze posten en de terugbetaling als Voorgeschoten indelen zodra ze in de afschriften staan.
+  Tot 4 okt was de €925 nog niet op Knab binnen.
