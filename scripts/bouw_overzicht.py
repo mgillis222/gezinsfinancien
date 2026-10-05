@@ -320,7 +320,7 @@ def main():
     zet(oms.str.contains("Zelle Payment To Karel Dhoore", case=False), "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten")  # weekend Atlanta
     zet(oms.str.contains("Zelle Payment To (Jelmer De Winter|Sebastiaan VAN Loon)", case=False, regex=True), "uitgave", "Sport & hobby", "Padel")
     zet(oms.str.contains("Zelle Payment To Xander Zonneveld", case=False), "uitgave", "Giften", "Cadeau (voetbaltickets)")
-    zet((oms.str.strip().str.match(r"^Zelle Payment To\s*\d*$", case=False)) & (t["datum"] == "2026-03-09"), "uitgave", "Reizen & uitjes", "WK-voetbalticket Jef")
+    zet(oms.str.contains("Zelle Payment To 1929683974", case=False), "uitgave", "Reizen & uitjes", "WK-voetbalticket Jef")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
