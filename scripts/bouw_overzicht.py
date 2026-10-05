@@ -247,6 +247,10 @@ def main():
     # Apple Store 6 mei 2026 ($1.205,85): voorgeschoten voor de zus van Myrthe (bevestigd door Myrthe).
     zus = t["omschrijving"].str.contains("APPLE STORE #R058", case=False) & (t["datum"] == "2026-05-06")
     t.loc[zus, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Voorgeschoten voor zus Myrthe (Apple)"]
+    # 'Afrekening houston' (9 mei, €1.875) van Florien (VAN DEN BERGH J + GILLIS F): terugbetaling van wat Myrthe
+    # in de VS voor haar voorschoot (o.a. Apple). Bevestigd door Myrthe.
+    flo = (t["bank"] == "Knab") & t["omschrijving"].str.contains("afrekening houston", case=False)
+    t.loc[flo, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Terugbetaald door Florien (afrekening Houston)"]
     # Tecovas 7 mei 2026 ($681,99): niet voor ons, voorgeschoten (bevestigd door Myrthe).
     tec = t["omschrijving"].str.contains("TECOVAS", case=False) & ((t["bedrag_usd"] + 681.99).abs() < 0.01)
     t.loc[tec, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Voorgeschoten: Tecovas (niet voor ons)"]
