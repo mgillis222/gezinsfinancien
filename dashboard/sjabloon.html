@@ -95,6 +95,7 @@ input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid 
 .result .big { font-family: var(--font-display); font-size: 34px; font-weight: 700 }
 .stack { height: 22px; display: flex; gap: 2px; border-radius: 4px; overflow: hidden; background: var(--surface-2) }
 .stack div { height: 100% }
+.knop { font: inherit; font-weight: 600; font-size: 14px; color: var(--accent); background: var(--surface); border: 1px solid var(--accent); border-radius: 999px; padding: 6px 14px; cursor: pointer }
 .tabs { display: flex; gap: 6px; flex-wrap: wrap }
 .tabs button { font: inherit; font-weight: 600; font-size: 14px; color: var(--fg-2); background: var(--surface); border: 1px solid var(--line);
   border-radius: 999px; padding: 6px 14px; cursor: pointer }
@@ -149,6 +150,8 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
     <header><h2>Een gewone maand vanaf oktober</h2>
       <p class="sub">Met de nieuwe vaste lasten: opvang voor Lily én Bill ($630 per week) en de ondersteuning van je schoonmoeder. De variabele posten zijn het gemiddelde van jan–aug. Pas de bedragen aan en vink besparingen aan; de pagina rekent mee en onthoudt je keuzes in deze browser.</p></header>
     <div class="result" id="vb-result"></div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button type="button" id="vb-reset" class="knop">Terug naar de cijfers uit de afschriften</button>
+      <span class="small muted" id="vb-status"></span></div>
     <div class="calc">
       <div class="card"><h3>Inkomen per maand</h3><div id="vb-inkomen"></div></div>
       <div class="card"><h3>Vaste lasten</h3><div id="vb-vast"></div></div>
@@ -205,8 +208,8 @@ const usd = (n, d = 0) => (n < 0 ? "−$" : "$") + Math.abs(n).toLocaleString("n
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const mlabel = p => MND[+p.slice(5) - 1];
 const datum = d => { const [y, m, dd] = d.split("-"); return `${+dd} ${MND[+m - 1]}`; };
-const opslaan = (k, v) => { try { localStorage.setItem("gf26-" + k, JSON.stringify(v)); } catch (e) {} };
-const laden = (k, f) => { try { const v = localStorage.getItem("gf26-" + k); return v == null ? f : JSON.parse(v); } catch (e) { return f; } };
+const opslaan = (k, v) => { try { localStorage.setItem("gf26v2-" + k, JSON.stringify(v)); } catch (e) {} };
+const laden = (k, f) => { try { const v = localStorage.getItem("gf26v2-" + k); return v == null ? f : JSON.parse(v); } catch (e) { return f; } };
 
 const vol = D.maanden.filter(m => m.volledig);
 const n = vol.length;
@@ -306,20 +309,24 @@ function koppelZoek(det, c) {
 
 /* ---------- vooruitblik + besparingsplan ---------- */
 const VB = D.vooruitblik;
-const waarden = laden("waarden", {}), vinkjes = laden("vinkjes", {});
+let waarden = laden("waarden", {}), vinkjes = laden("vinkjes", {});
+// Een eigen aanpassing geldt alleen zolang het standaardbedrag uit de afschriften hetzelfde is.
+const eigen = x => (waarden[x.id] && waarden[x.id].basis === x.bedrag) ? waarden[x.id].v : null;
 function regels(lijst, doel) {
   $(doel).innerHTML = lijst.map(x => `<label class="line" for="vb-${x.id}"><span>${esc(x.naam)}</span>
-    <input type="number" id="vb-${x.id}" step="10" min="0" value="${Math.round(waarden[x.id] ?? x.bedrag)}"></label>`).join("") +
+    <input type="number" id="vb-${x.id}" step="10" min="0" value="${Math.round(eigen(x) ?? x.bedrag)}"></label>`).join("") +
     `<div class="line tot"><span>Totaal</span><span class="num" id="${doel.slice(1)}-tot"></span></div>`;
 }
 function rekenen() {
   const val = x => { const v = parseFloat($("#vb-" + x.id).value); return isNaN(v) ? 0 : v; };
   const som = l => l.reduce((a, x) => a + val(x), 0);
-  [...VB.inkomen, ...VB.vast, ...VB.variabel].forEach(x => waarden[x.id] = val(x)); opslaan("waarden", waarden);
   const ink = som(VB.inkomen), vast = som(VB.vast), vari = som(VB.variabel);
   const bes = VB.besparen.filter(b => vinkjes[b.id]).reduce((a, b) => a + b.bedrag, 0);
   const uit = vast + vari - bes, saldo = ink - uit;
   $("#vb-inkomen-tot").textContent = usd(ink); $("#vb-vast-tot").textContent = usd(vast); $("#vb-var-tot").textContent = usd(vari);
+  const nAang = Object.keys(waarden).filter(k => [...VB.inkomen, ...VB.vast, ...VB.variabel].some(x => x.id === k && eigen(x) != null)).length;
+  const nVink = VB.besparen.filter(b => vinkjes[b.id]).length;
+  $("#vb-status").textContent = (nAang || nVink) ? `Met jouw aanpassingen: ${nAang} bedrag(en) gewijzigd, ${nVink} besparing(en) aangevinkt.` : "Dit zijn de cijfers uit de afschriften, zonder aanpassingen.";
   vbSaldo = saldo; renderTiles();
   const tot = Math.max(ink, uit);
   $("#vb-result").innerHTML = `
@@ -335,7 +342,15 @@ function renderVooruit() {
   $("#vb-save").innerHTML = VB.besparen.map(b => `<label class="save" for="sv-${b.id}"><input type="checkbox" id="sv-${b.id}" ${vinkjes[b.id] ? "checked" : ""}>
     <span><b>${esc(b.naam)}</b><span class="small sub">${esc(b.uitleg)}</span></span><span class="amt">${usd(b.bedrag)}/mnd</span></label>`).join("") +
     `<div class="line tot"><span>Alles samen</span><span class="num" style="color:var(--good)">${usd(VB.besparen.reduce((a, b) => a + b.bedrag, 0))} per maand</span></div>`;
-  document.querySelectorAll("#vooruit input[type=number]").forEach(i => i.addEventListener("input", rekenen));
+  const alle = [...VB.inkomen, ...VB.vast, ...VB.variabel];
+  alle.forEach(x => $("#vb-" + x.id).addEventListener("input", e => {
+    const v = parseFloat(e.target.value);
+    if (isNaN(v) || Math.round(v) === Math.round(x.bedrag)) delete waarden[x.id]; else waarden[x.id] = { v, basis: x.bedrag };
+    opslaan("waarden", waarden); rekenen();
+  }));
+  $("#vb-reset").addEventListener("click", () => {
+    waarden = {}; vinkjes = {}; opslaan("waarden", waarden); opslaan("vinkjes", vinkjes); renderVooruit();
+  });
   VB.besparen.forEach(b => $("#sv-" + b.id).addEventListener("change", e => { vinkjes[b.id] = e.target.checked; opslaan("vinkjes", vinkjes); rekenen(); }));
   rekenen();
 }
