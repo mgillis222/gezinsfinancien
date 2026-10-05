@@ -141,13 +141,10 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - AT&T: "Att Payment" ±$55 = wifi thuis; "AT&T Prepaid" $35 = telefoon Myrthe.
 - YMCA: elke 1e van de maand $129 (sinds aug $132,15) = sportschool-lidmaatschap, vaste last. Overige YMCA-betalingen
   zijn zwemlessen Lily (Kinderen).
-- Besparingsplan (5 okt 2026), staat op de pagina: abonnementen (Coursera, NL-streaming, Disney+), telefoon, auto-
-  verzekering, Knab, kleding, huis/hobby, schoonmaak, Child Tax Credit Bill, opvang één dag minder. Niet voorstellen:
-  boodschappen, bezorgen, uit eten, Claude Max (blijft), LinkedIn Premium (helpt bij het zoeken naar werk),
-  schoonmaak (blijft elke twee weken).
-  Maaltijdboxen zijn gestopt en tellen niet meer mee. Myrthe zegt Disney+ op: daarna op 'gestopt' zetten in
-  scripts/abonnementen.py.
-
-## Technische tip
+- Besparingsplan (definitief, 5 okt 2026): besloten zijn Disney+ opzeggen ($14), Coursera stoppen ($49) en kleding &
+  persoonlijk tijdelijk naar $0 ($341); deze staan standaard aangevinkt. Als optie blijven staan: Child Tax Credit Bill
+  (+$183) en opvang één dag minder (−$550). Myrthe wil géén andere voorstellen meer (NL-streaming, telefoon, verzekering,
+  Knab, huis/hobby, schoonmaak, boodschappen, bezorgen, uit eten, Claude Max, LinkedIn). Na het opzeggen Disney+ en
+  Coursera op "gestopt" zetten in scripts/abonnementen.py.
 - Geeft Python in WSL "Fatal Python error: init_import_site ... varnames is too small"? Dan is een systeem-cachebestand
   beschadigd. Omzeilen met: export PYTHONPYCACHEPREFIX=/tmp/pycache-gf (vóór het commando).

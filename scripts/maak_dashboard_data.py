@@ -177,16 +177,9 @@ def b(id, naam, bedrag, uitleg, soort, besloten=False):
     return {"id": id, "naam": naam, "bedrag": round(bedrag), "uitleg": uitleg, "soort": soort, "besloten": besloten}
 VB["besparen"] = [
     b("disney", "Disney+ / Hulu opzeggen", 14, "Besloten door Myrthe (5 okt 2026).", "besloten", True),
-    b("abo", "Abonnementen: Coursera en NL-streaming stoppen", 49 + 42,
-      "Coursera $49 (na de cursus); Netflix NL, Videoland, Podimo, Prime Video NL en NPO samen ±$42. Claude Max en LinkedIn blijven.", "makkelijk"),
-    b("tel", "Telefoon Myrthe: goedkopere prepaid op hetzelfde netwerk", 15,
-      "AT&T Prepaid kost $35 per maand; Mint of Visible ±$15–25. De $55 van AT&T is jullie wifi thuis, die blijft.", "makkelijk"),
-    b("verz", "Autoverzekering vergelijken bij verlenging (half december)", 45,
-      "GEICO kostte $1.870 voor een half jaar. Vraag een paar offertes op voordat hij verlengt.", "makkelijk"),
-    b("knab", "Knab: minder rekeningen", 7, "Pakketkosten €6 per maand; met minder rekeningen wordt dat lager.", "makkelijk"),
+    b("coursera", "Coursera stoppen", 49, "Besloten door Myrthe (5 okt 2026). $49 per maand sinds 28 september.", "besloten", True),
     b("kleding", "Kleding & persoonlijk tijdelijk naar $0", VB["variabel"][[x["id"] for x in VB["variabel"]].index("kleding")]["bedrag"],
       "Besloten door Myrthe (5 okt 2026): tijdelijk geen kleding kopen zolang alleen Jef werkt.", "besloten", True),
-    b("huis", "Huis, sport, hobby, elektronica: van $252 naar $150", 100, "Grotere aankopen eerst 48 uur op een verlanglijst.", "keuze"),
     b("ctc", "Child Tax Credit voor Bill (via de aangifte)", 183, "$2.200 per jaar. Lily heeft geen SSN en telt daarom niet mee. Laat het meenemen in de aangifte.", "inkomen"),
     b("opvang", "Opvang: één dag minder voor beide kinderen zolang jij thuis bent", 550,
       "Schatting: $630 per week voor vijf dagen. Vraag Primrose naar de deeltijdtarieven. Nadeel: minder tijd om te solliciteren, mogelijk plek kwijt.", "groot"),
