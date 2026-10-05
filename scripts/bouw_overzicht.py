@@ -31,8 +31,11 @@ REGELS = [
     (r"irs treas.*tax ref", "inkomen", "Inkomen", "Belastingteruggave VS"),
     (r"^knab: picnic", "inkomen", "Inkomen", "Inkomen Myrthe (freelance)"),
     (r"^knab: hr nj griffin", "inkomen", "Inkomen", "Huur woning NL ontvangen"),
-    (r"^knab: fugro", "uitgave", "Nog indelen", "Fugro NL (terugbetaling aan werkgever?)"),
-    (r"^knab: peeters inneke", "uitgave", "Nog indelen", "Inneke Peeters"),
+    (r"^knab: fugro", "uitgave", "Eenmalig", "Terugbetaling salaris Fugro NL (Jef)"),
+    (r"^knab: peeters inneke", "uitgave", "Ondersteuning familie", "Schoonmoeder (Inneke)"),
+    (r"^knab: bear graphics", "uitgave", "Kinderen", "Geboortekaartjes Bill"),
+    (r"zelle payment to nancy herrera", "uitgave", "Huishouden", "Schoonmaak (Nancy)"),
+    (r"zelle payment to (avertano rendon|evelyna rozenfeld)", "uitgave", "Kinderopvang", "Oppas"),
     (r"^knab: (jef michielssen|j\. michielssen)", "intern", "Intern", "Van/naar rekening Jef (buiten overzicht)"),
     (r"zelle payment from|^knab: (gillis - reyniers|van den bergh|michielssen|marie michielssen|de h |de hoon|verheye|pauwels|aab inz tikkie|av ferreira|s\.t\. leo|olivia rowaert|bondroit|koen \|)", "inkomen", "Inkomen", "Van familie/vrienden (of terugbetaling)"),
     (r"^knab: taf bv", "uitgave", "Verzekeringen", "Levensverzekering (NL)"),
@@ -48,7 +51,6 @@ REGELS = [
     (r"^knab: ziggo", "uitgave", "Woning NL", "Ziggo (eindafrekening)"),
     # --- kinderen ---
     (r"primrose school", "uitgave", "Kinderopvang", "Primrose (Lily & Bill)"),
-    (r"zelle payment to nancy herrera", "uitgave", "Kinderopvang", "Nancy Herrera (oppas/hulp?)"),
     (r"ymca houston|little gym|kid to kid|scholastic|sharkeys cuts for kids|mckenna childrens|bugaboo|babylist|hanna|love ?to ?dream|little unicorn|artipoppe", "uitgave", "Kinderen", "Kinderen (activiteiten, kleding, spullen)"),
     # --- vaste lasten VS ---
     (r"cinco mud|gexa energy|centerpoint|cpenergy|utility payment fee", "uitgave", "Nutsvoorzieningen", "Water/stroom/gas"),
@@ -94,9 +96,9 @@ REGELS = [
     (r"stand for the silent", "uitgave", "Giften", "Goede doelen"),
     (r"zelle payment to", "uitgave", "Nog indelen", "Zelle aan personen"),
     (r"atm withdrawal", "uitgave", "Contant geld", "Pinautomaat"),
-    (r"^withdrawal$", "uitgave", "Nog indelen", "Opname aan de balie / cashier's check"),
+    (r"^withdrawal$", "uitgave", "Nog indelen", "Opname aan de balie / cashier's check"),  # 9 jan: zie hieronder (camper)
 ]
-TWIJFEL_SUB = {"Nancy Herrera (oppas/hulp?)", "Van familie/vrienden (of terugbetaling)", "PayPal vanaf Knab (zie Gmail)"}
+TWIJFEL_SUB = {"Van familie/vrienden (of terugbetaling)", "PayPal vanaf Knab (zie Gmail)"}
 
 def koersen():
     e = pd.read_csv("data/ecb_ruw.csv", usecols=["TIME_PERIOD", "OBS_VALUE"])
@@ -158,6 +160,9 @@ def main():
     ]
     for masker, waarden in regels_fam:
         t.loc[fam & masker, ["soort", "categorie", "subcategorie"]] = waarden
+    # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
+    camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
+    t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
     # Ontvangen geld bij een persoon-overboeking zonder regel: terugbetaling, twijfel.
     terug = (t["categorie"] == "Nog indelen") & (t["bedrag_usd"] > 0)
     t.loc[terug, ["soort", "categorie", "subcategorie"]] = ["inkomen", "Inkomen", "Ontvangen, nog benoemen"]
