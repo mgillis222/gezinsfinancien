@@ -138,3 +138,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   tickets en eten onderweg tellen wel mee. De vooruitblik toont alleen het echte saldo op de rekening; de
   aflossing telt gewoon als uitgave (wens Myrthe: geen rekening houden met vermogensopbouw).
 - Marley Spoon is een maaltijdbox (stond eerst bij Reizen); Fadi's en Daily Gather zijn uit eten in Katy/Houston.
+- Besparingsplan (5 okt 2026), staat op de pagina: abonnementen (Coursera, NL-streaming, Disney+), telefoon, auto-
+  verzekering, Knab, kleding, huis/hobby, schoonmaak, Child Tax Credit Bill, opvang één dag minder. Niet voorstellen:
+  boodschappen, bezorgen, uit eten, Claude Max (blijft), LinkedIn Premium (helpt bij het zoeken naar werk).
+  Maaltijdboxen zijn gestopt en tellen niet meer mee. Myrthe zegt Disney+ op: daarna op 'gestopt' zetten in
+  scripts/abonnementen.py.

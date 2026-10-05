@@ -153,7 +153,8 @@ VB = {
     ],
     "variabel": [
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
-        {"id": "eten", "naam": "Eten & drinken: uit eten, eten op reis, bezorging, maaltijdboxen", "bedrag": gem(vol.categorie == "Eten & drinken")},
+        # Maaltijdboxen zijn gestopt (HelloFresh aug, Green Chef 1 okt 2026) en tellen niet meer mee.
+        {"id": "eten", "naam": "Eten & drinken: uit eten, koffie, lunch Jef (maaltijdboxen gestopt)", "bedrag": gem((vol.categorie == "Eten & drinken") & (vol.subcategorie != "Maaltijdboxen"))},
         {"id": "reizen", "naam": "Uitjes, tickets en eten onderweg", "bedrag": gem((vol.categorie == "Reizen & uitjes") & (vol.subcategorie != "Reizen, hotels, vluchten"))},
         # Tot Myrthe werk heeft geen vakanties of weekendjes weg (5 okt 2026). Historisch gemiddelde staat in de naam.
         {"id": "weekendjes", "naam": f"Weekendjes weg: hotels, campings (voorheen gem. ${gem((vol.categorie == 'Reizen & uitjes') & (vol.subcategorie == 'Reizen, hotels, vluchten')):.0f}; nu niet gepland)", "bedrag": 0},
@@ -168,18 +169,25 @@ VB = {
         {"id": "overig", "naam": "Overig (giften, documenten, bank, contant)", "bedrag": gem(vol.categorie.isin(["Giften", "Overheid & documenten", "Bankkosten", "Contant geld", "Huishouden"]) & ~vol.subcategorie.isin(["Schoonmaak (Nancy)", "Tuinman (Avertano)"]))},
     ],
 }
-# Besparingskansen: bedragen per maand, onderbouwd met de data.
-uitEten = gem(vol.subcategorie == "Uit eten & koffie")
-bezorg = gem(vol.subcategorie == "Bezorging (DoorDash/Uber Eats)")
+# Besparingsplan (opnieuw bekeken met Myrthe, 5 okt 2026). Niet voorstellen: boodschappen, bezorgen, uit eten,
+# Claude Max (blijft), LinkedIn Premium (helpt bij het zoeken naar werk). Bedragen per maand.
+def b(id, naam, bedrag, uitleg, soort):
+    return {"id": id, "naam": naam, "bedrag": round(bedrag), "uitleg": uitleg, "soort": soort}
 VB["besparen"] = [
-    {"id": "nlstreaming", "naam": "Nederlandse streaming opzeggen", "bedrag": round(lekjes["nl_streaming"] / 9),
-     "uitleg": "Netflix NL, Videoland, NPO, Podimo, Storytel en Prime Video lopen nog via Knab: samen $" + str(round(lekjes["nl_streaming"])) + " dit jaar.", "post": "abo"},
-    {"id": "aiabo", "naam": "Claude Max terug naar Pro, LinkedIn en Coursera stoppen", "bedrag": round((106.6 - 21.32) + 43.29 + 49),
-     "uitleg": "Sinds 15 sep Max ($107/mnd) in plaats van Pro ($21). LinkedIn Premium $43/mnd, Coursera $49/mnd vanaf 28 sep.", "post": "abo"},
-    {"id": "online", "naam": "Amazon en webshops: 48-uursregel", "bedrag": round(-vol[vol["omschrijving"].str.contains("amazon|amzn|temu|etsy|walmart.com|wayfair", case=False) & (vol.soort == "uitgave") & (vol.categorie != "Abonnementen")]["bedrag_usd"].sum() / N * 0.25),
-     "uitleg": "Amazon ±96 bestellingen dit jaar, vaak losse kleine orders. Verlanglijst eerst 48 uur laten staan.", "post": "online"},
-    {"id": "kleintjes", "naam": "Kleine lekjes dichten", "bedrag": round((lekjes["buitenlandkosten"] + lekjes["knab_kosten"]) / 9 + 5),
-     "uitleg": f"Buitenlandkosten op Chase 9862 (${lekjes['buitenlandkosten']}): gebruik in het buitenland de Freedom Unlimited 7970. Knab-pakketkosten op 3 rekeningen (${lekjes['knab_kosten']}). Rente Target-kaart (${lekjes['rente_target']}): Auto Pay staat nu goed.", "post": "overig"},
+    b("abo", "Abonnementen: Coursera, NL-streaming en Disney+ stoppen", 49 + 42 + 14,
+      "Coursera $49 (na de cursus), Netflix NL, Videoland, Podimo, Prime Video NL en NPO samen ±$42, Disney+ $14. Claude Max en LinkedIn blijven.", "makkelijk"),
+    b("tel", "Telefoon: goedkopere aanbieder op hetzelfde netwerk", 45,
+      "Twee AT&T-lijnen kosten nu ±$90 per maand. Mint of Visible: ±$15–25 per lijn.", "makkelijk"),
+    b("verz", "Autoverzekering vergelijken bij verlenging (half december)", 45,
+      "GEICO kostte $1.870 voor een half jaar. Vraag een paar offertes op voordat hij verlengt.", "makkelijk"),
+    b("knab", "Knab: minder rekeningen", 7, "Pakketkosten €6 per maand; met minder rekeningen wordt dat lager.", "makkelijk"),
+    b("kleding", "Kleding & persoonlijk: van $341 naar $200", 140,
+      "Vooral Patagonia, Hanna Andersson en Showroomprivé. Tweedehands (Kid to Kid, Poshmark, Sellpy) doen jullie al voor de kinderen.", "keuze"),
+    b("huis", "Huis, sport, hobby, elektronica: van $252 naar $150", 100, "Grotere aankopen eerst 48 uur op een verlanglijst.", "keuze"),
+    b("schoonmaak", "Schoonmaak één keer per vier weken zolang jij thuis bent", 145, "Nu elke twee weken $170 bij Nancy.", "keuze"),
+    b("ctc", "Child Tax Credit voor Bill (via de aangifte)", 183, "$2.200 per jaar. Lily heeft geen SSN en telt daarom niet mee. Laat het meenemen in de aangifte.", "inkomen"),
+    b("opvang", "Opvang: één dag minder voor beide kinderen zolang jij thuis bent", 550,
+      "Schatting: $630 per week voor vijf dagen. Vraag Primrose naar de deeltijdtarieven. Nadeel: minder tijd om te solliciteren, mogelijk plek kwijt.", "groot"),
 ]
 
 uit = {"bijgewerkt": pd.Timestamp.today().strftime("%Y-%m-%d"), "volledige_maanden": VOLLEDIG, "maanden": maanden,
