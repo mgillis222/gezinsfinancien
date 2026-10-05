@@ -35,6 +35,7 @@ STATUS = [
     ("De Correspondent", "jaarlijks", 29.56 / 12, "Jaarlid, betaald in juni."),
     ("Google One", "jaarlijks", 19.99 * 1.17 / 12, "€19,99 per jaar via PayPal, verlengt 30 sep 2027."),
     ("ICS-creditcard (ChatGPT + jaarbijdrage)", "jaarlijks", 28 * 1.17 / 12, "ChatGPT liep tot en met maart (gestopt); alleen de jaarbijdrage van €28 blijft."),
+    ("Travel + Leisure (tijdschrift)", "gestopt", 0, "Automatische verlenging ($44) opgezegd op 5 oktober 2026."),
     ("Storytel (NL)", "gestopt", 0, "Opgezegd in januari."),
     ("HBO Max", "gestopt", 0, "Opgezegd op 2 juni."),
     ("Consumentenbond", "gestopt", 0, "Opgezegd op 9 juni."),
@@ -44,7 +45,6 @@ STATUS = [
 ]
 
 BINNENKORT = [
-    {"wanneer": "vóór 21 okt", "wat": "Travel + Leisure (tijdschrift) verlengt automatisch voor $44 + belasting. Opzeggen als je het niet meer wilt."},
     {"wanneer": "24 dec", "wat": "DashPass is gratis via Chase tot 24 december; daarna $9,99 per maand als je het niet stopt."},
 ]
 
