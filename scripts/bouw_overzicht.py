@@ -298,6 +298,18 @@ def main():
         afl[["soort", "categorie", "subcategorie"]] = ["sparen", "Sparen & beleggen", "Aflossing hypotheek NL"]
         afl["omschrijving"] = afl["omschrijving"] + " (deel: aflossing)"
         t = pd.concat([t, afl], ignore_index=True)
+    # Kleine posten uit 'Nog beoordelen' die zonder twijfel in te delen zijn (5 okt 2026).
+    KLEIN = [(r"MCALISTER|MCDONALD|DUNKIN|3LEVY@GRB", "uitgave", "Eten & drinken", "Uit eten & koffie"),
+             (r"HOUSTON ZOO|LAKE BASTROP|TEXAN 9|ATLANTA AIRPORT|Conservation Lands", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
+             (r"PMUSA|ON STREET HOUSTON|PSPT Austin", "uitgave", "Vervoer", "Parkeren"),
+             (r"CHEEKY MONKEYS", "uitgave", "Kinderen", "Kinderen (activiteiten, kleding, spullen)"),
+             (r"WWW COSTCO COM", "uitgave", "Boodschappen", "Supermarkt"),
+             (r"MDC\*Magazines", "uitgave", "Abonnementen", "Streaming, software, nieuws"),
+             (r"Interest Charge on Purchases", "uitgave", "Bankkosten", "Rente creditcard")]
+    for patroon, soort, cat, sub in KLEIN:
+        zet(t["omschrijving"].str.contains(patroon, case=False, regex=True) & (t["categorie"] == "Nog indelen"), soort, cat, sub)
+    zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 12.48).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
+        "uitgave", "Abonnementen", "Streaming, software, nieuws")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
