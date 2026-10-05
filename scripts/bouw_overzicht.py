@@ -308,7 +308,7 @@ def main():
              (r"Interest Charge on Purchases", "uitgave", "Bankkosten", "Rente creditcard")]
     for patroon, soort, cat, sub in KLEIN:
         zet(t["omschrijving"].str.contains(patroon, case=False, regex=True) & (t["categorie"] == "Nog indelen"), soort, cat, sub)
-    zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 12.48).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
+    zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 10.74).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
         "uitgave", "Abonnementen", "Streaming, software, nieuws")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
