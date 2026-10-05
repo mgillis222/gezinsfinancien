@@ -64,6 +64,7 @@ REGELS = [
     (r"kroger fuel|costco gas|h-e-b gas|buc-ee|shell|chevron|exxon|sunoco|speedway|marathon|phillips 66|valero|dell valley oil|7-eleven", "uitgave", "Vervoer", "Brandstof"),
     (r"kroger|trader joe|h-e-b|heb |costco whse|aldi|sprouts|randalls|h mart|wal-mart|walmart|wm supercenter|instacart|amazon groce|delhaize|albert heijn|lidl|whole foods|kare market", "uitgave", "Boodschappen", "Supermarkt"),
     (r"target", "uitgave", "Boodschappen", "Target (boodschappen + huishouden)"),
+    (r"amazon prime|prime video", "uitgave", "Abonnementen", "Streaming, software, nieuws"),
     (r"amazon|amzn", "uitgave", "Online winkelen", "Amazon"),
     (r"hellofresh|green ?chef|home ?chef|factor", "uitgave", "Eten & drinken", "Maaltijdboxen"),
     # Specifieke uitzonderingen vóór de brede eten-regel (Square/Toast-terminals worden ook door niet-horeca gebruikt).
@@ -206,7 +207,19 @@ def main():
     # Uit eten buiten de regio Katy/Houston = eten tijdens reizen en uitjes (apart van dagelijks uit eten).
     lokaal = t["omschrijving"].str.contains(r"katy|houston|sugar ?land|fulshear|richmond|cypress|spring tx|cinco r|^knab:", case=False, regex=True)
     reis = (t["subcategorie"] == "Uit eten & koffie") & ~lokaal
-    t.loc[reis, "subcategorie"] = "Eten tijdens reizen & uitjes"
+    t.loc[reis, ["categorie", "subcategorie"]] = ["Reizen & uitjes", "Eten tijdens reizen & uitjes"]
+    # Werkreis Jef naar Toronto (8-16 jan 2026): via het salaris vergoed (bevestigd door Myrthe).
+    # De kosten en een even groot deel van het januarisalaris tellen allebei als intern.
+    toronto = (t["datum"] >= "2026-01-08") & (t["datum"] <= "2026-01-16") & t["omschrijving"].str.contains(r" ON$|ONTARIO|CANADA|YYZ", case=False, regex=True) & (t["bedrag_usd"] < 0)
+    t.loc[toronto, ["soort", "categorie", "subcategorie"]] = ["intern", "Werkreis (vergoed)", "Werkreis Toronto Jef"]
+    corr = round(t[toronto]["bedrag_usd"].sum(), 2)
+    if corr:
+        basis = t[(t["subcategorie"] == "Salaris Jef") & (t["datum"] == "2026-01-29")].iloc[[0]].copy()
+        a, b = basis.copy(), basis.copy()
+        a[["omschrijving", "bedrag_orig", "bedrag_usd"]] = ["Correctie: deel salaris was vergoeding werkreis Toronto", corr, corr]
+        b[["omschrijving", "bedrag_orig", "bedrag_usd", "soort", "categorie", "subcategorie"]] = [
+            "Vergoeding werkreis Toronto (in salaris)", -corr, -corr, "intern", "Werkreis (vergoed)", "Vergoeding werkreis (in salaris)"]
+        t = pd.concat([t, a, b], ignore_index=True)
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]

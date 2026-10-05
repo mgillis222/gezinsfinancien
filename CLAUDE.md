@@ -47,6 +47,12 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Lening van de ouders (Gillis-Reyniers): €5.000 in mei, €3.600 terug in juni. Telt als intern, niet als
   inkomen. De €60 per maand "Selfcare" telt wel als inkomen.
 - Terugbetalingen van reisgenoten (cruise, weekendjes) verlagen de post Reizen.
+- Toronto (8–16 jan 2026, $1.095): werkreis Jef, vergoed via het salaris van januari. Kosten en een even groot
+  deel van het salaris van 29 januari tellen als intern.
+- Port Aransas, Carlsbad, Marfa, Galveston en Atlanta waren vakanties of weekendtrips. Eten buiten Katy/Houston
+  valt daarom onder Reizen & uitjes.
+- Abonnementen: status per dienst (loopt, jaarlijks, gestopt, eenmalig) staat in scripts/abonnementen.py. Werk die
+  lijst bij bij opzeggen of nieuwe abonnementen. In de vooruitblik telt het bedrag dat nu loopt, niet het gemiddelde.
 - Boodschappen: Myrthe werkt al met een weekmenu en koopt bewust per winkel wat daar goedkoper is. Daarom
   staat er geen besparingsvoorstel op boodschappen.
 - Uit eten: Square- en Toast-betalingen zijn niet altijd horeca (zwemles, huidarts). Eten buiten

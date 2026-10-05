@@ -173,8 +173,12 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
   </section>
 
   <section id="abonnementen">
-    <header><h2>Abonnementen</h2><p class="sub">Alles wat dit jaar terugkwam, met het laatst betaalde bedrag. NL-diensten lopen via Knab en zijn omgerekend.</p></header>
+    <header><h2>Abonnementen</h2><p class="sub">Wat nu loopt, wat jaarlijks terugkomt en wat al gestopt is. NL-diensten lopen via Knab en zijn omgerekend naar dollars.</p></header>
+    <div class="tiles" id="abtiles"></div>
+    <div class="card" id="abbinnenkort"></div>
     <div class="tablewrap" style="max-height:none"><table id="abtable"></table></div>
+    <details class="card"><summary style="cursor:pointer;font-weight:600">Gestopt of eenmalig (<span id="abgestopt-n"></span>)</summary>
+      <div class="tablewrap" style="max-height:none;margin-top:10px"><table id="abgestopt"></table></div></details>
   </section>
 
   <section id="vermogen">
@@ -389,10 +393,20 @@ function renderFsa() {
 
 /* ---------- abonnementen, vermogen, twijfel ---------- */
 function renderRest() {
-  const ab = [...D.abonnementen].sort((a, b) => b.totaal - a.totaal);
-  $("#abtable").innerHTML = `<thead><tr><th>Dienst</th><th>Laatst betaald</th><th class="r">Laatste bedrag</th><th class="r">Keer</th><th class="r">Totaal 2026</th></tr></thead><tbody>` +
-    ab.map(a => `<tr><td>${esc(a.naam)}</td><td class="num">${datum(a.laatst)}</td><td class="r">${usd(a.bedrag, 2)}</td><td class="r">${a.keer}</td><td class="r">${usd(a.totaal, 2)}</td></tr>`).join("") +
-    `</tbody><tfoot><tr><th colspan="4">Samen in 2026</th><th class="r">${usd(ab.reduce((s, a) => s + a.totaal, 0), 2)}</th></tr></tfoot>`;
+  const AB_LABEL = { loopt: ["good", "● loopt"], jaarlijks: ["warn", "↻ jaarlijks"], gestopt: ["", "gestopt"], eenmalig: ["", "eenmalig"], controleren: ["bad", "? controleren"] };
+  const actief = D.abonnementen.filter(a => a.status === "loopt" || a.status === "jaarlijks").sort((a, b) => b.per_maand - a.per_maand);
+  const gestopt = D.abonnementen.filter(a => !(a.status === "loopt" || a.status === "jaarlijks"));
+  const pm = actief.reduce((s, a) => s + a.per_maand, 0), nl = actief.filter(a => /\(NL/.test(a.naam)).reduce((s, a) => s + a.per_maand, 0);
+  $("#abtiles").innerHTML = tile("Lopende abonnementen per maand", usd(pm), `${actief.length} diensten, jaarlijkse omgerekend per maand`) +
+    tile("Per jaar", usd(pm * 12), "Als alles blijft lopen zoals nu") +
+    tile("Waarvan Nederlandse diensten", usd(nl), "Netflix, Podimo, Videoland, Prime Video en NPO via Knab");
+  $("#abbinnenkort").innerHTML = `<h3>Let op</h3><ul class="todo" style="margin-top:10px">${D.abo_binnenkort.map(b => `<li><span class="when">${esc(b.wanneer)}</span><span>${esc(b.wat)}</span></li>`).join("")}</ul>`;
+  const rij = a => `<tr><td><b>${esc(a.naam)}</b><div class="small muted">${esc(a.noot)}</div></td><td><span class="pill ${AB_LABEL[a.status][0]}">${AB_LABEL[a.status][1]}</span></td>
+    <td class="num">${a.laatst ? datum(a.laatst) : "—"}</td><td class="r">${a.per_maand ? usd(a.per_maand, 2) : "—"}</td><td class="r">${usd(a.totaal, 2)}</td></tr>`;
+  const kop = `<thead><tr><th>Dienst</th><th>Status</th><th>Laatst betaald</th><th class="r">Per maand</th><th class="r">Betaald in 2026</th></tr></thead>`;
+  $("#abtable").innerHTML = kop + "<tbody>" + actief.map(rij).join("") + `</tbody><tfoot><tr><th colspan="3">Samen per maand</th><th class="r">${usd(pm, 2)}</th><th class="r">${usd(actief.reduce((s, a) => s + a.totaal, 0), 2)}</th></tr></tfoot>`;
+  $("#abgestopt").innerHTML = kop + "<tbody>" + gestopt.map(rij).join("") + "</tbody>";
+  $("#abgestopt-n").textContent = gestopt.length;
   const k = D.vooruitblik.koers;
   $("#verm").innerHTML = D.vermogen.map(v => tile(esc(v.naam), v.usd ? usd(v.usd) : "€" + v.eur.toLocaleString("nl-NL"), v.eur ? `≈ ${usd(v.eur * k)}` : "")).join("") +
     tile("Reserve: schenking ouders", "€" + D.reserve.schenking_eur.toLocaleString("nl-NL"), `≈ ${usd(D.reserve.schenking_eur * k)} · ${esc(D.reserve.noot)}`);

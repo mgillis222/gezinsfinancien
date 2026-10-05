@@ -125,19 +125,8 @@ fsa = {"dc": {"per_salaris": 288.46, "jaar": 7500, "ingelegd": round(t[(t.bank =
        "opvang_betaald_2026": round(-t[t.subcategorie == "Primrose (Lily & Bill)"]["bedrag_usd"].sum(), 2)}
 
 # ---------- abonnementen (laatste bekende maandbedrag per dienst) ----------
-DIENSTEN = [("claude|anthropic", "Claude (Anthropic)"), ("linkedin", "LinkedIn Premium"), ("microsoft", "Microsoft 365"), ("netflix", "Netflix (NL)"),
-            ("videoland", "Videoland (NL)"), ("npo", "NPO Plus (NL)"), ("prime video|amazon media", "Prime Video"), ("podimo", "Podimo (NL)"),
-            ("spotify", "Spotify"), ("storytel", "Storytel (NL)"), ("hbo", "HBO Max"), ("disney", "Disney+ / Hulu"), ("nord", "NordVPN (2 jaar)"),
-            ("consumentenbond", "Consumentenbond"), ("correspondent", "De Correspondent"), ("strava|koen", "Strava (via Koen)"),
-            ("international card|ics", "ChatGPT via ICS-kaart + jaarbijdrage"), ("apple", "Apple (iCloud e.d.)"), ("canva", "Canva"),
-            ("coursera", "Coursera"), ("google", "Google One")]
-def dienst(s):
-    for pat, n in DIENSTEN:
-        if re.search(pat, s, re.I): return n
-    return schoon(s)
-ab = t[(t.categorie == "Abonnementen") & (t.soort == "uitgave")].assign(naam=lambda d: d["omschrijving"].map(dienst))
-abo = ab.sort_values("datum").groupby("naam").agg(laatst=("datum", "last"), bedrag=("bedrag_usd", "last"), keer=("bedrag_usd", "size"), totaal=("bedrag_usd", "sum"))
-abonnementen = [{"naam": k, "laatst": r["laatst"], "bedrag": round(-r["bedrag"], 2), "keer": int(r["keer"]), "totaal": round(-r["totaal"], 2)} for k, r in abo.sort_values("totaal").iterrows()]
+from abonnementen import maak_lijst, BINNENKORT
+abonnementen = maak_lijst(t, schoon)
 
 # ---------- twijfelgevallen ----------
 tw = t[(t["twijfel"]) | (t["categorie"] == "Nog indelen")]
@@ -175,7 +164,7 @@ VB = {
         {"id": "nuts", "naam": "Water, stroom, gas", "bedrag": gem(vol.categorie == "Nutsvoorzieningen")},
         {"id": "tel", "naam": "Telefoon & internet", "bedrag": gem(vol.categorie == "Telefoon & internet")},
         {"id": "verz", "naam": "Verzekeringen (auto, leven, reis)", "bedrag": gem(vol.categorie == "Verzekeringen")},
-        {"id": "abo", "naam": "Abonnementen", "bedrag": gem(vol.categorie == "Abonnementen")},
+        {"id": "abo", "naam": "Abonnementen die nu lopen (incl. jaarlijkse, per maand)", "bedrag": round(sum(a["per_maand"] for a in abonnementen if a["status"] in ("loopt", "jaarlijks")))},
     ],
     "variabel": [
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
@@ -210,7 +199,7 @@ VB["besparen"] = [
 
 uit = {"bijgewerkt": pd.Timestamp.today().strftime("%Y-%m-%d"), "volledige_maanden": VOLLEDIG, "maanden": maanden,
        "categorieen": cats, "inkomen": inkomen, "sparen": sparen, "winkels": winkels, "fsa": fsa,
-       "abonnementen": abonnementen, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB,
+       "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB,
        "reserve": {"schenking_eur": 90000, "noot": "Schenking ouders, staat op Belgische spaarrekening op naam van de ouders; op te vragen."},
        "vermogen": [{"naam": "Chase CD (deposito, t/m 30-07-2026)", "usd": 10000},
                     {"naam": "Beleggingsrekening VS (4 okt)", "usd": 5877},
@@ -222,4 +211,4 @@ for c in cats[:8]: print(f"  {c['naam']:24s} {c['per_maand_gem']:9.0f}/mnd")
 print("Amazon per categorie:", [(x['naam'], x['totaal']) for x in winkels[0]['per_categorie']])
 print("Target:", winkels[1]['ordertotaal'], winkels[1]['orders'], "bezorg", winkels[1]['bezorgorders'], "fooi", winkels[1]['fooien'])
 print("FSA:", fsa); print("Lekjes:", lekjes)
-print("Abonnementen:", [(a['naam'], a['bedrag']) for a in abonnementen])
+print("Abonnementen:", [(a['naam'], a['status'], a['per_maand']) for a in abonnementen])
