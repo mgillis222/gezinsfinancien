@@ -94,9 +94,9 @@ REGELS = [
     (r"vrbo|vacasa|virgin cruises|trip\.com|recreation\.gov|state parks|tex state pks|nm state parks|hipcamp|amtrak|klm|transavia|booking|bkg\*|hotel|hilton|radisson|hyatt|aloft|sleep inn|bluegreen|resort|glamping|houston airports|iah |atl airp|safari|beekse bergen|airbnb|ns internationaal|big bend|wnpa|carlsbad|eilan|river forest|breeze|marleyspoo|sentinel|canada|toronto|mississauga|seaworld", "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten"),
     (r"space cent|museum|aquarium|symphony|polo club|axs\.com|stubhub|nature cent|varner hogg|special event|texas gun club|land van ooit|monkey town", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
     # --- persoonlijk & huis ---
-    (r"patagonia|tecovas|tommy hilfiger|hollister|poshmark|tjmaxx|uptown cheapskate|backcountry|competitive cyclist|ryzon|sephora|warby parker|showroompriv|veepee|sellhelp|vinted", "uitgave", "Kleding & persoonlijk", "Kleding, schoenen, verzorging"),
+    (r"patagonia|tecovas|tommy hilfiger|hollister|poshmark|tjmaxx|uptown cheapskate|backcountry|ryzon|sephora|warby parker|showroompriv|veepee|sellhelp|vinted", "uitgave", "Kleding & persoonlijk", "Kleding, schoenen, verzorging"),
     (r"great clips|aurea|salon", "uitgave", "Kleding & persoonlijk", "Kapper"),
-    (r"trek|cool cat cycles|4iiii|bass pro|ride magazine", "uitgave", "Sport & hobby", "Fietsen, sport"),
+    (r"trek|cool cat cycles|4iiii|bass pro|ride magazine|competitive cyclist", "uitgave", "Sport & hobby", "Fietsen, sport"),
     (r"etsy|el baker art|motiff|yarn", "uitgave", "Sport & hobby", "Hobby (haken, kunst)"),
     (r"ikea|home depot|lowe'?s|harbor freight|wayfair|sur la table|officemax|postnet|ups store|usps|postnl|bpost|pakske", "uitgave", "Huis & inrichting", "Huis, inrichting, post"),
     (r"apple store|bestbuy|best buy", "uitgave", "Elektronica", "Elektronica"),
