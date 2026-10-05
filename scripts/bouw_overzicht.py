@@ -74,6 +74,9 @@ REGELS = [
     (r"spacecntrhoustoncafe|armk dp concessions", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
     (r"wl1 cafe", "uitgave", "Eten & drinken", "Lunch Jef op werk"),
     (r"^dd |doordash", "uitgave", "Boodschappen", "DoorDash/DashMart (deals)"),
+    (r"^knab: koninklijke postnl", "uitgave", "Kinderen", "Geboortekaartjes Bill"),        # postzegels geboortekaartjes
+    (r"lowe'?s family cente", "uitgave", "Boodschappen", "Supermarkt"),                       # Lowe's Market Port Aransas
+    (r"postnet", "uitgave", "Overheid & documenten", "Paspoort Bill"),
     (r"practice with bell|dermatolog", "uitgave", "Zorg", "Zorg & medisch"),
     (r"river forest haven", "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten"),
     (r"scspacetrader", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
