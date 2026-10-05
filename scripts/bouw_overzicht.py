@@ -251,6 +251,10 @@ def main():
     # in de VS voor haar voorschoot (o.a. Apple). Bevestigd door Myrthe.
     flo = (t["bank"] == "Knab") & t["omschrijving"].str.contains("afrekening houston", case=False)
     t.loc[flo, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Terugbetaald door Florien (afrekening Houston)"]
+    # Virgin Voyages-cruise (jan 2027): betaald met Chase, volledig terugbetaald door Florien (bevestigd door Myrthe).
+    cruise = t["omschrijving"].str.contains("VIRGIN CRUISES", case=False) | \
+        ((t["bank"] == "Knab") & t["omschrijving"].str.contains("GILLIS F", case=False) & t["omschrijving"].str.contains("cruise", case=False))
+    t.loc[cruise, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Virgin-cruise voor Florien (terugbetaald)"]
     # Tecovas 7 mei 2026 ($681,99): niet voor ons, voorgeschoten (bevestigd door Myrthe).
     tec = t["omschrijving"].str.contains("TECOVAS", case=False) & ((t["bedrag_usd"] + 681.99).abs() < 0.01)
     t.loc[tec, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Voorgeschoten: Tecovas (niet voor ons)"]

@@ -49,7 +49,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   afbetaald: de rest (±€1.400) is verrekend doordat Myrthe in de VS iets voor hen voorschoot. OPEN: welke
   aankoop dat was (±$1.600). Tecovas 7 mei ($682) is in elk geval voorgeschoten. Telt als intern, niet als
   inkomen. De €60 per maand "Selfcare" telt wel als inkomen.
-- Terugbetalingen van reisgenoten (cruise, weekendjes) verlagen de post Reizen.
+- Terugbetalingen van reisgenoten (weekendjes, Tikkie) verlagen de post Reizen. De Virgin-cruise (jan 2027,
+  $3.126 via Chase) is van Florien en volledig door haar terugbetaald (€630 + €2.100): telt als Voorgeschoten.
 - Toronto (8–16 jan 2026, $1.095): werkreis Jef, vergoed via het salaris van januari. Kosten en een even groot
   deel van het salaris van 29 januari tellen als intern.
 - Best Buy april ($540, reMarkable) was een cadeau voor Jef, betaald door de familie via Knab (€525); beide intern.
