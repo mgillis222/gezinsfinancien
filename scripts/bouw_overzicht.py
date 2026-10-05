@@ -325,6 +325,21 @@ def main():
     zet(t["omschrijving"].str.contains("AXS.COMTICKET", case=False), "uitgave", "Reizen & uitjes", "Rodeo-tickets")
     zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 139.93).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
         "uitgave", "Giften", "Verjaardag Jef: Earth, Wind & Fire")
+    # Freelance-inkomen Myrthe (Picnic, uitbetaald 19 en 22 mei) hoort bij werk in februari, maart en april:
+    # gelijk verdelen over die maanden (bevestigd door Myrthe 5 okt 2026). Het bedrag blijft gelijk, alleen de maand verschuift.
+    fl = t["subcategorie"] == "Inkomen Myrthe (freelance)"
+    if fl.any():
+        basis = t[fl].iloc[[0]].copy()
+        tot_eur, tot_usd = t.loc[fl, "bedrag_orig"].sum(), t.loc[fl, "bedrag_usd"].sum()
+        delen = []
+        for i, d in enumerate(["2026-02-28", "2026-03-31", "2026-04-30"]):
+            r = basis.copy()
+            r["datum"] = pd.Timestamp(d)
+            r["bedrag_orig"] = round(tot_eur / 3, 2) if i < 2 else round(tot_eur - 2 * round(tot_eur / 3, 2), 2)
+            r["bedrag_usd"] = round(tot_usd / 3, 2) if i < 2 else round(tot_usd - 2 * round(tot_usd / 3, 2), 2)
+            r["omschrijving"] = f"Freelance Myrthe (uitbetaald in mei), deel {i + 1}/3 voor werk in {['februari', 'maart', 'april'][i]}"
+            delen.append(r)
+        t = pd.concat([t[~fl]] + delen, ignore_index=True)
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]

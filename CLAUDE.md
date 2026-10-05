@@ -125,3 +125,5 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   Jef; Jelmer De Winter en Sebastiaan van Loon = padel; Xander Zonneveld $42 = cadeau voetbaltickets. AXS.com ($210,
   22 feb) = rodeo-tickets; StubHub ($156, 10 apr) = Earth, Wind & Fire, cadeau verjaardag Jef. Nog onbekend: Abisola $3,25, Liv Williams $15,
   Zelle 832-492-6487 $30 (6 jul), opname $25 + money order $5 (16 apr).
+- Freelance Myrthe (Picnic, €15.128 uitbetaald 19 en 22 mei) is in het overzicht gelijk verdeeld over februari,
+  maart en april, de maanden van het werk. Geen belastingreserve nodig (wens Myrthe).
