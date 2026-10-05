@@ -51,6 +51,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   inkomen. De €60 per maand "Selfcare" telt wel als inkomen.
 - Terugbetalingen van reisgenoten (weekendjes, Tikkie) verlagen de post Reizen. De Virgin-cruise (jan 2027,
   $3.126 via Chase) is van Florien en volledig door haar terugbetaald (€630 + €2.100): telt als Voorgeschoten.
+- Beekse Bergen (Safari Resort, €791,69 op 13 jul) is betaald door John (vader Jef): €792 terug op 8 sep. Voorgeschoten.
 - Toronto (8–16 jan 2026, $1.095): werkreis Jef, vergoed via het salaris van januari. Kosten en een even groot
   deel van het salaris van 29 januari tellen als intern.
 - Best Buy april ($540, reMarkable) was een cadeau voor Jef, betaald door de familie via Knab (€525); beide intern.

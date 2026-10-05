@@ -255,6 +255,10 @@ def main():
     cruise = t["omschrijving"].str.contains("VIRGIN CRUISES", case=False) | \
         ((t["bank"] == "Knab") & t["omschrijving"].str.contains("GILLIS F", case=False) & t["omschrijving"].str.contains("cruise", case=False))
     t.loc[cruise, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Virgin-cruise voor Florien (terugbetaald)"]
+    # Beekse Bergen / Safari Resort (13 jul, €791,69): terugbetaald door John (vader Jef), €792 op 8 sep.
+    bb_resort = (t["bank"] == "Knab") & t["omschrijving"].str.contains("Safari Resort Exploitatie", case=False)
+    bb_terug = (t["bank"] == "Knab") & (t["bedrag_orig"] > 0) & t["omschrijving"].str.contains(r"\| Beekse bergen \|", case=False, regex=True)
+    t.loc[bb_resort | bb_terug, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Beekse Bergen (betaald door John)"]
     # Tecovas 7 mei 2026 ($681,99): niet voor ons, voorgeschoten (bevestigd door Myrthe).
     tec = t["omschrijving"].str.contains("TECOVAS", case=False) & ((t["bedrag_usd"] + 681.99).abs() < 0.01)
     t.loc[tec, ["soort", "categorie", "subcategorie"]] = ["intern", "Voorgeschoten", "Voorgeschoten: Tecovas (niet voor ons)"]
