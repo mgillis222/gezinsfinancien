@@ -127,3 +127,6 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   Zelle 832-492-6487 $30 (6 jul), opname $25 + money order $5 (16 apr).
 - Freelance Myrthe (Picnic, €15.128 uitbetaald 19 en 22 mei) is in het overzicht gelijk verdeeld over februari,
   maart en april, de maanden van het werk. Geen belastingreserve nodig (wens Myrthe).
+- Vooruitblik = structurele maand: gemiddelde jan–aug zonder eenmalige posten (camper, babyuitzet, geboortekaartjes,
+  paspoort Bill, inrichting na verhuizing jan–feb, bijdrage ouders mei) en zonder grote vakantie; die laatste telt als
+  jaarbudget ÷ 12 (zomer 2026: ±$6.600). Regels in scripts/eenmalig.py.

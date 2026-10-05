@@ -121,7 +121,12 @@ lekjes = {
 }
 
 # ---------- vooruitblik: een gewone maand vanaf oktober 2026 ----------
-def gem(mask): return round(-vol[mask]["bedrag_usd"].sum() / N, 0)
+from eenmalig import markeer
+vol = markeer(vol)
+struct = ~vol["eenmalig"] & ~vol["grote_vakantie"]          # structurele maand: zonder eenmalige posten en grote vakanties
+def gem(mask): return round(-vol[mask & struct]["bedrag_usd"].sum() / N, 0)
+GROTE_VAK_JAAR = round(-vol[vol["grote_vakantie"]]["bedrag_usd"].sum(), 0)   # grote vakantie(s) jan-aug ~ één per jaar
+EENMALIG_LIJST = vol[vol["eenmalig"]].groupby("subcategorie")["bedrag_usd"].sum().mul(-1).round(0).sort_values(ascending=False)
 koers = float(t[t.valuta == "EUR"].sort_values("datum")["eur_usd"].dropna().iloc[-1])
 VB = {
     "koers": round(koers, 4),
@@ -149,7 +154,8 @@ VB = {
     "variabel": [
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
         {"id": "eten", "naam": "Eten & drinken: uit eten, eten op reis, bezorging, maaltijdboxen", "bedrag": gem(vol.categorie == "Eten & drinken")},
-        {"id": "reizen", "naam": "Reizen & uitjes", "bedrag": gem(vol.categorie == "Reizen & uitjes")},
+        {"id": "reizen", "naam": "Reizen & uitjes: weekendjes, uitjes, eten onderweg", "bedrag": gem(vol.categorie == "Reizen & uitjes")},
+        {"id": "grotevak", "naam": "Grote vakantie (jaarbudget ÷ 12, op basis van deze zomer)", "bedrag": round(GROTE_VAK_JAAR / 12)},
         {"id": "vervoer", "naam": "Vervoer (benzine, tol, Uber, auto)", "bedrag": gem(vol.categorie == "Vervoer")},
         {"id": "kleding", "naam": "Kleding & persoonlijk", "bedrag": gem(vol.categorie == "Kleding & persoonlijk")},
         {"id": "kinderen", "naam": "Kinderen (activiteiten, spullen)", "bedrag": gem((vol.categorie == "Kinderen") & (vol.subcategorie != "Geboortekaartjes Bill"))},
@@ -174,7 +180,7 @@ VB["besparen"] = [
 
 uit = {"bijgewerkt": pd.Timestamp.today().strftime("%Y-%m-%d"), "volledige_maanden": VOLLEDIG, "maanden": maanden,
        "categorieen": cats, "inkomen": inkomen, "sparen": sparen, "winkels": winkels, "fsa": fsa,
-       "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB,
+       "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB, "eenmalig": [{"naam": k, "bedrag": v} for k, v in EENMALIG_LIJST.items()], "grote_vakantie_jaar": GROTE_VAK_JAAR,
        "reserve": {"schenking_eur": 90000, "noot": "Schenking ouders, staat op Belgische spaarrekening op naam van de ouders; op te vragen."},
        "vermogen": [{"naam": "Overwaarde woning NL (geschatte waarde €655.000 − schuld €429.994, okt 2026; bandbreedte €195k–€260k)", "eur": 225006.41},
                     {"naam": "Chase CD (deposito, t/m 30-07-2026)", "usd": 10000},

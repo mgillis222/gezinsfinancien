@@ -148,7 +148,7 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
 
   <section id="vooruit">
     <header><h2>Een gewone maand vanaf oktober</h2>
-      <p class="sub">Met de nieuwe vaste lasten: opvang voor Lily én Bill ($630 per week) en de ondersteuning van je schoonmoeder. De variabele posten zijn het gemiddelde van jan–aug. Pas de bedragen aan en vink besparingen aan; de pagina rekent mee en onthoudt je keuzes in deze browser.</p></header>
+      <p class="sub">Met de nieuwe vaste lasten: opvang voor Lily én Bill ($630 per week) en de ondersteuning van je schoonmoeder. De variabele posten zijn het gemiddelde van jan–aug zónder eenmalige uitgaven (camper, babyuitzet, inrichting na de verhuizing); de grote zomervakantie telt als jaarbudget gedeeld door 12. Pas de bedragen aan en vink besparingen aan; de pagina rekent mee en onthoudt je keuzes in deze browser.</p></header>
     <div class="result" id="vb-result"></div>
     <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button type="button" id="vb-reset" class="knop">Terug naar de cijfers uit de afschriften</button>
       <span class="small muted" id="vb-status"></span></div>
@@ -157,6 +157,8 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
       <div class="card"><h3>Vaste lasten</h3><div id="vb-vast"></div></div>
       <div class="card"><h3>Variabele uitgaven</h3><div id="vb-var"></div></div>
     </div>
+    <details class="card"><summary style="cursor:pointer;font-weight:600">Weggelaten als eenmalig (jan–aug): <span id="eenm-tot"></span></summary>
+      <div class="kv" id="eenm" style="margin-top:10px"></div></details>
     <div class="card"><h3>Besparingsplan</h3><p class="sub small">Elke regel is onderbouwd met jullie eigen cijfers. Aangevinkt = meegerekend hierboven.</p><div id="vb-save"></div>
       <p class="small muted" style="margin-top:10px">Grote keuzes zoals de woning in NL, de opvang of reizen staan hier niet in. Daar beslissen jullie zelf over; de vooruitblik laat zien wat ze kosten.</p></div>
   </section>
@@ -431,5 +433,7 @@ function renderRest() {
     D.twijfel.map(x => `<tr><td class="num">${datum(x.d)}</td><td>${esc(x.o)}<div class="small muted">${esc(x.r)}</div></td><td class="small">${esc(x.s)}</td><td class="r">${usd(x.b, 2)}</td></tr>`).join("") + "</tbody>";
 }
 
+$("#eenm").innerHTML = D.eenmalig.map(e => `<span>${esc(e.naam)}</span><span>${usd(e.bedrag)}</span>`).join("");
+$("#eenm-tot").textContent = usd(D.eenmalig.reduce((a, e) => a + e.bedrag, 0)) + `, plus grote vakantie ${usd(D.grote_vakantie_jaar)} (als jaarbudget)`;
 renderMaanden(); renderCats(); renderVooruit(); renderWinkels(); renderFsa(); renderRest();
 </script>
