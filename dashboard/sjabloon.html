@@ -122,7 +122,7 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
   </header>
 
   <nav class="secties" aria-label="Secties">
-    <a href="#samenvatting">Samenvatting</a><a href="#maanden">Per maand</a><a href="#categorieen">Waar gaat het heen</a>
+    <a href="#samenvatting">Samenvatting</a><a href="#maanden">Per maand</a><a href="#trends">Trends</a><a href="#categorieen">Waar gaat het heen</a>
     <a href="#vooruit">Vanaf oktober</a><a href="#winkels">Winkels in detail</a><a href="#fsa">FSA</a>
     <a href="#abonnementen">Abonnementen</a><a href="#vermogen">Vermogen</a><a href="#twijfel">Nog beoordelen</a>
   </nav>
@@ -138,6 +138,13 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
     <div class="card"><div class="legend"><span><i style="background:var(--s-in)"></i>Inkomen</span><span><i style="background:var(--s-out)"></i>Uitgaven</span></div>
       <div class="chart" id="mchart"></div></div>
     <div class="tablewrap" style="max-height:none"><table id="mtable"></table></div>
+  </section>
+
+  <section id="trends">
+    <header><h2>Trends</h2>
+      <p class="sub">Per categorie: januari t/m april tegenover mei t/m augustus, zonder eenmalige uitgaven (camper, babyuitzet, inrichting) en zonder grote vakantie.</p></header>
+    <div class="tablewrap" style="max-height:none"><table id="trtable"></table></div>
+    <p class="small muted">De opvang van Bill (vanaf half september) en het nieuwe besparingsplan zitten nog niet in deze maanden; zie ‘Vanaf oktober’.</p>
   </section>
 
   <section id="categorieen">
@@ -436,5 +443,15 @@ function renderRest() {
 
 $("#eenm").innerHTML = D.eenmalig.map(e => `<span>${esc(e.naam)}</span><span>${usd(e.bedrag)}</span>`).join("");
 $("#eenm-tot").textContent = usd(D.eenmalig.reduce((a, e) => a + e.bedrag, 0)) + `, plus grote vakantie ${usd(D.grote_vakantie_jaar)} (als jaarbudget)`;
+function renderTrends() {
+  const max = Math.max(...D.trends.flatMap(t => t.maanden), 1);
+  const spark = t => `<svg viewBox="0 0 ${t.maanden.length * 10} 24" width="${t.maanden.length * 10}" height="24" role="img" aria-label="Verloop per maand">` +
+    t.maanden.map((v, i) => `<rect x="${i * 10 + 1}" y="${24 - Math.max(1, v / max * 24)}" width="8" height="${Math.max(1, v / max * 24)}" rx="1.5" fill="var(--s-bar)"><title>${MND[i]}: ${usd(v)}</title></rect>`).join("") + `</svg>`;
+  $("#trtable").innerHTML = `<thead><tr><th>Categorie</th><th>jan → aug</th><th class="r">jan–apr</th><th class="r">mei–aug</th><th class="r">Verschil</th><th>Toelichting</th></tr></thead><tbody>` +
+    D.trends.map(t => `<tr><td><b>${esc(t.naam)}</b></td><td>${spark(t)}</td><td class="r">${usd(t.a)}</td><td class="r">${usd(t.b)}</td>
+      <td class="r" style="color:var(${Math.abs(t.verschil) < 25 ? "--muted" : t.verschil > 0 ? "--bad" : "--good"})">${Math.abs(t.verschil) < 25 ? "≈ gelijk" : (t.verschil > 0 ? "▲ +" : "▼ ") + usd(Math.abs(t.verschil))}</td>
+      <td class="small sub">${esc(t.noot)}</td></tr>`).join("") + "</tbody>";
+}
+renderTrends();
 renderMaanden(); renderCats(); renderVooruit(); renderWinkels(); renderFsa(); renderRest();
 </script>

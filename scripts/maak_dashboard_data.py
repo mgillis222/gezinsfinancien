@@ -185,9 +185,36 @@ VB["besparen"] = [
       "Schatting: $630 per week voor vijf dagen. Vraag Primrose naar de deeltijdtarieven. Nadeel: minder tijd om te solliciteren, mogelijk plek kwijt.", "groot"),
 ]
 
+# ---------- trends: structurele uitgaven per categorie per maand (zonder eenmalig en grote vakantie) ----------
+TREND_NOOT = {   # toelichting bij de trend (stand 5 okt 2026)
+    "Ondersteuning familie": "Nieuw sinds juni: €800 per maand voor je schoonmoeder.",
+    "Kinderopvang": "Nog alleen Lily. Vanaf half september komt Bill erbij (+$1.430 per maand).",
+    "Kinderen": "Bill geboren, zwemlessen Lily, feestje Little Gym.",
+    "Eten & drinken": "Bezoek ouders en de weken rond de bevalling; maaltijdboxen zijn inmiddels gestopt.",
+    "Nutsvoorzieningen": "Airco in de zomer; in de winter meer gas.",
+    "Reizen & uitjes": "Veel weekendjes in het voorjaar (Atlanta, Big Bend, Carlsbad, Lake Bastrop).",
+    "Zorg": "Zwangerschap en bevalling achter de rug.",
+    "Vervoer": "Minder ritten; juli en augustus deels in Europa.",
+    "Boodschappen": "Stabiel; verschuiving van Target naar Kroger, Trader Joe's en H-E-B. Augustus laag door de vakantie.",
+    "Verzekeringen": "Autoverzekering per half jaar (juni en december).",
+    "Wonen VS": "Februari geen huur, maart twee keer; gemiddeld gelijk.",
+    "Huishouden": "Geen schoonmaak tijdens de vakantie in augustus.",
+}
+_u = vol[(vol.soort == "uitgave") & ~vol["eenmalig"] & ~vol["grote_vakantie"]]
+_p = _u.pivot_table(index="categorie", columns="periode", values="bedrag_usd", aggfunc="sum", fill_value=0).mul(-1)
+_p = _p.reindex(columns=VOLLEDIG, fill_value=0)
+trends = []
+for cat, rij in _p.iterrows():
+    a, b2 = rij[VOLLEDIG[:4]].mean(), rij[VOLLEDIG[4:]].mean()
+    if max(a, b2) < 25:
+        continue
+    trends.append({"naam": cat, "maanden": [round(x) for x in rij.tolist()], "a": round(a), "b": round(b2),
+                   "verschil": round(b2 - a), "noot": TREND_NOOT.get(cat, "")})
+trends.sort(key=lambda x: -max(x["a"], x["b"]))
+
 uit = {"bijgewerkt": pd.Timestamp.today().strftime("%Y-%m-%d"), "volledige_maanden": VOLLEDIG, "maanden": maanden,
        "categorieen": cats, "inkomen": inkomen, "sparen": sparen, "winkels": winkels, "fsa": fsa,
-       "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB, "eenmalig": [{"naam": k, "bedrag": v} for k, v in EENMALIG_LIJST.items()], "grote_vakantie_jaar": GROTE_VAK_JAAR,
+       "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB, "trends": trends, "eenmalig": [{"naam": k, "bedrag": v} for k, v in EENMALIG_LIJST.items()], "grote_vakantie_jaar": GROTE_VAK_JAAR,
        "reserve": {"schenking_eur": 90000, "noot": "Schenking ouders, staat op Belgische spaarrekening op naam van de ouders; op te vragen."},
        "vermogen": [{"naam": "Overwaarde woning NL (geschatte waarde €655.000 − schuld €429.994, okt 2026; bandbreedte €195k–€260k)", "eur": 225006.41},
                     {"naam": "Chase CD (deposito, t/m 30-07-2026)", "usd": 10000},
