@@ -42,7 +42,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   - Nancy Herrera: schoonmaak. Avertano Rendon en Evelyna Rozenfeld: oppas.
   - Bear Graphics: geboortekaartjes Bill.
   - Chase 6010 had in maart en augustus geen afschrift (geen uitgaven).
-  - Fugro NL €1.956,84 (4 mei): aankoop aandelen Fugro door Jef, dus sparen/beleggen.
+  - Fugro NL €1.956,84 (4 mei): aankoop aandelen Fugro door Jef (sparen/beleggen). Deze aandelen tellen niet
+    mee in het vermogensoverzicht (wens Myrthe).
   - ICS-creditcard (NL): alleen ChatGPT €21,48/mnd t/m maart en €28 jaarbijdrage; geen afschriften nodig.
 - Lening van de ouders (Gillis-Reyniers): €5.000 in mei, €3.600 terug in juni. Telt als intern, niet als
   inkomen. De €60 per maand "Selfcare" telt wel als inkomen.
