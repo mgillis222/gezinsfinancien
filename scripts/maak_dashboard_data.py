@@ -147,6 +147,7 @@ VB = {
         {"id": "oppas", "naam": "Oppas", "bedrag": gem(vol.subcategorie == "Oppas")},
         {"id": "tuin", "naam": "Tuinman (Avertano)", "bedrag": gem(vol.subcategorie == "Tuinman (Avertano)")},
         {"id": "nuts", "naam": "Water, stroom, gas", "bedrag": gem(vol.categorie == "Nutsvoorzieningen")},
+        {"id": "sport", "naam": "Sportschool YMCA (lidmaatschap)", "bedrag": 132},
         {"id": "tel", "naam": "Telefoon & internet", "bedrag": gem(vol.categorie == "Telefoon & internet")},
         {"id": "verz", "naam": "Verzekeringen (auto, leven, reis)", "bedrag": gem(vol.categorie == "Verzekeringen")},
         {"id": "abo", "naam": "Abonnementen die nu lopen (incl. jaarlijkse, per maand)", "bedrag": round(sum(a["per_maand"] for a in abonnementen if a["status"] in ("loopt", "jaarlijks")))},
@@ -165,7 +166,7 @@ VB = {
         {"id": "kleding", "naam": "Kleding & persoonlijk", "bedrag": gem(vol.categorie == "Kleding & persoonlijk")},
         {"id": "kinderen", "naam": "Kinderen (activiteiten, spullen)", "bedrag": gem((vol.categorie == "Kinderen") & (vol.subcategorie != "Geboortekaartjes Bill"))},
         {"id": "zorg", "naam": "Zorg (eigen betalingen, buiten FSA)", "bedrag": gem((vol.categorie == "Zorg") & (vol.bank != "HealthEquity"))},
-        {"id": "huis", "naam": "Huis, sport, hobby, elektronica", "bedrag": gem(vol.categorie.isin(["Huis & inrichting", "Sport & hobby", "Elektronica"]))},
+        {"id": "huis", "naam": "Huis, sport, hobby, elektronica", "bedrag": gem(vol.categorie.isin(["Huis & inrichting", "Sport & hobby", "Elektronica"]) & (vol.subcategorie != "Sportschool YMCA (lidmaatschap)"))},
         {"id": "overig", "naam": "Overig (giften, documenten, bank, contant)", "bedrag": gem(vol.categorie.isin(["Giften", "Overheid & documenten", "Bankkosten", "Contant geld", "Huishouden"]) & ~vol.subcategorie.isin(["Schoonmaak (Nancy)", "Tuinman (Avertano)"]))},
     ],
 }

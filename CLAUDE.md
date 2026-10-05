@@ -139,6 +139,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   aflossing telt gewoon als uitgave (wens Myrthe: geen rekening houden met vermogensopbouw).
 - Marley Spoon is een maaltijdbox (stond eerst bij Reizen); Fadi's en Daily Gather zijn uit eten in Katy/Houston.
 - AT&T: "Att Payment" ±$55 = wifi thuis; "AT&T Prepaid" $35 = telefoon Myrthe.
+- YMCA: elke 1e van de maand $129 (sinds aug $132,15) = sportschool-lidmaatschap, vaste last. Overige YMCA-betalingen
+  zijn zwemlessen Lily (Kinderen).
 - Besparingsplan (5 okt 2026), staat op de pagina: abonnementen (Coursera, NL-streaming, Disney+), telefoon, auto-
   verzekering, Knab, kleding, huis/hobby, schoonmaak, Child Tax Credit Bill, opvang één dag minder. Niet voorstellen:
   boodschappen, bezorgen, uit eten, Claude Max (blijft), LinkedIn Premium (helpt bij het zoeken naar werk),

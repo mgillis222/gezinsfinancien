@@ -346,6 +346,9 @@ def main():
         t = pd.concat([t[~fl]] + delen, ignore_index=True)
     zet((t["bank"] == "Knab") & t["omschrijving"].str.contains("Pauwels Eva", case=False) & (t["bedrag_orig"] > 0),
         "uitgave", "Reizen & uitjes", "Terugbetaald door Eva (Cameron Ranch, Lake Bastrop)")
+    # YMCA-lidmaatschap (sportschool, elke 1e van de maand $129, sinds aug $132,15) = vaste last; zwemlessen blijven Kinderen.
+    ymca = t["omschrijving"].str.contains("YMCA", case=False) & t["bedrag_usd"].round(2).isin([-129.00, -132.15])
+    zet(ymca, "uitgave", "Sport & hobby", "Sportschool YMCA (lidmaatschap)")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
