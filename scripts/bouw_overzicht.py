@@ -340,6 +340,8 @@ def main():
             r["omschrijving"] = f"Freelance Myrthe (uitbetaald in mei), deel {i + 1}/3 voor werk in {['februari', 'maart', 'april'][i]}"
             delen.append(r)
         t = pd.concat([t[~fl]] + delen, ignore_index=True)
+    zet((t["bank"] == "Knab") & t["omschrijving"].str.contains("Pauwels Eva", case=False) & (t["bedrag_orig"] > 0),
+        "uitgave", "Reizen & uitjes", "Terugbetaald door Eva (Cameron Ranch, Lake Bastrop)")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]

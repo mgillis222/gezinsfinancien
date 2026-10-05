@@ -52,7 +52,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   en Carlos Castro $40 = verkoop koffieapparaat; Jozefien Michielssen €125 en €7,36 = terugbetaling Target-
   spullen; De Hoon-Michielssen €58,40 = Oostduinkerke; Country Inn & Suites Frederick = vakantiehuisje (afschrijving
   en terugstorting heffen elkaar op); Remote Online Deposit $6,50 = onbekend. Tikkie J.A. Hagens €295 ("rodeo
-  horeca", 17 mrt) = bezoek Jeroen en Roos; Eva Pauwels €316 ("Weekendje samen", 9 mrt) = bezoek Eva.
+  horeca", 17 mrt) = bezoek Jeroen en Roos; Eva Pauwels €316 ("Weekendje samen", 9 mrt) = haar deel van Cameron Ranch (Lake Bastrop, $753).
 - Jef reisde voor werk ook naar Washington (Amtrak $140, vergoed op 19 mrt) en North Carolina (geen kosten op
   onze kaarten gevonden).
 - De Nederlandse rekening van Jef valt buiten het overzicht; alleen overboekingen van en naar die rekening
