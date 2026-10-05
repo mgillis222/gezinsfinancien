@@ -310,6 +310,11 @@ def main():
         zet(t["omschrijving"].str.contains(patroon, case=False, regex=True) & (t["categorie"] == "Nog indelen"), soort, cat, sub)
     zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 10.74).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
         "uitgave", "Abonnementen", "Streaming, software, nieuws")
+    # PayPal met koersopslag: Wayfair $129,88 (jan) en StubHub $156,48 (apr).
+    zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 115.80).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
+        "uitgave", "Huis & inrichting", "Huis, inrichting, post")
+    zet((t["bank"] == "Knab") & ((t["bedrag_orig"] + 139.93).abs() < 0.01) & t["omschrijving"].str.contains("PayPal", case=False),
+        "uitgave", "Reizen & uitjes", "Uitjes & tickets")
     # Cashier's check van 9 jan 2026 = pop-up camper (bevestigd door Myrthe).
     camper = (t["omschrijving"] == "Withdrawal") & (t["datum"] == "2026-01-09")
     t.loc[camper, ["soort", "categorie", "subcategorie"]] = ["uitgave", "Eenmalig", "Pop-up camper"]
