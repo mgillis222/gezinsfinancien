@@ -150,3 +150,10 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 ## Technische tip
 - Geeft Python in WSL "Fatal Python error: init_import_site ... varnames is too small"? Dan is een systeem-cachebestand
   beschadigd. Omzeilen met: export PYTHONPYCACHEPREFIX=/tmp/pycache-gf (vóór het commando).
+
+## Nutsvoorzieningen
+- Stroom: Gexa Guarantee 12+ (klantnr 36696006), vast, 12 mnd vanaf 3 jul 2026; energie 8,88 ct/kWh + TDU 5,15 ct/kWh
+  + $4,90/mnd (±14,5 ct all-in bij 1000 kWh). Opzegkosten $150. ACTIE mei/juni 2027: vergelijken op PowerToChoose
+  (simpel vast tarief, geen bill credits); besparing ±$15–20/mnd. Markt okt 2026: gemiddeld 13,4 ct all-in.
+- Water Cinco MUD (Inframark): met creditcard ±3% "Utility Payment Fee"; via bank/e-check meestal gratis (±$40/jaar).
+- Gas CenterPoint: geen keuze in aanbieder.
