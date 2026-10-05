@@ -68,7 +68,7 @@ REGELS = [
     (r"target", "uitgave", "Boodschappen", "Target (boodschappen + huishouden)"),
     (r"amazon prime|prime video", "uitgave", "Abonnementen", "Streaming, software, nieuws"),
     (r"amazon|amzn", "uitgave", "Online winkelen", "Amazon"),
-    (r"hellofresh|green ?chef|home ?chef|factor", "uitgave", "Eten & drinken", "Maaltijdboxen"),
+    (r"hellofresh|green ?chef|home ?chef|factor|marleyspoon", "uitgave", "Eten & drinken", "Maaltijdboxen"),
     # Specifieke uitzonderingen vóór de brede eten-regel (Square/Toast-terminals worden ook door niet-horeca gebruikt).
     (r"aramark methodist|amk hmw cafe", "uitgave", "Zorg", "Ziekenhuis (bevalling)"),
     (r"spacecntrhoustoncafe|armk dp concessions", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
@@ -94,7 +94,7 @@ REGELS = [
     # --- zorg ---
     (r"fyzical|methodist|jenkins|obstet|blue fish|labcorp|quest|cvs|walgreens|aeroflow|med\*|phr\*|mychart|ultrasound|childrens hosp|access total care|pt billing|chop", "uitgave", "Zorg", "Zorg & medisch"),
     # --- reizen ---
-    (r"vrbo|vacasa|virgin cruises|trip\.com|recreation\.gov|state parks|tex state pks|nm state parks|hipcamp|amtrak|klm|transavia|booking|bkg\*|hotel|hilton|radisson|hyatt|aloft|sleep inn|bluegreen|resort|glamping|houston airports|iah |atl airp|safari|beekse bergen|airbnb|ns internationaal|big bend|wnpa|carlsbad|eilan|river forest|breeze|marleyspoo|sentinel|canada|toronto|mississauga|seaworld", "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten"),
+    (r"vrbo|vacasa|virgin cruises|trip\.com|recreation\.gov|state parks|tex state pks|nm state parks|hipcamp|amtrak|klm|transavia|booking|bkg\*|hotel|hilton|radisson|hyatt|aloft|sleep inn|bluegreen|resort|glamping|houston airports|iah |atl airp|safari|beekse bergen|airbnb|ns internationaal|big bend|wnpa|carlsbad|eilan|river forest|breeze|sentinel|canada|toronto|mississauga|seaworld", "uitgave", "Reizen & uitjes", "Reizen, hotels, vluchten"),
     (r"space cent|museum|aquarium|symphony|polo club|axs\.com|stubhub|nature cent|varner hogg|special event|texas gun club|land van ooit|monkey town", "uitgave", "Reizen & uitjes", "Uitjes & tickets"),
     # --- persoonlijk & huis ---
     (r"patagonia|tecovas|tommy hilfiger|hollister|poshmark|tjmaxx|uptown cheapskate|backcountry|ryzon|sephora|warby parker|showroompriv|veepee|sellhelp|vinted", "uitgave", "Kleding & persoonlijk", "Kleding, schoenen, verzorging"),
@@ -219,7 +219,7 @@ def main():
     for masker, waarden in regels_fam:
         t.loc[fam & masker, ["soort", "categorie", "subcategorie"]] = waarden
     # Uit eten buiten de regio Katy/Houston = eten tijdens reizen en uitjes (apart van dagelijks uit eten).
-    lokaal = t["omschrijving"].str.contains(r"katy|houston|sugar ?land|fulshear|richmond|cypress|spring tx|cinco r|^knab:", case=False, regex=True)
+    lokaal = t["omschrijving"].str.contains(r"katy|houston|sugar ?land|fulshear|richmond|cypress|spring tx|cinco r|fadis|mason rd|daily gather|^knab:", case=False, regex=True)
     reis = (t["subcategorie"] == "Uit eten & koffie") & (~lokaal | t["omschrijving"].str.contains(r"\bIAH\b|airport", case=False, regex=True))
     t.loc[reis, ["categorie", "subcategorie"]] = ["Reizen & uitjes", "Eten tijdens reizen & uitjes"]
     # Werkreis Jef naar Toronto (8-16 jan 2026): via het salaris vergoed (bevestigd door Myrthe).

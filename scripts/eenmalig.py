@@ -21,7 +21,8 @@ def markeer(t):
     inrichting = (t["categorie"] == "Huis & inrichting") & (datum < "2026-03-01")   # eerste weken na de verhuizing
     eenmalig = t["subcategorie"].isin(EENMALIG_SUB) | oms.str.contains(EENMALIG_TEKST, case=False, regex=True) | inrichting
     europa = (t["subcategorie"] == "Pinnen tijdens vakantie Europa") | \
-        ((t["bank"] == "Knab") & ((t["bedrag_orig"] + 2711.77).abs() < 0.01))   # Oostduinkerke via PayPal
+        ((t["bank"] == "Knab") & ((t["bedrag_orig"] + 2375.00).abs() < 0.01)) | \
+        (oms.str.contains("HOUSTON AIRPORTS RESER", case=False) & (datum >= "2026-07-01"))   # Oostduinkerke (PayPal) en parkeren IAH zomer
     groot = (t["categorie"] == "Reizen & uitjes") & (oms.str.contains(GROTE_VAKANTIE_TEKST, case=False, regex=True) | europa)
     t = t.copy()
     t["eenmalig"] = eenmalig & (t["soort"] == "uitgave")

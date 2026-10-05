@@ -134,3 +134,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Vakanties komende maanden kosten niets extra: Florida (dec 2026) en skiën (mrt 2027) worden betaald door de ouders
   van Myrthe; Parijs (feb 2027: KLM $2.305 en hotel €250) is al betaald in september. Grote vakantie in de
   vooruitblik = $0.
+- Tot Myrthe werk heeft: geen vakanties en geen weekendjes weg (hotels, campings) in de vooruitblik (= $0). Uitjes,
+  tickets en eten onderweg tellen wel mee. De vooruitblik toont alleen het echte saldo op de rekening; de
+  aflossing telt gewoon als uitgave (wens Myrthe: geen rekening houden met vermogensopbouw).
+- Marley Spoon is een maaltijdbox (stond eerst bij Reizen); Fadi's en Daily Gather zijn uit eten in Katy/Houston.

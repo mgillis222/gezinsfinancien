@@ -154,7 +154,9 @@ VB = {
     "variabel": [
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
         {"id": "eten", "naam": "Eten & drinken: uit eten, eten op reis, bezorging, maaltijdboxen", "bedrag": gem(vol.categorie == "Eten & drinken")},
-        {"id": "reizen", "naam": "Reizen & uitjes: weekendjes, uitjes, eten onderweg", "bedrag": gem(vol.categorie == "Reizen & uitjes")},
+        {"id": "reizen", "naam": "Uitjes, tickets en eten onderweg", "bedrag": gem((vol.categorie == "Reizen & uitjes") & (vol.subcategorie != "Reizen, hotels, vluchten"))},
+        # Tot Myrthe werk heeft geen vakanties of weekendjes weg (5 okt 2026). Historisch gemiddelde staat in de naam.
+        {"id": "weekendjes", "naam": f"Weekendjes weg: hotels, campings (voorheen gem. ${gem((vol.categorie == 'Reizen & uitjes') & (vol.subcategorie == 'Reizen, hotels, vluchten')):.0f}; nu niet gepland)", "bedrag": 0},
         # Komende maanden geen grote vakantie die geld kost (Myrthe, 5 okt 2026): Florida (dec) en skiën (mrt) betalen
         # de ouders van Myrthe, Parijs (feb) is al betaald. Ter vergelijking: deze zomer ±GROTE_VAK_JAAR.
         {"id": "grotevak", "naam": "Grote vakantie (niets gepland: Florida en skiën betaald door ouders, Parijs al betaald)", "bedrag": 0},
