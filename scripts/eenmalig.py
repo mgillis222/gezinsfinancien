@@ -9,7 +9,6 @@ import pandas as pd
 EENMALIG_SUB = {
     "Pop-up camper", "Camper & kampeerspullen (Amazon)", "Klussen (Amazon)",
     "Baby & zwangerschap (Amazon)", "Geboortekaartjes Bill", "Paspoort Bill", "Ziekenhuis (bevalling)",
-    "Bijdrage ouders boodschappen (bezoek mei)",   # eenmalige meevaller, verlaagt de boodschappen niet structureel
 }
 EENMALIG_TEKST = r"GANDER RV|CAMPING WORLD|BABYLIST|BUGABOO|ARTIPOPPE|TX BIRTH DEATH|CONSULATE GEN BELGIUM|PRACTICE WITH BELL"
 GROTE_VAKANTIE_TEKST = r"KLM|VRBO|TRANSAVIA|NS INTERNATIONAAL|BOOKING"

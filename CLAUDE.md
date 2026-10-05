@@ -128,7 +128,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Freelance Myrthe (Picnic, €15.128 uitbetaald 19 en 22 mei) is in het overzicht gelijk verdeeld over februari,
   maart en april, de maanden van het werk. Geen belastingreserve nodig (wens Myrthe).
 - Vooruitblik = structurele maand: gemiddelde jan–aug zonder eenmalige posten (camper, babyuitzet, geboortekaartjes,
-  paspoort Bill, inrichting na verhuizing jan–feb, bijdrage ouders mei) en zonder grote vakantie; die laatste telt als
+  paspoort Bill, inrichting na verhuizing jan–feb) en zonder grote vakantie. De bijdrage van de ouders (mei) verlaagt
+  de boodschappen wél: hun extra boodschappen tijdens het bezoek zaten in het bedrag. Grote vakantie telt als
   jaarbudget ÷ 12 (zomer 2026: ±$6.600). Regels in scripts/eenmalig.py.
 - Vakanties komende maanden kosten niets extra: Florida (dec 2026) en skiën (mrt 2027) worden betaald door de ouders
   van Myrthe; Parijs (feb 2027: KLM $2.305 en hotel €250) is al betaald in september. Grote vakantie in de
