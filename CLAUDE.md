@@ -158,3 +158,11 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
   (simpel vast tarief, geen bill credits); besparing ±$15–20/mnd. Markt okt 2026: gemiddeld 13,4 ct all-in.
 - Water Cinco MUD (Inframark): met creditcard ±3% "Utility Payment Fee"; via bank/e-check meestal gratis (±$40/jaar).
 - Gas CenterPoint: geen keuze in aanbieder.
+
+## Boodschappenwijzer (12 okt 2026)
+- Pagina: `dashboard/boodschappen.html` → artifact https://claude.ai/artifact/KZ5yZpXVR4nbqqc3NYwQkG (prijzen met de hand samengesteld uit de zoekresultaten van 12 okt).
+- `scripts/boodschappen.py` voegt Kroger-bonnen (`data/bestellingen/kroger_artikelen_2026.csv`, 605 regels uit 37 bonnen) en Gmail-artikelen samen in productgroepen; Target-kortingen op ordniveau worden naar rato verdeeld. Uitvoer: `data/verwerkt/boodschappen_*.csv`.
+- Prijzen ophalen: Kroger via verborgen iframes van `/search` (traag, ±10 s per product, pane vooraan zetten); Target via redsky `plp_search_v2` (store 1908, zip 77494); H-E-B via `__NEXT_DATA__` van `/search?q=` (context ONLINE); Trader Joe's via `/api/graphql` SearchProducts met storeCode 429; Costco alleen als tabblad vooraan staat. ALDI (aldi.us, Instacart) vraagt om in te loggen.
+- Kaarten: 9862 en 6010 = 1,5% overal; 7970 Freedom Unlimited = 1,5% + 3% restaurants/drogist; 3591 Target Circle Card = 5% bij Target; 9708 betaalrekening = 0%.
+- Kroger fuel points: 1 pt/$ (bij pickup-acties vaak 3-4x); 100 pt = 10¢/gallon, max 1.000 pt en 35 gal per keer. Pagina: kroger.com/points/summary.
+- Open: ALDI-prijzen (na inloggen), wekelijkse folder-check op woensdag (nog niet ingesteld), Costco-lidmaatschap niet gevonden in de afschriften.
