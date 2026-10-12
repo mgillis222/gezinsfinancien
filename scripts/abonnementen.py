@@ -45,8 +45,14 @@ STATUS = [
     ("Prime Video huur/kanaal", "eenmalig", 0, "Losse huur in augustus."),
 ]
 
+# Herinneringen voor abonnementen en contracten. "datum" (JJJJ-MM-DD) is de dag waarop het afloopt of verlengt;
+# de maandelijkse taak "abonnementen-herinnering" meldt alles wat binnen 45 dagen valt. Sorteer op datum.
 BINNENKORT = [
-    {"wanneer": "24 dec", "wat": "DashPass is gratis via Chase tot 24 december; daarna $9,99 per maand als je het niet stopt."},
+    {"datum": "2026-12-24", "wanneer": "24 dec", "wat": "DashPass is gratis via Chase tot 24 december; daarna $9,99 per maand als je het niet stopt."},
+    {"datum": "2027-03-22", "wanneer": "mrt 2027", "wat": "Costco-lidmaatschap verlengt (gekocht via Groupon voor $65). Zoek eerst een nieuwe Groupon-deal."},
+    {"datum": "2027-07-03", "wanneer": "mei–jun 2027", "wat": "Stroomcontract Gexa loopt af op 3 juli; vergelijk in mei/juni een nieuw contract (anders duurder variabel tarief)."},
+    {"datum": "2027-09-30", "wanneer": "30 sep 2027", "wat": "Google One verlengt (€19,99 per jaar)."},
+    {"datum": "2028-01-15", "wanneer": "jan 2028", "wat": "NordVPN verlengt voor $150 (2 jaar). Opzeggen of een nieuwe aanbieding zoeken."},
 ]
 
 
