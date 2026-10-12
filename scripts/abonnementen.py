@@ -10,7 +10,7 @@ DIENSTEN = [
     ("netflix", "Netflix (NL)"), ("videoland", "Videoland (NL)"), ("npo", "NPO Start Plus (NL)"),
     ("prime video uk", "Prime Video (NL, via Knab)"), ("amazon prime", "Amazon Prime (VS)"), ("prime video", "Prime Video huur/kanaal"),
     ("podimo", "Podimo (NL)"), ("spotify", "Spotify"), ("storytel", "Storytel (NL)"), ("hbo", "HBO Max"),
-    ("disney", "Disney+ / Hulu"), ("nord", "NordVPN"), ("consumentenbond", "Consumentenbond"), ("correspondent", "De Correspondent"),
+    ("disney", "Disney+ / Hulu"), ("groupon", "Costco-lidmaatschap (via Groupon)"), ("nord", "NordVPN"), ("consumentenbond", "Consumentenbond"), ("correspondent", "De Correspondent"),
     ("strava|koen", "Strava (via Koen)"), ("international card|ics", "ICS-creditcard (ChatGPT + jaarbijdrage)"),
     ("apple", "Apple (iCloud e.d.)"), ("canva", "Canva"), ("github", "GitHub"), ("coursera", "Coursera"), ("google", "Google One"),
 ]
@@ -32,6 +32,7 @@ STATUS = [
     ("Apple (iCloud e.d.)", "loopt", 2.99, "Elke maand rond de 28e."),
     ("NordVPN", "jaarlijks", 87.87 / 24, "Twee jaar betaald in januari 2026 ($87,87). Verlengt in januari 2028 voor $150."),
     ("Strava (via Koen)", "jaarlijks", 69.23 / 12, "Jaarabonnement, in maart aan Koen betaald."),
+    ("Costco-lidmaatschap (via Groupon)", "jaarlijks", 65 / 12, "Gekocht via Groupon op 22 maart 2026 ($65). Verlengt in maart 2027; kijk dan weer naar een Groupon-deal."),
     ("De Correspondent", "jaarlijks", 29.56 / 12, "Jaarlid, betaald in juni."),
     ("Google One", "jaarlijks", 19.99 * 1.17 / 12, "€19,99 per jaar via PayPal, verlengt 30 sep 2027."),
     ("ICS-creditcard (ChatGPT + jaarbijdrage)", "jaarlijks", 28 * 1.17 / 12, "ChatGPT liep tot en met maart (gestopt); alleen de jaarbijdrage van €28 blijft."),

@@ -349,6 +349,9 @@ def main():
     # YMCA-lidmaatschap (sportschool, elke 1e van de maand $129, sinds aug $132,15) = vaste last; zwemlessen blijven Kinderen.
     ymca = t["omschrijving"].str.contains("YMCA", case=False) & t["bedrag_usd"].round(2).isin([-129.00, -132.15])
     zet(ymca, "uitgave", "Sport & hobby", "Sportschool YMCA (lidmaatschap)")
+    # Costco-lidmaatschap via Groupon ($65, 22 maart; bevestigd door Myrthe). Jaarlijks, verlengt maart 2027.
+    costco = t["omschrijving"].str.contains("groupon", case=False) & (t["bedrag_usd"].round(2) == -65.00)
+    zet(costco, "uitgave", "Abonnementen", "Costco-lidmaatschap (via Groupon)")
     # Huur van februari is per ongeluk te laat betaald (2 maart). Toewijzen aan februari (bevestigd door Myrthe).
     feb_huur = (t["subcategorie"] == "Huur Cottondale Ct") & (t["datum"] == "2026-03-02")
     t.loc[feb_huur, "omschrijving"] = t.loc[feb_huur, "omschrijving"] + " (huur februari, te laat betaald op 2 mrt)"
