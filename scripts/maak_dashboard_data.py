@@ -155,7 +155,8 @@ VB = {
     "variabel": [
         {"id": "boodschappen", "naam": "Boodschappen (incl. Target)", "bedrag": gem(vol.categorie == "Boodschappen")},
         # Maaltijdboxen zijn gestopt (HelloFresh aug, Green Chef 1 okt 2026) en tellen niet meer mee.
-        {"id": "eten", "naam": "Eten & drinken: uit eten, koffie, lunch Jef (maaltijdboxen gestopt)", "bedrag": gem((vol.categorie == "Eten & drinken") & (vol.subcategorie != "Maaltijdboxen"))},
+        # Nespresso-machine verkocht (laatste capsules mei 2026), dus capsules tellen ook niet meer mee.
+        {"id": "eten", "naam": "Eten & drinken: uit eten, koffie, lunch Jef (maaltijdboxen en Nespresso gestopt)", "bedrag": gem((vol.categorie == "Eten & drinken") & (vol.subcategorie != "Maaltijdboxen") & ~vol.omschrijving.str.contains("nespresso", case=False))},
         {"id": "reizen", "naam": "Uitjes, tickets en eten onderweg", "bedrag": gem((vol.categorie == "Reizen & uitjes") & (vol.subcategorie != "Reizen, hotels, vluchten"))},
         # Tot Myrthe werk heeft geen vakanties of weekendjes weg (5 okt 2026). Historisch gemiddelde staat in de naam.
         {"id": "weekendjes", "naam": f"Weekendjes weg: hotels, campings (voorheen gem. ${gem((vol.categorie == 'Reizen & uitjes') & (vol.subcategorie == 'Reizen, hotels, vluchten')):.0f}; nu niet gepland)", "bedrag": 0},
