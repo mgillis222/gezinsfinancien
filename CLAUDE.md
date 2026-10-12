@@ -166,3 +166,4 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Kaarten: 9862 en 6010 = 1,5% overal; 7970 Freedom Unlimited = 1,5% + 3% restaurants/drogist; 3591 Target Circle Card = 5% bij Target; 9708 betaalrekening = 0%.
 - Kroger fuel points: 1 pt/$ (bij pickup-acties vaak 3-4x); 100 pt = 10¢/gallon, max 1.000 pt en 35 gal per keer. Pagina: kroger.com/points/summary.
 - Open: wekelijkse folder-check staat als geplande taak "boodschappen-folder-check" (woensdag 8:00), Costco-lidmaatschap gekocht via Groupon ($65, 22 maart 2026, verlengt maart 2027).
+- Alcoholvrij bier: Myrthe wil ALTIJD horen als goed alcoholvrij bier ergens goedkoop in de aanbieding is (staat in de woensdag-check). Referentie per blik 12 oz: Athletic $1,67 (actie $9,99/6), Michelob Ultra Zero 12-pack H-E-B $15,62 = $1,30 (normale prijs), Heineken 0.0 12-pack $1,43, Corona NA $1,42. ALDI verkoopt online geen alcoholvrij bier.
