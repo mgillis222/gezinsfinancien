@@ -169,3 +169,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Alcoholvrij bier: Myrthe wil ALTIJD horen als goed alcoholvrij bier ergens goedkoop in de aanbieding is (staat in de woensdag-check). Referentie per blik 12 oz: Athletic $1,67 (actie $9,99/6), Michelob Ultra Zero 12-pack H-E-B $15,62 = $1,30 (normale prijs), Heineken 0.0 12-pack $1,43, Corona NA $1,42. ALDI verkoopt online geen alcoholvrij bier.
 - Abonnementen: Myrthe wil altijd herinnerd worden aan abonnementen die ze moet herzien. Herinneringen staan met datum in `BINNENKORT` in `scripts/abonnementen.py` (nieuwe toevoegen!); de geplande taak "abonnementen-herinnering" (elke 1e van de maand, 9:00) meldt alles binnen 45 dagen en zoekt in Gmail naar nieuwe abonnementen/proefperiodes.
 - Koffie: Nespresso-machine verkocht (laatste capsules mei 2026); ze gebruikt nu koffiebonen. Nespresso telt niet meer mee in de vooruitblik.
+
+## Verwacht (15 okt 2026)
+- Teruggave Nederlandse belasting: ±€9.000 (≈ $10.100), datum en rekening nog onbekend. Eenmalig: niet in de structurele vooruitblik, wel als buffer tot Myrthe werk heeft.
+- Vraag open: loopt de uitkering van Lincoln (aug $2.276, sep $2.130) door, en tot wanneer? Staat nog niet in de vooruitblik.
