@@ -173,3 +173,4 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 ## Verwacht (15 okt 2026)
 - Teruggave Nederlandse belasting: ±€9.000 (≈ $10.100), datum en rekening nog onbekend. Eenmalig: niet in de structurele vooruitblik, wel als buffer tot Myrthe werk heeft.
 - Vraag open: loopt de uitkering van Lincoln (aug $2.276, sep $2.130) door, en tot wanneer? Staat nog niet in de vooruitblik.
+- Afschriften ophalen (besloten 15 okt 2026): maandelijks samen in het ingebouwde browservenster. Myrthe logt zelf in (wachtwoorden via passwords.google.com; Claude vult nooit wachtwoorden in), Claude downloadt de CSV's na haar akkoord. Eerstvolgende keer: na 20 okt (afschrift 9862), herinnering gepland op 21 okt.
