@@ -173,6 +173,9 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
   <section id="spaarplan">
     <header><h2>Spaarplan met het salaris van Myrthe</h2><p class="sub">Het salaris van Jef (plus huur Den Haag en bijdrage ouders) is het leefgeld. Het hele nettosalaris van Myrthe bij Babylist gaat naar vakanties en sparen/beleggen. Doel: €100.000 per jaar, zonder 401(k) en aflossing.</p></header>
     <div class="tablewrap" style="max-height:none"><table id="sptable"></table></div>
+    <div class="card"><h3>Doel: appartement Antwerpen</h3><p class="sub small" id="aw-sub"></p>
+      <div class="tablewrap" style="max-height:none;margin-top:10px"><table id="awtable"></table></div>
+      <ul id="aw-noten" class="small" style="margin:10px 0 0;padding-left:1.1em;display:grid;gap:6px"></ul></div>
     <div class="grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
       <div class="card"><h3>Belasting voor het hele gezin</h3><div id="sp-gezin" class="small"></div></div>
       <div class="card"><h3>Zorgverzekering: Fugro of Babylist?</h3><div id="sp-zorg" class="small"></div></div>
@@ -489,6 +492,18 @@ if (D.spaarplan) {
     `<p class="small muted" style="margin-top:8px">Haar salaris valt bovenop dat van Jef, dus bijna helemaal in de schijf van ${sc[0].marge_tarief}%. Texas heft geen inkomstenbelasting.</p>`;
   $("#sp-zorg").innerHTML = S.zorg.map(z => `<div class="line"><span><b>${esc(z.plan)}</b><br><span class="muted">premie ${usd(z.premie)}/jaar · eigen risico ${esc(z.eigen_risico)}${z.hsa_werkgever ? ` · Babylist legt ${usd(z.hsa_werkgever)} op de HSA` : ""}</span></span><span class="num" style="color:${z.voordeel > 0 ? "var(--good)" : "var(--fg-2)"}">${z.voordeel ? "+" + usd(z.voordeel) + "/jaar" : "nu"}</span></div>`).join("") +
     `<p class="small muted" style="margin-top:8px">Voordeel = minder premie en belasting, plus de HSA-bijdrage van Babylist, voor het hele gezin. Wat je bij ziekte zelf betaalt, is niet meegerekend: bij het Silver-plan betaal je de eerste $4.000 per jaar zelf (uit de HSA). Overstappen kan bij jouw start; Jef stopt dan met de Fugro-verzekering en (bij de HSA) met zijn zorg-FSA.</p>`;
+  if (S.antwerpen) {
+    const AW = S.antwerpen, I = AW.instellingen;
+    $("#aw-sub").textContent = `Nu ±${eur(I.nu_eur)}. Beginnen met zoeken bij ${eur(I.zoeken_eur)}, kopen bij ${eur(I.doel_eur)} all-in (registratierechten en notaris inbegrepen), cash. Spaargeld groeit met ±${String(I.rente * 100).replace(".", ",")}% rente.`;
+    $("#awtable").innerHTML = `<thead><tr><th>Salaris Myrthe</th><th style="text-align:right">Sparen per maand</th><th style="text-align:right">Zoeken (${eur(I.zoeken_eur)})</th><th style="text-align:right">Kopen (${eur(I.doel_eur)})</th><th style="text-align:right">Met teruggave en Silver-zorgplan</th></tr></thead><tbody>` +
+      AW.rijen.map(r => `<tr><td>${usd(r.bruto)}</td><td class="num" style="text-align:right">${eur(r.per_maand_eur)}</td><td class="num" style="text-align:right"><b>${r.basis.zoeken}</b></td><td class="num" style="text-align:right"><b>${r.basis.doel}</b></td><td class="num" style="text-align:right">${r.plus.zoeken} · ${r.plus.doel}</td></tr>`).join("") + "</tbody>";
+    $("#aw-noten").innerHTML = [
+      `In België teken je eerst het compromis (meestal 10% voorschot) en ±4 maanden later de akte (de rest). Begin je met zoeken bij ${eur(I.zoeken_eur)}, dan spaar je tijdens zoeken en wachten op de akte meestal de rest bij elkaar.`,
+      `Kom je aan het eind toch iets tekort, dan kan een korte lening van je ouders het gat overbruggen.`,
+      `Laatste kolom: met de belastingteruggave van ${eur(AW.teruggave_eur)} en de overstap naar het Silver-zorgplan van Babylist. Bonussen zijn nergens meegerekend en maken het sneller.`,
+      `Geld dat binnen een paar jaar nodig is, houden mensen meestal in euro's en met weinig risico (spaarrekening, deposito, staatsobligaties). Laat de keuze en de belasting checken door KPMG.`
+    ].map(t => `<li>${t}</li>`).join("");
+  }
   const A = S.aannames;
   $("#sp-aannames").innerHTML = [
     `Leefgeld volgens jouw begroting: ${usd(S.budget_inkomen)} inkomen, ${usd(S.budget_uitgaven)} uitgaven (abonnementen $250, kleding $100, boodschappen $1.060). Saldo ${usd(S.budget_saldo)}: het salaris van Jef dekt precies het leefgeld.`,

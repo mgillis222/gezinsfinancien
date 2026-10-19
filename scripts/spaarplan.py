@@ -141,10 +141,57 @@ def scenario(bruto):
     }
 
 
+# --- Doel: appartement Antwerpen voor schoonmoeder (Myrthe, 19 okt 2026) ---
+ANTWERPEN = {
+    "nu_eur": 100_000,         # huidig spaargeld incl. schenking ouders, volgens Myrthe
+    "zoeken_eur": 250_000,     # vanaf dit bedrag beginnen met zoeken (compromis duurt even)
+    "doel_eur": 300_000,       # all-in, incl. registratierechten en notaris; cash, geen lening
+    "start": (2026, 12),       # eerste volle maand met salaris Myrthe
+    "rente": 0.025,            # gemiddeld op spaargeld/obligaties, per jaar
+    "teruggave": ((2027, 4), 9_000),  # NL-belastingteruggave, datum geschat
+}
+
+
+def doel_antwerpen(scenarios, zorg_voordeel_usd):
+    """Per salarisscenario: wanneer €250.000 (zoeken) en €300.000 (kopen) gehaald worden."""
+    a = ANTWERPEN
+
+    def maand_naam(y, m):
+        return ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"][m - 1] + f" {y}"
+
+    def sim(per_maand, met_extra):
+        b, (y, m), uit = a["nu_eur"], a["start"], {}
+        for _ in range(120):
+            if met_extra and (y, m) == a["teruggave"][0]:
+                b += a["teruggave"][1]
+            b = b * (1 + a["rente"] / 12) + per_maand
+            for k in ("zoeken", "doel"):
+                if b >= a[k + "_eur"] and k not in uit:
+                    uit[k] = maand_naam(y, m)
+            if len(uit) == 2:
+                break
+            m += 1
+            if m > 12:
+                y, m = y + 1, 1
+        return uit
+
+    rijen = []
+    for sc in scenarios:
+        basis = sc["sparen_maand"] / KOERS
+        extra = basis + zorg_voordeel_usd / 12 / KOERS
+        rijen.append({"bruto": sc["bruto"], "per_maand_eur": round(basis), "basis": sim(basis, False),
+                      "plus": sim(extra, True), "per_maand_plus_eur": round(extra)})
+    return {"instellingen": {k: v for k, v in a.items() if k not in ("start", "teruggave")},
+            "teruggave_eur": a["teruggave"][1], "rijen": rijen}
+
+
 def maak():
     inkomen = sum(BUDGET["inkomen"].values())
     uitgaven = sum(BUDGET["vast"].values()) + sum(BUDGET["variabel"].values())
+    scen = [scenario(b) for b in SCENARIO_BRUTO]
+    zorg = zorg_vergelijking(SCENARIO_BRUTO[0])
     return {
+        "antwerpen": doel_antwerpen(scen, max(z["voordeel"] for z in zorg)),
         "budget": BUDGET, "budget_inkomen": inkomen, "budget_uitgaven": uitgaven, "budget_saldo": inkomen - uitgaven,
         "scenarios": [scenario(b) for b in SCENARIO_BRUTO],
         "zorg": zorg_vergelijking(SCENARIO_BRUTO[0]),
@@ -163,4 +210,5 @@ if __name__ == "__main__":
         print(s)
     for z in d["zorg"]:
         print(z)
+    print(d["antwerpen"])
     (MAP / "data" / "verwerkt" / "spaarplan.json").write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
