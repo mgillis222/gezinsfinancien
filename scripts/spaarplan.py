@@ -37,6 +37,7 @@ JEF = {
 
 # --- Zorgverzekering: alternatief via Babylist (benefit guide 2025, gezin, per maand) ---
 BABYLIST_ZORG = {
+    "Platinum PPO": {"premie": (875.11 + 94.57) * 12, "hsa_werkgever": 0, "eigen_risico": "$0", "max": "$7.200 gezin"},
     "Gold PPO": {"premie": (698.05 + 47.46) * 12, "hsa_werkgever": 0, "eigen_risico": "$500 / $1.000 gezin", "max": "$9.000 gezin"},
     "Silver HDHP + HSA": {"premie": (389.25 + 47.46) * 12, "hsa_werkgever": 2_000, "eigen_risico": "$2.000 / $4.000 gezin", "max": "$8.000 gezin"},
 }
