@@ -35,6 +35,13 @@ JEF = {
     "zorgpremie": (432.56 + 37.91) * 26,  # Medical $800 Deductible Plan + Dental Enhanced Gold, gezin ($12.232)
 }
 
+# --- Zorgverzekering: andere Fugro-plannen (2024 Benefits Summary × 1,05² voor 2026; PPO-tarief klopt dan exact
+#     met de loonstrook: $392,35 × 1,1025 = $432,56). Gold en Silver zijn HSA-plannen. ---
+FUGRO_ZORG = {
+    "Gold (HSA)": {"premie": (129.43 * 1.1025 + 37.91) * 26, "hsa_werkgever": 500, "eigen_risico": "$1.750 / $3.500 gezin", "max": "$8.000 gezin"},
+    "Silver (HSA)": {"premie": (46.37 * 1.1025 + 37.91) * 26, "hsa_werkgever": 750, "eigen_risico": "$4.500 / $9.000 gezin", "max": "$13.100 gezin"},
+}
+
 # --- Zorgverzekering: alternatief via Babylist (benefit guide 2025, gezin, per maand) ---
 BABYLIST_ZORG = {
     "Platinum PPO": {"premie": (875.11 + 94.57) * 12, "hsa_werkgever": 0, "eigen_risico": "$0", "max": "$7.200 gezin"},
@@ -80,7 +87,10 @@ def gezin(myrthe_bruto, myrthe_401k_pct=MYRTHE_401K_PCT, zorg=None):
     j, m = JEF, myrthe_bruto
     j401, m401 = min(j["bruto"] * j["k401_pct"], LIMIET_401K), min(m * myrthe_401k_pct, LIMIET_401K)
     j_premie, j_hcfsa, m_sec125 = j["zorgpremie"], j["hcfsa"], 0
-    if zorg:  # gezin via Babylist: Jef betaalt geen premie meer; bij HSA mag Jef geen gewone zorg-FSA hebben
+    if zorg and zorg.get("via") == "fugro":  # ander Fugro-plan: Jef betaalt die premie (en eventueel HSA)
+        j_premie = zorg["premie"] + zorg.get("hsa_eigen", 0)
+        j_hcfsa = 0 if zorg.get("hsa_werkgever") else j["hcfsa"]
+    elif zorg:  # gezin via Babylist: Jef betaalt geen premie meer; bij HSA mag Jef geen gewone zorg-FSA hebben
         j_premie = 0
         j_hcfsa = 0 if zorg.get("hsa_werkgever") else j["hcfsa"]
         m_sec125 = zorg["premie"] + zorg.get("hsa_eigen", 0)
@@ -95,7 +105,8 @@ def gezin(myrthe_bruto, myrthe_401k_pct=MYRTHE_401K_PCT, zorg=None):
     fica = (SS_TARIEF * min(j["bruto"] + j["bijtelling"] - sec125_j, SS_GRENS) + SS_TARIEF * min(m - m_sec125, SS_GRENS)
             + MEDICARE * medicare_loon + EXTRA_MEDICARE * max(0, medicare_loon - EXTRA_MEDICARE_GRENS))
     return {"belastbaar": belastbaar, "federaal": fed, "fica": fica, "kortingen": kortingen,
-            "j401": j401, "m401": m401, "bruto": j["bruto"] + m, "premies": j_premie + (zorg or {}).get("premie", 0),
+            "j401": j401, "m401": m401, "bruto": j["bruto"] + m,
+            "premies": (zorg["premie"] if zorg else j_premie),
             "hcfsa": j_hcfsa}
 
 
@@ -103,16 +114,16 @@ def zorg_vergelijking(bruto):
     """Wat het gezin per jaar overhoudt bij elk zorgplan, t.o.v. nu (Fugro). Eigen betalingen bij ziekte niet meegeteld."""
     basis = gezin(bruto)
     kosten = lambda g: g["premies"] + g["federaal"] + g["fica"]
-    uit = [{"plan": "Fugro $800 Deductible (nu)", "premie": round(JEF["zorgpremie"]), "voordeel": 0,
-            "eigen_risico": "$800 (gezin: zie Fugro)", "max": "zie Fugro", "hsa_werkgever": 0}]
-    for naam, z in BABYLIST_ZORG.items():
-        z = dict(z)
+    uit = [{"plan": "Fugro PPO (nu)", "premie": round(JEF["zorgpremie"]), "voordeel": 0,
+            "eigen_risico": "$800 / $2.400 gezin", "max": "$4.800 gezin", "hsa_werkgever": 0}]
+    alle = [(f"Fugro {n}", dict(z, via="fugro")) for n, z in FUGRO_ZORG.items()] +            [(f"Babylist {n}", dict(z)) for n, z in BABYLIST_ZORG.items()]
+    for naam, z in alle:
         if z["hsa_werkgever"]:
             z["hsa_eigen"] = HSA_GEZIN - z["hsa_werkgever"]   # rest tot het maximum zelf inleggen (blijft van jullie)
         g = gezin(bruto, zorg=z)
         # zelf ingelegde HSA en zorg-FSA zijn eigen geld dat blijft; alleen premies, belasting en de gift tellen
         voordeel = kosten(basis) - kosten(g) + z["hsa_werkgever"]
-        uit.append({"plan": f"Babylist {naam}", "premie": round(z["premie"]), "voordeel": round(voordeel),
+        uit.append({"plan": naam, "premie": round(z["premie"]), "voordeel": round(voordeel),
                     "eigen_risico": z["eigen_risico"], "max": z["max"], "hsa_werkgever": z["hsa_werkgever"]})
     return uit
 
