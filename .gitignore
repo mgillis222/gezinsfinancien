@@ -7,3 +7,4 @@ data/
 *.xlsx
 dashboard/overzicht.html
 dashboard/boodschappen.html
+dashboard/zorgverzekering.html
