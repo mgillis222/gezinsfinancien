@@ -37,7 +37,7 @@ p { margin: 0; max-width: 68ch }
 header.top { display: grid; gap: 8px; padding-block: 8px 20px }
 .eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700 }
 nav.secties { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line);
-  display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; margin-bottom: 24px; scrollbar-width: none }
+  display: flex; flex-wrap: wrap; gap: 4px; padding-block: 8px; margin-bottom: 24px }
 nav.secties a { color: var(--fg-2); text-decoration: none; font-size: 14px; font-weight: 600; padding: 6px 10px; border-radius: 999px; white-space: nowrap }
 nav.secties a:hover, nav.secties a:focus-visible { background: var(--surface-2); color: var(--fg); outline: none }
 section { display: grid; gap: 16px; padding-block: 28px; border-top: 1px solid var(--line); scroll-margin-top: 56px }
