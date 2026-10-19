@@ -51,8 +51,8 @@ BUDGET = {
     "vast": {"Huur Cottondale Ct": 3100, "Woning NL: rente, VvE, belastingen": 1040, "Aflossing hypotheek NL": 1363,
              "Primrose (Lily + Bill)": 2730, "Ondersteuning schoonmoeder": 898, "Schoonmaak": 289, "Oppas": 30,
              "Tuinman": 57, "Water, stroom, gas": 232, "Sportschool YMCA": 132, "Telefoon & internet": 97,
-             "Verzekeringen": 259, "Abonnementen (zonder Disney+ en Coursera)": 256},
-    "variabel": {"Boodschappen": 1400, "Eten & drinken": 200, "Uitjes, tickets, eten onderweg": 200,
+             "Verzekeringen": 259, "Abonnementen": 250},
+    "variabel": {"Boodschappen": 1060, "Eten & drinken": 200, "Uitjes, tickets, eten onderweg": 200,
                  "Weekendjes weg": 50, "Grote vakantie": 0, "Vervoer": 160, "Kleding & persoonlijk": 100,
                  "Kinderen": 150, "Zorg (eigen betalingen)": 200, "Huis, sport, hobby": 250, "Overig": 50},
 }

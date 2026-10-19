@@ -488,7 +488,7 @@ if (D.spaarplan) {
     `<p class="small muted" style="margin-top:8px">Haar salaris valt bovenop dat van Jef, dus bijna helemaal in de schijf van ${sc[0].marge_tarief}%. Texas heft geen inkomstenbelasting.</p>`;
   const A = S.aannames;
   $("#sp-aannames").innerHTML = [
-    `Leefgeld volgens jouw begroting: ${usd(S.budget_inkomen)} inkomen, ${usd(S.budget_uitgaven)} uitgaven (Disney+ en Coursera gestopt, kleding $100). Het tekort van ${usd(-S.budget_saldo)} per maand gaat eerst van jouw salaris af.`,
+    `Leefgeld volgens jouw begroting: ${usd(S.budget_inkomen)} inkomen, ${usd(S.budget_uitgaven)} uitgaven (abonnementen $250, kleding $100, boodschappen $1.060). Saldo ${usd(S.budget_saldo)}: het salaris van Jef dekt precies het leefgeld.`,
     `Jef: 401(k) ${Math.round(A.jef_401k_pct * 100)}% en zorgverzekering ±${usd(A.jef_zorgpremie)} per jaar zijn geschat. Met zijn loonstrook wordt dit exact.`,
     `Bill: Child Tax Credit ${usd(A.bill_ctc)} per jaar is meegerekend. Lily: met een ITIN komt er ${usd(A.odc)} per jaar bij.`,
     `Niet meegerekend: bonus en aandelen (Babylist en Fugro), de NL-belastingteruggave (±€9.000), Babylist-match op de 401(k) en een HSA via het Silver-plan van Babylist.`,
