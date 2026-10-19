@@ -174,3 +174,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Teruggave Nederlandse belasting: ±€9.000 (≈ $10.100), datum en rekening nog onbekend. Eenmalig: niet in de structurele vooruitblik, wel als buffer tot Myrthe werk heeft.
 - Vraag open: loopt de uitkering van Lincoln (aug $2.276, sep $2.130) door, en tot wanneer? Staat nog niet in de vooruitblik.
 - Afschriften ophalen (besloten 15 okt 2026): maandelijks samen in het ingebouwde browservenster. Myrthe logt zelf in (wachtwoorden via passwords.google.com; Claude vult nooit wachtwoorden in), Claude downloadt de CSV's na haar akkoord. Eerstvolgende keer: na 20 okt (afschrift 9862), herinnering gepland op 21 okt.
+
+## Fase 2: spaarplan (gestart 19 okt 2026)
+- Doel Myrthe: vanaf november werkt zij (verwacht $140.000 bruto per jaar). Zuiniger leven, ruim sparen voor vakanties en ±€100.000 per jaar sparen/beleggen; deel in euro, deel in dollar. Bonus niet meegerekend.
+- Arbeidsvoorwaarden Jef (data/werk/Jef Michielssen - Offer - Signed.pdf, getekend 17 aug 2025): Fugro USA Land, $166.500 basis, tweewekelijks; discretionaire bonus; RSU's tot 15% van basis per jaar (vesten na 3 jaar); 401(k), medisch/dental/vision; 4 weken vakantie; elk jaar 1 retourvlucht naar NL per gezinslid (belast, zolang het tijdelijke werkvisum geldt); KPMG-belastingadvies betaald door Fugro voor 2025 en 2026; tijdelijk werkvisum (intracompany transfer).
+- Geen persoonlijk beleggingsadvies: alleen rekenen, opties uitleggen, plan maken; voor keuzes verwijzen naar KPMG (gratis via Fugro) of een fee-only adviseur met VS-NL-kennis.
