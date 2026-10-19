@@ -123,7 +123,7 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
 
   <nav class="secties" aria-label="Secties">
     <a href="#samenvatting">Samenvatting</a><a href="#maanden">Per maand</a><a href="#trends">Trends</a><a href="#categorieen">Waar gaat het heen</a>
-    <a href="#vooruit">Vanaf oktober</a><a href="#winkels">Winkels in detail</a><a href="#fsa">FSA</a>
+    <a href="#vooruit">Vanaf oktober</a><a href="#spaarplan">Spaarplan</a><a href="#winkels">Winkels in detail</a><a href="#fsa">FSA</a>
     <a href="#abonnementen">Abonnementen</a><a href="#vermogen">Vermogen</a><a href="#twijfel">Nog beoordelen</a>
   </nav>
 
@@ -168,6 +168,15 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
       <div class="kv" id="eenm" style="margin-top:10px"></div></details>
     <div class="card"><h3>Besparingsplan</h3><p class="sub small">Elke regel is onderbouwd met jullie eigen cijfers. Aangevinkt = meegerekend hierboven.</p><div id="vb-save"></div>
       <p class="small muted" style="margin-top:10px">Grote keuzes zoals de woning in NL, de opvang of reizen staan hier niet in. Daar beslissen jullie zelf over; de vooruitblik laat zien wat ze kosten.</p></div>
+  </section>
+
+  <section id="spaarplan">
+    <header><h2>Spaarplan met het salaris van Myrthe</h2><p class="sub">Het salaris van Jef (plus huur Den Haag en bijdrage ouders) is het leefgeld. Het hele nettosalaris van Myrthe bij Babylist gaat naar vakanties en sparen/beleggen. Doel: €100.000 per jaar, zonder 401(k) en aflossing.</p></header>
+    <div class="tablewrap" style="max-height:none"><table id="sptable"></table></div>
+    <div class="grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      <div class="card"><h3>Belasting voor het hele gezin</h3><div id="sp-gezin" class="small"></div></div>
+      <div class="card"><h3>Aannames en wat er nog bij kan komen</h3><ul id="sp-aannames" class="small" style="margin:8px 0 0;padding-left:1.1em;display:grid;gap:6px"></ul></div>
+    </div>
   </section>
 
   <section id="winkels">
@@ -332,7 +341,11 @@ function rekenen() {
   const val = x => { const v = parseFloat($("#vb-" + x.id).value); return isNaN(v) ? 0 : v; };
   const som = l => l.reduce((a, x) => a + val(x), 0);
   const ink = som(VB.inkomen), vast = som(VB.vast), vari = som(VB.variabel);
-  const bes = VB.besparen.filter(aan).reduce((a, b) => a + b.bedrag, 0);
+  // Een besparing op een regel kan nooit meer zijn dan wat er op die regel nog staat
+  // (bijv. kleding zelf op $100 gezet: dan scheelt "kleding naar $0" nog maar $100).
+  const REGEL = { kleding: "kleding", opvang: "opvang" };
+  const effect = b => REGEL[b.id] ? Math.min(b.bedrag, val({ id: REGEL[b.id] })) : b.bedrag;
+  const bes = VB.besparen.filter(aan).reduce((a, b) => a + effect(b), 0);
   const uit = vast + vari - bes, saldo = ink - uit;
   const aflos = VB.vast.filter(x => x.sparen).reduce((a, x) => a + val(x), 0);
   $("#vb-inkomen-tot").textContent = usd(ink); $("#vb-vast-tot").textContent = usd(vast); $("#vb-var-tot").textContent = usd(vari);
@@ -454,4 +467,32 @@ function renderTrends() {
 }
 renderTrends();
 renderMaanden(); renderCats(); renderVooruit(); renderWinkels(); renderFsa(); renderRest();
+
+if (D.spaarplan) {
+  const S = D.spaarplan, sc = S.scenarios, eur = n => "€" + Math.round(n).toLocaleString("nl-NL");
+  const rij = (label, f, cls = "") => `<tr class="${cls}"><td>${label}</td>${sc.map(x => `<td class="num" style="text-align:right">${f(x)}</td>`).join("")}</tr>`;
+  $("#sptable").innerHTML = `<thead><tr><th>Per jaar</th>${sc.map(x => `<th style="text-align:right">Babylist ${usd(x.bruto)}</th>`).join("")}</tr></thead><tbody>` +
+    rij("Bruto salaris", x => usd(x.bruto)) +
+    rij(`401(k) Myrthe (${Math.round(sc[0].k401_pct * 100)}%, gaat naar pensioen)`, x => "−" + usd(x.k401)) +
+    rij("Extra federale belasting door haar salaris", x => "−" + usd(x.federaal)) +
+    rij("Social Security en Medicare", x => "−" + usd(x.fica)) +
+    rij("<b>Netto</b>", x => `<b>${usd(x.netto)}</b>`) +
+    rij("Netto per salaris (26× per jaar)", x => usd(x.netto_salaris)) +
+    rij("Tekort in het leefgeld (begroting Myrthe)", x => x.tekort_leefgeld ? "−" + usd(-x.tekort_leefgeld) : "$0") +
+    rij("Vakanties", x => "−" + usd(x.vakantie)) +
+    rij("<b>Sparen en beleggen</b>", x => `<b>${usd(x.sparen)}</b><br><span class="small muted">${eur(x.sparen_eur)}</span>`) +
+    rij("Per maand", x => usd(x.sparen_maand)) +
+    rij("Per salaris: sparen + vakantie", x => `${usd(x.sparen_salaris)} + ${usd(x.vakantie_salaris)}`) +
+    rij("Deel van het doel (€100.000)", x => `<b>${x.doel_pct}%</b>`) + "</tbody>";
+  $("#sp-gezin").innerHTML = sc.map(x => `<div class="line"><span>Bij ${usd(x.bruto)}: federaal ${usd(x.gezin_federaal)} + premies ${usd(x.gezin_fica)}</span><span class="num">${String(x.gezin_tarief).replace(".", ",")}% van alles</span></div>`).join("") +
+    `<p class="small muted" style="margin-top:8px">Haar salaris valt bovenop dat van Jef, dus bijna helemaal in de schijf van ${sc[0].marge_tarief}%. Texas heft geen inkomstenbelasting.</p>`;
+  const A = S.aannames;
+  $("#sp-aannames").innerHTML = [
+    `Leefgeld volgens jouw begroting: ${usd(S.budget_inkomen)} inkomen, ${usd(S.budget_uitgaven)} uitgaven (Disney+ en Coursera gestopt, kleding $100). Het tekort van ${usd(-S.budget_saldo)} per maand gaat eerst van jouw salaris af.`,
+    `Jef: 401(k) ${Math.round(A.jef_401k_pct * 100)}% en zorgverzekering ±${usd(A.jef_zorgpremie)} per jaar zijn geschat. Met zijn loonstrook wordt dit exact.`,
+    `Bill: Child Tax Credit ${usd(A.bill_ctc)} per jaar is meegerekend. Lily: met een ITIN komt er ${usd(A.odc)} per jaar bij.`,
+    `Niet meegerekend: bonus en aandelen (Babylist en Fugro), de NL-belastingteruggave (±€9.000), Babylist-match op de 401(k) en een HSA via het Silver-plan van Babylist.`,
+    `Huur Den Haag: aangifte in de VS met verrekening van de Nederlandse belasting; gerekend als neutraal. Laat KPMG dit bevestigen.`
+  ].map(t => `<li>${t}</li>`).join("");
+}
 </script>

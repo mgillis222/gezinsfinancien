@@ -216,6 +216,7 @@ trends.sort(key=lambda x: -max(x["a"], x["b"]))
 uit = {"bijgewerkt": pd.Timestamp.today().strftime("%Y-%m-%d"), "volledige_maanden": VOLLEDIG, "maanden": maanden,
        "categorieen": cats, "inkomen": inkomen, "sparen": sparen, "winkels": winkels, "fsa": fsa,
        "abonnementen": abonnementen, "abo_binnenkort": BINNENKORT, "twijfel": twijfel, "lekjes": lekjes, "vooruitblik": VB, "trends": trends, "eenmalig": [{"naam": k, "bedrag": v} for k, v in EENMALIG_LIJST.items()], "grote_vakantie_jaar": GROTE_VAK_JAAR,
+       "spaarplan": __import__("spaarplan").maak(),
        "reserve": {"schenking_eur": 90000, "noot": "Schenking ouders, staat op Belgische spaarrekening op naam van de ouders; op te vragen."},
        "vermogen": [{"naam": "Overwaarde woning NL (geschatte waarde €655.000 − schuld €429.994, okt 2026; bandbreedte €195k–€260k)", "eur": 225006.41},
                     {"naam": "Chase CD (deposito, t/m 30-07-2026)", "usd": 10000},
