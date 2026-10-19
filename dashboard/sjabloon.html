@@ -175,6 +175,7 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
     <div class="tablewrap" style="max-height:none"><table id="sptable"></table></div>
     <div class="grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
       <div class="card"><h3>Belasting voor het hele gezin</h3><div id="sp-gezin" class="small"></div></div>
+      <div class="card"><h3>Zorgverzekering: Fugro of Babylist?</h3><div id="sp-zorg" class="small"></div></div>
       <div class="card"><h3>Aannames en wat er nog bij kan komen</h3><ul id="sp-aannames" class="small" style="margin:8px 0 0;padding-left:1.1em;display:grid;gap:6px"></ul></div>
     </div>
   </section>
@@ -486,10 +487,12 @@ if (D.spaarplan) {
     rij("Deel van het doel (€100.000)", x => `<b>${x.doel_pct}%</b>`) + "</tbody>";
   $("#sp-gezin").innerHTML = sc.map(x => `<div class="line"><span>Bij ${usd(x.bruto)}: federaal ${usd(x.gezin_federaal)} + premies ${usd(x.gezin_fica)}</span><span class="num">${String(x.gezin_tarief).replace(".", ",")}% van alles</span></div>`).join("") +
     `<p class="small muted" style="margin-top:8px">Haar salaris valt bovenop dat van Jef, dus bijna helemaal in de schijf van ${sc[0].marge_tarief}%. Texas heft geen inkomstenbelasting.</p>`;
+  $("#sp-zorg").innerHTML = S.zorg.map(z => `<div class="line"><span><b>${esc(z.plan)}</b><br><span class="muted">premie ${usd(z.premie)}/jaar · eigen risico ${esc(z.eigen_risico)}${z.hsa_werkgever ? ` · Babylist legt ${usd(z.hsa_werkgever)} op de HSA` : ""}</span></span><span class="num" style="color:${z.voordeel > 0 ? "var(--good)" : "var(--fg-2)"}">${z.voordeel ? "+" + usd(z.voordeel) + "/jaar" : "nu"}</span></div>`).join("") +
+    `<p class="small muted" style="margin-top:8px">Voordeel = minder premie en belasting, plus de HSA-bijdrage van Babylist, voor het hele gezin. Wat je bij ziekte zelf betaalt, is niet meegerekend: bij het Silver-plan betaal je de eerste $4.000 per jaar zelf (uit de HSA). Overstappen kan bij jouw start; Jef stopt dan met de Fugro-verzekering en (bij de HSA) met zijn zorg-FSA.</p>`;
   const A = S.aannames;
   $("#sp-aannames").innerHTML = [
     `Leefgeld volgens jouw begroting: ${usd(S.budget_inkomen)} inkomen, ${usd(S.budget_uitgaven)} uitgaven (abonnementen $250, kleding $100, boodschappen $1.060). Saldo ${usd(S.budget_saldo)}: het salaris van Jef dekt precies het leefgeld.`,
-    `Jef: 401(k) ${Math.round(A.jef_401k_pct * 100)}% en zorgverzekering ±${usd(A.jef_zorgpremie)} per jaar zijn geschat. Met zijn loonstrook wordt dit exact.`,
+    `Jef (loonstrook 2–15 okt): 401(k) ${Math.round(A.jef_401k_pct * 100)}% (volle Fugro-bijdrage), zorgverzekering ${usd(A.jef_zorgpremie)} per jaar, FSA's opvang en zorg. Het model komt uit op dezelfde $4.340 netto per salaris als zijn loonstrook.`,
     `Bill: Child Tax Credit ${usd(A.bill_ctc)} per jaar is meegerekend. Lily: met een ITIN komt er ${usd(A.odc)} per jaar bij.`,
     `Niet meegerekend: bonus en aandelen (Babylist en Fugro), de NL-belastingteruggave (±€9.000), Babylist-match op de 401(k) en een HSA via het Silver-plan van Babylist.`,
     `Huur Den Haag: aangifte in de VS met verrekening van de Nederlandse belasting; gerekend als neutraal. Laat KPMG dit bevestigen.`

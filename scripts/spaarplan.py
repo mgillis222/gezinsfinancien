@@ -25,13 +25,20 @@ ODC_PER_KIND = 500                             # Credit for Other Dependents (ki
 LIMIET_401K = 24_500
 HSA_GEZIN = 8_750
 
-# --- Jef (offer letter + FSA-inleg; zorgpremie geschat tot de loonstrook er is) ---
+# --- Jef: loonstrook Fugro 2–15 okt 2026 (data/werk/Loonstrook Jef.pdf), per salaris × 26 ---
 JEF = {
-    "bruto": 166_500,
-    "k401_pct": 0.04,          # "minimum voor de volle Fugro-bijdrage"; controleren op loonstrook
-    "dcfsa": 7_500,            # Dependent Care FSA (gezinsmaximum)
-    "hcfsa": 3_400,            # Health Care FSA
-    "zorgpremie": 6_000,       # SCHATTING gezinsverzekering Fugro per jaar (vóór belasting)
+    "bruto": 166_500,          # $6.404 per salaris
+    "bijtelling": 10.49 * 26,  # imputed income levensverzekering (belast, geen geld)
+    "k401_pct": 0.06,          # $384,24 = 6%: met de Fugro-regeling (100% over 4% + 50% over 2%) de volle bijdrage
+    "dcfsa": 288.46 * 26,      # Dependent Care FSA ($7.500)
+    "hcfsa": 130.76 * 26,      # Health Care FSA ($3.400)
+    "zorgpremie": (432.56 + 37.91) * 26,  # Medical $800 Deductible Plan + Dental Enhanced Gold, gezin ($12.232)
+}
+
+# --- Zorgverzekering: alternatief via Babylist (benefit guide 2025, gezin, per maand) ---
+BABYLIST_ZORG = {
+    "Gold PPO": {"premie": (698.05 + 47.46) * 12, "hsa_werkgever": 0, "eigen_risico": "$500 / $1.000 gezin", "max": "$9.000 gezin"},
+    "Silver HDHP + HSA": {"premie": (389.25 + 47.46) * 12, "hsa_werkgever": 2_000, "eigen_risico": "$2.000 / $4.000 gezin", "max": "$8.000 gezin"},
 }
 
 # --- Myrthe: Babylist ---
@@ -67,22 +74,46 @@ def inkomstenbelasting(belastbaar):
     return belasting
 
 
-def gezin(myrthe_bruto, myrthe_401k_pct=MYRTHE_401K_PCT):
-    """Jaarlijkse belasting en premies voor het hele gezin."""
+def gezin(myrthe_bruto, myrthe_401k_pct=MYRTHE_401K_PCT, zorg=None):
+    """Jaarlijkse belasting en premies voor het hele gezin. zorg=None: gezin verzekerd via Fugro (zoals nu)."""
     j, m = JEF, myrthe_bruto
     j401, m401 = min(j["bruto"] * j["k401_pct"], LIMIET_401K), min(m * myrthe_401k_pct, LIMIET_401K)
-    sec125_j = j["dcfsa"] + j["hcfsa"] + j["zorgpremie"]       # gaat ook van de premiegrondslag af
-    loon_j = j["bruto"] - j401 - sec125_j
-    loon_m = m - m401
+    j_premie, j_hcfsa, m_sec125 = j["zorgpremie"], j["hcfsa"], 0
+    if zorg:  # gezin via Babylist: Jef betaalt geen premie meer; bij HSA mag Jef geen gewone zorg-FSA hebben
+        j_premie = 0
+        j_hcfsa = 0 if zorg.get("hsa_werkgever") else j["hcfsa"]
+        m_sec125 = zorg["premie"] + zorg.get("hsa_eigen", 0)
+    sec125_j = j["dcfsa"] + j_hcfsa + j_premie                # gaat ook van de premiegrondslag af
+    loon_j = j["bruto"] + j["bijtelling"] - j401 - sec125_j
+    loon_m = m - m401 - m_sec125
     belastbaar = max(0, loon_j + loon_m - STANDAARDAFTREK)
     bruto_belasting = inkomstenbelasting(belastbaar)
     kortingen = (CTC_PER_KIND if BILL_SSN else 0) + (ODC_PER_KIND if LILY_ITIN else 0)
     fed = max(0, bruto_belasting - kortingen)
-    medicare_loon = (j["bruto"] - sec125_j) + m
-    fica = (SS_TARIEF * min(j["bruto"] - sec125_j, SS_GRENS) + SS_TARIEF * min(m, SS_GRENS)
+    medicare_loon = (j["bruto"] + j["bijtelling"] - sec125_j) + (m - m_sec125)
+    fica = (SS_TARIEF * min(j["bruto"] + j["bijtelling"] - sec125_j, SS_GRENS) + SS_TARIEF * min(m - m_sec125, SS_GRENS)
             + MEDICARE * medicare_loon + EXTRA_MEDICARE * max(0, medicare_loon - EXTRA_MEDICARE_GRENS))
     return {"belastbaar": belastbaar, "federaal": fed, "fica": fica, "kortingen": kortingen,
-            "j401": j401, "m401": m401, "bruto": j["bruto"] + m}
+            "j401": j401, "m401": m401, "bruto": j["bruto"] + m, "premies": j_premie + (zorg or {}).get("premie", 0),
+            "hcfsa": j_hcfsa}
+
+
+def zorg_vergelijking(bruto):
+    """Wat het gezin per jaar overhoudt bij elk zorgplan, t.o.v. nu (Fugro). Eigen betalingen bij ziekte niet meegeteld."""
+    basis = gezin(bruto)
+    kosten = lambda g: g["premies"] + g["federaal"] + g["fica"]
+    uit = [{"plan": "Fugro $800 Deductible (nu)", "premie": round(JEF["zorgpremie"]), "voordeel": 0,
+            "eigen_risico": "$800 (gezin: zie Fugro)", "max": "zie Fugro", "hsa_werkgever": 0}]
+    for naam, z in BABYLIST_ZORG.items():
+        z = dict(z)
+        if z["hsa_werkgever"]:
+            z["hsa_eigen"] = HSA_GEZIN - z["hsa_werkgever"]   # rest tot het maximum zelf inleggen (blijft van jullie)
+        g = gezin(bruto, zorg=z)
+        # zelf ingelegde HSA en zorg-FSA zijn eigen geld dat blijft; alleen premies, belasting en de gift tellen
+        voordeel = kosten(basis) - kosten(g) + z["hsa_werkgever"]
+        uit.append({"plan": f"Babylist {naam}", "premie": round(z["premie"]), "voordeel": round(voordeel),
+                    "eigen_risico": z["eigen_risico"], "max": z["max"], "hsa_werkgever": z["hsa_werkgever"]})
+    return uit
 
 
 def budget_saldo():
@@ -116,6 +147,7 @@ def maak():
     return {
         "budget": BUDGET, "budget_inkomen": inkomen, "budget_uitgaven": uitgaven, "budget_saldo": inkomen - uitgaven,
         "scenarios": [scenario(b) for b in SCENARIO_BRUTO],
+        "zorg": zorg_vergelijking(SCENARIO_BRUTO[0]),
         "koers": KOERS, "doel_eur": DOEL_EUR, "vakantie": VAKANTIE_PER_JAAR,
         "aannames": {
             "jef_401k_pct": JEF["k401_pct"], "jef_zorgpremie": JEF["zorgpremie"], "myrthe_401k_pct": MYRTHE_401K_PCT,
@@ -129,4 +161,6 @@ if __name__ == "__main__":
     print(f"Begroting: inkomen {d['budget_inkomen']}, uitgaven {d['budget_uitgaven']}, saldo {d['budget_saldo']}")
     for s in d["scenarios"]:
         print(s)
+    for z in d["zorg"]:
+        print(z)
     (MAP / "data" / "verwerkt" / "spaarplan.json").write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
