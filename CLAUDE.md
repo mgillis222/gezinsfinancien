@@ -193,3 +193,8 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Zorg: overstap gezin naar Babylist scheelt per jaar ±$2.200 (Gold PPO) of ±$7.800 (Silver HDHP + HSA, incl. $2.000 HSA-gift; hoger eigen risico $4.000 gezin). Beslissen bij start Myrthe (inschrijven binnen 21 dagen).
 - Doel appartement Antwerpen (schoonmoeder): €300.000 all-in (incl. registratierechten, notaris), cash, geen lening (eventueel kort overbruggen via ouders Myrthe). Zoeken vanaf €250.000. Nu ±€100.000 (incl. schenking). Model: ANTWERPEN in spaarplan.py (2,5% rente, start dec 2026). Kopen: $140k → okt 2029, $155k → jun 2029, $170k → mrt 2029; met teruggave + Silver-zorgplan 4–5 maanden eerder.
 - Pensioen: kritische vergelijking NL/VS gegeven (19 okt). Staatspensioen licht positief door VS-jaren (Social Security-korting ±20% na 2033 mogelijk), werkgeverspensioen ±€12.700/jr minder dan in NL. Voorstel onderdeel "Pensioen" wacht op: geboortejaren, mijnpensioenoverzicht.nl-pdf, laatste NL-brutosalarissen, verwachte verblijfsduur VS.
+
+## Volgende sessie (na 19 okt 2026)
+- Onderdeel "Pensioen" bouwen (plan goedgekeurd? nog bevestigen): staatspensioen AOW/Social Security bij 2/4/10 jaar VS en blijven (ook −20%-variant), 401(k)-groei bij 3% reëel (nu vs maximum) tegenover NL-opbouw, benodigde extra inleg en effect op doel Antwerpen, risico's/KPMG-vragen. Myrthe levert: geboortejaren, mijnpensioenoverzicht.nl-pdf, laatste NL-brutosalarissen, verwachte verblijfsduur.
+- Daarna: vragenlijst voor KPMG (Trump Account Bill, backdoor Roth, AOW vrijwillig vóór dec 2026, afschrijving huis Den Haag, ITIN Lily, Antwerpen, box 3 bij terugkeer) en herinnering Pre-K Lily (Katy ISD, voorjaar 2027).
+- 21 okt: afschriften sep/okt ophalen (herinnering gepland).
