@@ -59,17 +59,25 @@ DOEL_EUR = 100_000
 BILL_SSN = True                # Child Tax Credit
 LILY_ITIN = False              # zonder ITIN geen $500; aanvragen loont
 
+# --- Besluit 21 okt 2026: vanaf 2027 Fugro Gold (gezin) + HSA tot het maximum, geen zorg-FSA meer ---
+ZORG_2027 = dict(FUGRO_ZORG["Gold (HSA)"], via="fugro", hsa_eigen=HSA_GEZIN - FUGRO_ZORG["Gold (HSA)"]["hsa_werkgever"])
+
+# Verzekeringen per maand: GEICO auto $1.870 per half jaar (juni en december), levensverzekering NL €15,59, reisverzekering $54 per jaar
+VERZEKERINGEN = round(1870 * 2 / 12 + 15.59 * KOERS + 54 / 12)
+
 # --- Maandbegroting zoals Myrthe die in het overzicht instelde (19 okt 2026) ---
+# Salaris Jef 9404 = loonstrook met PPO en zorg-FSA; jef_netto_verschil() telt het effect van Gold + HSA erbij.
+# Zorg (eigen betalingen) = 0: doktersrekeningen gaan vanaf 2027 van de HSA.
 BUDGET = {
     "inkomen": {"Salaris Jef (netto)": 9404, "Dependent Care FSA terug": 625, "Huur woning NL (€2.495)": 2801,
                 "Bijdrage ouders": 67},
     "vast": {"Huur Cottondale Ct": 3100, "Woning NL: rente, VvE, belastingen": 1040, "Aflossing hypotheek NL": 1363,
              "Primrose (Lily + Bill)": 2730, "Ondersteuning schoonmoeder": 898, "Schoonmaak": 289, "Oppas": 30,
              "Tuinman": 57, "Water, stroom, gas": 232, "Sportschool YMCA": 132, "Telefoon & internet": 97,
-             "Verzekeringen": 259, "Abonnementen": 250},
+             "Verzekeringen": VERZEKERINGEN, "Abonnementen": 250},
     "variabel": {"Boodschappen": 1060, "Eten & drinken": 200, "Uitjes, tickets, eten onderweg": 200,
                  "Weekendjes weg": 50, "Grote vakantie": 0, "Vervoer": 160, "Kleding & persoonlijk": 100,
-                 "Kinderen": 150, "Zorg (eigen betalingen)": 200, "Huis, sport, hobby": 250, "Overig": 50},
+                 "Kinderen": 150, "Zorg (eigen betalingen)": 0, "Huis, sport, hobby": 250, "Overig": 50},
 }
 
 
@@ -95,6 +103,7 @@ def gezin(myrthe_bruto, myrthe_401k_pct=MYRTHE_401K_PCT, zorg=None):
         j_hcfsa = 0 if zorg.get("hsa_werkgever") else j["hcfsa"]
         m_sec125 = zorg["premie"] + zorg.get("hsa_eigen", 0)
     sec125_j = j["dcfsa"] + j_hcfsa + j_premie                # gaat ook van de premiegrondslag af
+    j_netto = j["bruto"] - j401 - sec125_j                    # wat Jef aan loon overhoudt vóór belasting
     loon_j = j["bruto"] + j["bijtelling"] - j401 - sec125_j
     loon_m = m - m401 - m_sec125
     belastbaar = max(0, loon_j + loon_m - STANDAARDAFTREK)
@@ -107,7 +116,14 @@ def gezin(myrthe_bruto, myrthe_401k_pct=MYRTHE_401K_PCT, zorg=None):
     return {"belastbaar": belastbaar, "federaal": fed, "fica": fica, "kortingen": kortingen,
             "j401": j401, "m401": m401, "bruto": j["bruto"] + m,
             "premies": (zorg["premie"] if zorg else j_premie),
-            "hcfsa": j_hcfsa}
+            "hcfsa": j_hcfsa, "j_netto": j_netto}
+
+
+def jef_netto_verschil():
+    """Hoeveel meer Jef per maand netto overhoudt met Gold + HSA dan met de PPO en zorg-FSA (zonder salaris Myrthe)."""
+    nu, gold = gezin(0), gezin(0, zorg=ZORG_2027)
+    netto = lambda g: g["j_netto"] - g["federaal"] - g["fica"]
+    return (netto(gold) - netto(nu)) / 12
 
 
 def zorg_vergelijking(bruto):
@@ -128,13 +144,16 @@ def zorg_vergelijking(bruto):
     return uit
 
 
+BUDGET["inkomen"]["Salaris Jef (netto)"] = round(9404 + jef_netto_verschil())
+
+
 def budget_saldo():
     return sum(BUDGET["inkomen"].values()) - sum(BUDGET["vast"].values()) - sum(BUDGET["variabel"].values())
 
 
 def scenario(bruto):
-    zonder, met = gezin(0), gezin(bruto)
-    tekort = min(0, budget_saldo()) * 12   # wat het leefgeld per jaar tekortkomt, gaat eerst van haar salaris af
+    zonder, met = gezin(0, zorg=ZORG_2027), gezin(bruto, zorg=ZORG_2027)
+    tekort = budget_saldo() * 12   # over of tekort in het leefgeld per jaar: gaat naar sparen of eerst van haar salaris af
     extra_fed = met["federaal"] - zonder["federaal"]
     extra_fica = met["fica"] - zonder["fica"]
     netto = bruto - met["m401"] - extra_fed - extra_fica
@@ -149,7 +168,7 @@ def scenario(bruto):
         "sparen_salaris": round(sparen / 26), "doel_pct": round(sparen / KOERS / DOEL_EUR * 100),
         "marge_tarief": round(tarief_marge * 100), "gezin_federaal": round(met["federaal"]),
         "gezin_fica": round(met["fica"]), "gezin_tarief": round((met["federaal"] + met["fica"]) / met["bruto"] * 100, 1),
-        "zonder_401k_netto": round(bruto - (gezin(bruto, 0)["federaal"] - zonder["federaal"]) - (gezin(bruto, 0)["fica"] - zonder["fica"])),
+        "zonder_401k_netto": round(bruto - (gezin(bruto, 0, ZORG_2027)["federaal"] - zonder["federaal"]) - (gezin(bruto, 0, ZORG_2027)["fica"] - zonder["fica"])),
     }
 
 
@@ -202,8 +221,11 @@ def maak():
     uitgaven = sum(BUDGET["vast"].values()) + sum(BUDGET["variabel"].values())
     scen = [scenario(b) for b in SCENARIO_BRUTO]
     zorg = zorg_vergelijking(SCENARIO_BRUTO[0])
+    per_plan = {z["plan"]: z["voordeel"] for z in zorg}
     return {
-        "antwerpen": doel_antwerpen(scen, max(z["voordeel"] for z in zorg)),
+        # Gold zit al in de basis; de extra kolom is wat Babylist Silver daar nog bovenop zou geven
+        "antwerpen": doel_antwerpen(scen, max(0, per_plan["Babylist Silver HDHP + HSA"] - per_plan["Fugro Gold (HSA)"])),
+        "jef_gold_maand": round(jef_netto_verschil()), "verzekeringen": VERZEKERINGEN,
         "budget": BUDGET, "budget_inkomen": inkomen, "budget_uitgaven": uitgaven, "budget_saldo": inkomen - uitgaven,
         "scenarios": [scenario(b) for b in SCENARIO_BRUTO],
         "zorg": zorg_vergelijking(SCENARIO_BRUTO[0]),
