@@ -102,7 +102,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Privépagina op claude.ai: https://claude.ai/artifact/EhF8DHrDuXL63EF3otnSx3 (alleen voor Myrthe; delen gaat via
   het Share-menu op de pagina).
 - Bijwerken: nieuwe afschriften in data/afschriften/ zetten en daarna draaien:
-  pdf_naar_tekst.py → lees_chase.py → bouw_overzicht.py → maak_dashboard_data.py → maak_pagina.py,
+  pdf_naar_tekst.py → lees_chase.py → lees_knab_pdf.py (alleen bij Knab-pdf) → bouw_overzicht.py → controle_kaarten.py → maak_dashboard_data.py → maak_pagina.py,
   en dashboard/overzicht.html opnieuw publiceren op dezelfde URL.
 - dashboard/sjabloon.html staat in Git; dashboard/overzicht.html bevat de cijfers en staat er niet in.
 
@@ -210,3 +210,9 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Gestopt bevestigd: Disney+, Coursera (geen afschrijving okt), Prime Video NL (2× teruggestort 5 okt).
 - Ontbreekt nog: Capital One, Target Circle Card na 17 sep, 6010 na 26 sep, Knab 1133/5171 na 2–4 okt, FSA na 24 sep.
 - Katy Trailer World ($185, 3 okt) = reparatie pop-up camper (Vervoer/RV). Rice-football (Vivid Seats $90 + parking $40) = uitje; ±helft terug van Roy en Maxine (Zelle-regel staat klaar).
+
+## Maandelijkse analyse (besloten 21 okt 2026)
+- Myrthe wil elke maand kijken waar ze te veel of te weinig uitgeven. Rond de 21e (na het afschrift van 9862 op de 20e): afschriften ophalen (zelf uploaden in data/ of samen via browser), pipeline draaien, overzicht publiceren.
+- Analyse per maand: totaal en per categorie tegenover gemiddelde mrt–aug en tegenover de begroting (BUDGET in scripts/spaarplan.py), boodschappen per winkel en per artikel (scripts/boodschappen.py; vitamines/luiers/speelgoed apart noemen), kleding en uit eten per aankoop, voorgeschoten/terugbetalingen matchen, onbekende posten in Gmail opzoeken (reserveringen, bonnen) vóór het vragen.
+- Nodige afschriften: Chase 9708, 0103, 9862, 6010, 7970; Target Circle Card 3591; Capital One (alleen bij voorgeschoten reizen); Knab 1133, 9994, 5171 (csv of pdf); HealthEquity FSA.
+- Geplande taak "maandanalyse-gezinsfinancien" (elke 21e, 9:00) herinnert en zet klaar wat er al is.
