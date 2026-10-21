@@ -373,6 +373,8 @@ def main():
     zet(t["omschrijving"].str.contains("KATY TRAILER WORLD", case=False), "uitgave", "Vervoer", "Auto (onderhoud, rijbewijs, RV)")
     zet(t["omschrijving"].str.contains("Vivid Seats \*Rice|RICE UNIV ATHLETICS", case=False, regex=True), "uitgave", "Reizen & uitjes", "Uitjes & tickets")
     zet(t["omschrijving"].str.contains("Zelle Payment From.*(Roy|Maxine)", case=False, regex=True), "uitgave", "Reizen & uitjes", "Terugbetaald door reisgenoten")
+    # Kirkwood Restaurant (Katy Freeway): diner met z'n tweeën op 24 sep (reservering in Gmail).
+    zet(t["omschrijving"].str.contains("KIRKWOOD 346-396-5580", case=False, regex=False), "uitgave", "Eten & drinken", "Uit eten & koffie")
     # Capital One-kaart = alleen de reiskosten van de ouders van Myrthe (bevestigd 21 okt); door hen terugbetaald via Knab.
     zet(t["omschrijving"].str.contains("Capital One Mobile Pmt", case=False), "intern", "Voorgeschoten",
         "Ouders Myrthe: vliegtickets en auto (terugbetaald)")
