@@ -51,7 +51,7 @@ BINNENKORT = [
     {"datum": "2026-12-24", "wanneer": "24 dec", "wat": "DashPass is gratis via Chase tot 24 december; daarna $9,99 per maand als je het niet stopt."},
     {"datum": "2027-03-15", "wanneer": "mrt 2027", "wat": "Aangifte 2026 met KPMG (betaald door Fugro): Picnic-freelance (Schedule C, werkplek thuis 154 sqft) en ITIN Lily meenemen. Belasting Picnic betalen vóór 15 april uit de reservering (±\.100)."},
     {"datum": "2027-03-22", "wanneer": "mrt 2027", "wat": "Costco-lidmaatschap verlengt (gekocht via Groupon voor $65). Zoek eerst een nieuwe Groupon-deal."},
-    {"datum": "2027-07-03", "wanneer": "mei–jun 2027", "wat": "Stroomcontract Gexa loopt af op 3 juli; vergelijk in mei/juni een nieuw contract (anders duurder variabel tarief)."},
+    {"datum": "2027-07-03", "wanneer": "jun 2027", "wat": "Stroomcontract Gexa loopt af op 3 juli (nu ±15,8 ct/kWh). Vanaf ±19 juni zonder boete overstappen: vast tarief zonder bill credits, vergelijk EFL bij 500 en 1000 kWh op PowerToChoose. Doel ±12 ct all-in (±$300/jaar besparing)."},
     {"datum": "2027-09-30", "wanneer": "30 sep 2027", "wat": "Google One verlengt (€19,99 per jaar)."},
     {"datum": "2028-01-15", "wanneer": "jan 2028", "wat": "NordVPN verlengt voor $150 (2 jaar). Opzeggen of een nieuwe aanbieding zoeken."},
 ]

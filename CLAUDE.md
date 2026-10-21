@@ -156,6 +156,12 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Stroom: Gexa Guarantee 12+ (klantnr 36696006), vast, 12 mnd vanaf 3 jul 2026; energie 8,88 ct/kWh + TDU 5,15 ct/kWh
   + $4,90/mnd (±14,5 ct all-in bij 1000 kWh). Opzegkosten $150. ACTIE mei/juni 2027: vergelijken op PowerToChoose
   (simpel vast tarief, geen bill credits); besparing ±$15–20/mnd. Markt okt 2026: gemiddeld 13,4 ct all-in.
+- Verbruik 2026 (Gexa-facturen, cyclus eindigt ±12e): jan 99 (vanaf 2 jan), feb 301, mrt 352, apr 385, mei 621,
+  jun 1058, jul 1335, aug 1296, sep 878, okt 1210 kWh. Schatting jaar ±8.800 kWh (winter ±350, zomer ±1.300; verwarming op gas).
+  Gemiddelde prijs oud contract ±12,0 ct; sinds verlenging jul 2026 14,4–15,8 ct all-in → ±$1.300/jaar. Bij ±12 ct: ±$1.000.
+  Nu overstappen loont niet ($150 boete ≈ besparing tot juli). Zonder boete overstappen vanaf 14 dagen vóór einde contract
+  (±19 jun 2027). Kies dan een vast tarief zonder bill credits/minimumverbruik (wintermaanden ±300 kWh), check de EFL-prijs
+  bij 500 én 1000 kWh, 12 maanden. Advertenties van 6–7 ct bij 1000 kWh zijn bijna altijd bill-credit-plannen.
 - Water Cinco MUD (Inframark): met creditcard ±3% "Utility Payment Fee"; via bank/e-check meestal gratis (±$40/jaar).
 - Gas CenterPoint: geen keuze in aanbieder.
 
