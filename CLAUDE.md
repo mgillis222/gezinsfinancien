@@ -222,3 +222,4 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - In de VS: Schedule C + self-employment tax 15,3% (geen NL-dekking via verdrag, want woonachtig in VS). Schatting totaal ±$4.000–5.100 afhankelijk van aftrekbare kosten.
 - Werkplek thuis Katy: kamer 14 × 11 ft = 154 sqft, uitsluitend werk, 1e verdieping; huis 1.820 sqft → 8,46%. Periode feb–apr (3 mnd, incl. voorbereiding; bewijs bewaren). Kosten 3 mnd: huur $9.300 + nuts $700 + internet ±$165 = $10.165 → aftrek ±$860 (werkelijke-kostenmethode). Eventueel + inboedelverzekering.
 - Doorgeven aan KPMG (aangifte 2026, betaald door Fugro); vragen naar estimated tax.
+- Reservering belasting Picnic: ±$5.100 (≈ €4.550) apart zetten (veilige kant: zonder de 49 kosten). Myrthe had al €2.645 gereserveerd → nog ±€1.900 bij. Valt er minder te betalen (kosten aftrekbaar, ±$4.050), dan gaat het verschil terug naar sparen. Herinnering staat in BINNENKORT (15 mrt 2027).
