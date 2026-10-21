@@ -368,6 +368,11 @@ def main():
     zet(ouders, "intern", "Voorgeschoten", "Ouders Myrthe: vliegtickets en auto (terugbetaald)")
     # Capital One-creditcard: aflossingen vanaf Chase zijn intern zodra de kaart zelf is ingelezen; tot dan
     # tonen we ze apart zodat ze niet als onbekende uitgave tellen.
+    # Katy Trailer World (3 okt): reparatie pop-up camper. Rice-football (Vivid Seats + parking Rice Athletics, okt):
+    # ±de helft komt terug van Roy en Maxine (Zelle van hen = Terugbetaald door reisgenoten).
+    zet(t["omschrijving"].str.contains("KATY TRAILER WORLD", case=False), "uitgave", "Vervoer", "Auto (onderhoud, rijbewijs, RV)")
+    zet(t["omschrijving"].str.contains("Vivid Seats \*Rice|RICE UNIV ATHLETICS", case=False, regex=True), "uitgave", "Reizen & uitjes", "Uitjes & tickets")
+    zet(t["omschrijving"].str.contains("Zelle Payment From.*(Roy|Maxine)", case=False, regex=True), "uitgave", "Reizen & uitjes", "Terugbetaald door reisgenoten")
     # Capital One-kaart = alleen de reiskosten van de ouders van Myrthe (bevestigd 21 okt); door hen terugbetaald via Knab.
     zet(t["omschrijving"].str.contains("Capital One Mobile Pmt", case=False), "intern", "Voorgeschoten",
         "Ouders Myrthe: vliegtickets en auto (terugbetaald)")

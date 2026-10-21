@@ -209,3 +209,4 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Salaris Jef sep laag ($1.390 op 24 sep, 10 sep ontbreekt); Lincoln-uitkering sep $5.201 → vermoedelijk verlof van Jef (bevestigen).
 - Gestopt bevestigd: Disney+, Coursera (geen afschrijving okt), Prime Video NL (2× teruggestort 5 okt).
 - Ontbreekt nog: Capital One, Target Circle Card na 17 sep, 6010 na 26 sep, Knab 1133/5171 na 2–4 okt, FSA na 24 sep.
+- Katy Trailer World ($185, 3 okt) = reparatie pop-up camper (Vervoer/RV). Rice-football (Vivid Seats $90 + parking $40) = uitje; ±helft terug van Roy en Maxine (Zelle-regel staat klaar).
