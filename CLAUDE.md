@@ -204,7 +204,7 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 ## Update 21 okt 2026 (afschriften t/m ±20 okt)
 - Nieuw ingelezen: 9708 (8 okt), 7970 (10 okt), 0103 (19 okt), 9862 (20 okt), Knab 9994 als pdf (21 aug–21 okt) via `scripts/lees_knab_pdf.py` (af/bij op x-positie; schrijft "Knab uit-pdf 9994.csv" met alleen transacties na de laatste csv-datum; totalen sluiten met de pdf). ECB-koersen ververst (curl.exe).
 - John en Sylvia: uitgaven 21–28 sep (Claire's, FP Movement, Daily Gather, Harvest Kitchen, Shotpro, Texas Gun Club, Space Center, Whiskey River, DoorDash Roegels) = $1.008; terug €925 ($1.036) op 5 okt via rekening Jef → Voorgeschoten, sluit.
-- Ouders Myrthe (Luc Gillis) €1.896 terug op 13 okt "vliegtickets en auto" → Voorgeschoten; de uitgaven staan op de Capital One-kaart (afschrift nog NIET binnen; Chase 9708 betaalde Capital One $1.339 op 8 okt).
+- Ouders Myrthe (Luc Gillis) €1.896 ($2.121) terug op 13 okt "vliegtickets en auto" → Voorgeschoten. Capital One-kaart = alleen deze reiskosten (Myrthe 21 okt); aflossing $1.339 op 8 okt → Voorgeschoten. Verschil $782: deel betaald vanaf Chase 9708 of nog openstaand op Capital One (nagaan).
 - Benefit Payment $4.900 (17 sep) = uitbetaling DCFSA → intern.
 - Salaris Jef sep laag ($1.390 op 24 sep, 10 sep ontbreekt); Lincoln-uitkering sep $5.201 → vermoedelijk verlof van Jef (bevestigen).
 - Gestopt bevestigd: Disney+, Coursera (geen afschrijving okt), Prime Video NL (2× teruggestort 5 okt).

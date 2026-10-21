@@ -368,8 +368,9 @@ def main():
     zet(ouders, "intern", "Voorgeschoten", "Ouders Myrthe: vliegtickets en auto (terugbetaald)")
     # Capital One-creditcard: aflossingen vanaf Chase zijn intern zodra de kaart zelf is ingelezen; tot dan
     # tonen we ze apart zodat ze niet als onbekende uitgave tellen.
-    zet(t["omschrijving"].str.contains("Capital One Mobile Pmt", case=False), "uitgave", "Nog indelen",
-        "Capital One-kaart (afschrift nog niet ingelezen)")
+    # Capital One-kaart = alleen de reiskosten van de ouders van Myrthe (bevestigd 21 okt); door hen terugbetaald via Knab.
+    zet(t["omschrijving"].str.contains("Capital One Mobile Pmt", case=False), "intern", "Voorgeschoten",
+        "Ouders Myrthe: vliegtickets en auto (terugbetaald)")
     # Huur van februari is per ongeluk te laat betaald (2 maart). Toewijzen aan februari (bevestigd door Myrthe).
     feb_huur = (t["subcategorie"] == "Huur Cottondale Ct") & (t["datum"] == "2026-03-02")
     t.loc[feb_huur, "omschrijving"] = t.loc[feb_huur, "omschrijving"] + " (huur februari, te laat betaald op 2 mrt)"
