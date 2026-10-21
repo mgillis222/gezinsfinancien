@@ -216,3 +216,9 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Analyse per maand: totaal en per categorie tegenover gemiddelde mrt–aug en tegenover de begroting (BUDGET in scripts/spaarplan.py), boodschappen per winkel en per artikel (scripts/boodschappen.py; vitamines/luiers/speelgoed apart noemen), kleding en uit eten per aankoop, voorgeschoten/terugbetalingen matchen, onbekende posten in Gmail opzoeken (reserveringen, bonnen) vóór het vragen.
 - Nodige afschriften: Chase 9708, 0103, 9862, 6010, 7970; Target Circle Card 3591; Capital One (alleen bij voorgeschoten reizen); Knab 1133, 9994, 5171 (csv of pdf); HealthEquity FSA.
 - Geplande taak "maandanalyse-gezinsfinancien" (elke 21e, 9:00) herinnert en zet klaar wat er al is.
+
+## Freelance Picnic 2026 – belasting VS (21 okt 2026)
+- Bron: Google Sheet "Picnic uren werken" (Drive): 237 uur × €62 = €14.694 (kolom F €15.614, verschil €920 onbekend); ontvangen €15.128 (±$17.600) op 19/22 mei. Blad4: 49 bedragen zonder omschrijving, samen €2.963 (aftrekbaarheid nog onbekend). Myrthe reserveerde zelf 18% (€2.645).
+- In de VS: Schedule C + self-employment tax 15,3% (geen NL-dekking via verdrag, want woonachtig in VS). Schatting totaal ±$4.000–5.100 afhankelijk van aftrekbare kosten.
+- Werkplek thuis Katy: kamer 14 × 11 ft = 154 sqft, uitsluitend werk, 1e verdieping; huis 1.820 sqft → 8,46%. Periode feb–apr (3 mnd, incl. voorbereiding; bewijs bewaren). Kosten 3 mnd: huur $9.300 + nuts $700 + internet ±$165 = $10.165 → aftrek ±$860 (werkelijke-kostenmethode). Eventueel + inboedelverzekering.
+- Doorgeven aan KPMG (aangifte 2026, betaald door Fugro); vragen naar estimated tax.
