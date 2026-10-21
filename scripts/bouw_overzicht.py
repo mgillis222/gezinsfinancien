@@ -126,7 +126,7 @@ TWIJFEL_SUB = {"Van familie/vrienden (of terugbetaling)", "PayPal vanaf Knab (zi
 def koersen():
     e = pd.read_csv("data/ecb_ruw.csv", usecols=["TIME_PERIOD", "OBS_VALUE"])
     e.columns = ["datum", "eur_usd"]; e["datum"] = pd.to_datetime(e["datum"])
-    alle = pd.DataFrame({"datum": pd.date_range("2025-11-25", "2026-10-10")})
+    alle = pd.DataFrame({"datum": pd.date_range("2025-11-25", pd.Timestamp.today().normalize())})
     return alle.merge(e, how="left").ffill().bfill()  # weekend = laatste werkdagkoers
 
 def lees_chase():
@@ -352,6 +352,24 @@ def main():
     # Costco-lidmaatschap via Groupon ($65, 22 maart; bevestigd door Myrthe). Jaarlijks, verlengt maart 2027.
     costco = t["omschrijving"].str.contains("groupon", case=False) & (t["bedrag_usd"].round(2) == -65.00)
     zet(costco, "uitgave", "Abonnementen", "Costco-lidmaatschap (via Groupon)")
+    # Uitbetaling Dependent Care FSA ($4.900, 17 sep) komt binnen als "Benefit Payment": eigen geld terug, intern.
+    zet(t["omschrijving"].str.contains("Benefit Payment EDI Pymnts PPD ID: H943351864", case=False, regex=False),
+        "intern", "Intern", "FSA-terugbetaling (eigen geld)")
+    # Bezoek John en Sylvia (ouders Jef), 21–28 sep 2026: voorgeschoten volgens hun lijst
+    # (data/voorgeschoten_john_sylvia_sep2026.csv, $1.047). Terugbetaald: €925 op 5 okt via de rekening van Jef.
+    js_periode = t["datum"].between("2026-09-21", "2026-09-28")
+    js = js_periode & t["omschrijving"].str.contains(
+        r"CLAIRE'S #5554|FP MOVEMENT|DAILY GATHER|HARVEST KITCHEN|WHISKEY RIVER|DOORDASH ROEGELS|SHOTPRO|TEXAS GUN CLUB|SPACECNTRHOUSTON", case=False, regex=True)
+    js_terug = (t["bank"] == "Knab") & (t["bedrag_orig"] > 0) & t["omschrijving"].str.contains("Papa en Sylvia", case=False)
+    zet(js | js_terug, "intern", "Voorgeschoten", "Bezoek John en Sylvia (terugbetaald €925)")
+    # Ouders Myrthe (Luc Gillis) betaalden €1.896 terug voor "vliegtickets en auto" (13 okt). De uitgaven zelf staan
+    # grotendeels op de Capital One-kaart (afschrift nog niet binnen).
+    ouders = (t["bank"] == "Knab") & (t["bedrag_orig"] > 0) & (t["datum"] >= "2026-10-01") & t["omschrijving"].str.contains("GILLIS LUC", case=False)
+    zet(ouders, "intern", "Voorgeschoten", "Ouders Myrthe: vliegtickets en auto (terugbetaald)")
+    # Capital One-creditcard: aflossingen vanaf Chase zijn intern zodra de kaart zelf is ingelezen; tot dan
+    # tonen we ze apart zodat ze niet als onbekende uitgave tellen.
+    zet(t["omschrijving"].str.contains("Capital One Mobile Pmt", case=False), "uitgave", "Nog indelen",
+        "Capital One-kaart (afschrift nog niet ingelezen)")
     # Huur van februari is per ongeluk te laat betaald (2 maart). Toewijzen aan februari (bevestigd door Myrthe).
     feb_huur = (t["subcategorie"] == "Huur Cottondale Ct") & (t["datum"] == "2026-03-02")
     t.loc[feb_huur, "omschrijving"] = t.loc[feb_huur, "omschrijving"] + " (huur februari, te laat betaald op 2 mrt)"

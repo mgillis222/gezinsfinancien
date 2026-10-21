@@ -81,6 +81,8 @@ def lees_target_kaart(naam, tekst, datum, rek):
 
 alle, fouten, gezien = [], [], set()
 for f in sorted(TEKST.glob("*.txt")):
+    if f.name.startswith("Knab"):  # Knab-pdf's leest lees_knab_pdf.py
+        continue
     tekst = f.read_text(encoding="utf-8")
     datum, rek = afschrift_datum(f.name, tekst), rekening(f.name, tekst)
     sleutel = (rek, datum)

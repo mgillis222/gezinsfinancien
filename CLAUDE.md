@@ -200,3 +200,12 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - 21 okt: afschriften sep/okt ophalen (herinnering gepland).
 - Zorgvergelijking-pagina: dashboard/zorgverzekering.html → artifact (zie publicatie 19 okt). Fugro = BCBS Texas, plannen Silver/Gold/PPO; open enrollment 2–13 nov 2026; premies 2027 +5%. Jef heeft "Medical-$800 Deductible Plan" ($432,56/salaris gezin). OOP-max Fugro volgens Myrthe ±$2.400 p.p./$4.800 gezin (TE CONTROLEREN via SBC; oude samenvatting "2024 Recruitment Benefits Summary.pdf" in Gmail, mail Jef 21 jul 2025). Memorial Hermann sinds apr 2026 buiten BCBS-netwerk.
 - Fugro 2024 Benefits Summary (Gmail, mail Jef 21 jul 2025) gelezen: BCBSTX PPO (Jef nu; ded $800/$2.400, OOP $2.400/$4.800, $40/$80 copay), Gold HSA (ded $1.750/$3.500, OOP $4.300/$8.000, HSA-gift $500 gezin), Silver HSA (ded $4.500/$9.000, OOP $6.550/$13.100, gift $750). Biweekly gezin 2024: PPO $392,35, Gold $129,43, Silver $46,37 (×1,1025 = 2026). Dental Gold $37,91 (max $2.000, ortho), Silver $31,36. Life 2× salaris (max $550k), 401k-match 100% 4% + 50% 2%, auto-escalatie 1%/jr. Conclusie: Fugro Gold in elk scenario ±$4.800–8.000/jr goedkoper dan PPO.
+
+## Update 21 okt 2026 (afschriften t/m ±20 okt)
+- Nieuw ingelezen: 9708 (8 okt), 7970 (10 okt), 0103 (19 okt), 9862 (20 okt), Knab 9994 als pdf (21 aug–21 okt) via `scripts/lees_knab_pdf.py` (af/bij op x-positie; schrijft "Knab uit-pdf 9994.csv" met alleen transacties na de laatste csv-datum; totalen sluiten met de pdf). ECB-koersen ververst (curl.exe).
+- John en Sylvia: uitgaven 21–28 sep (Claire's, FP Movement, Daily Gather, Harvest Kitchen, Shotpro, Texas Gun Club, Space Center, Whiskey River, DoorDash Roegels) = $1.008; terug €925 ($1.036) op 5 okt via rekening Jef → Voorgeschoten, sluit.
+- Ouders Myrthe (Luc Gillis) €1.896 terug op 13 okt "vliegtickets en auto" → Voorgeschoten; de uitgaven staan op de Capital One-kaart (afschrift nog NIET binnen; Chase 9708 betaalde Capital One $1.339 op 8 okt).
+- Benefit Payment $4.900 (17 sep) = uitbetaling DCFSA → intern.
+- Salaris Jef sep laag ($1.390 op 24 sep, 10 sep ontbreekt); Lincoln-uitkering sep $5.201 → vermoedelijk verlof van Jef (bevestigen).
+- Gestopt bevestigd: Disney+, Coursera (geen afschrijving okt), Prime Video NL (2× teruggestort 5 okt).
+- Ontbreekt nog: Capital One, Target Circle Card na 17 sep, 6010 na 26 sep, Knab 1133/5171 na 2–4 okt, FSA na 24 sep.
