@@ -123,7 +123,7 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
 
   <nav class="secties" aria-label="Secties">
     <a href="#samenvatting">Samenvatting</a><a href="#maanden">Per maand</a><a href="#trends">Trends</a><a href="#categorieen">Waar gaat het heen</a>
-    <a href="#vooruit">Vanaf oktober</a><a href="#spaarplan">Spaarplan</a><a href="#winkels">Winkels in detail</a><a href="#fsa">FSA</a>
+    <a href="#vooruit">Vanaf oktober</a><a href="#spaarplan">Spaarplan</a><a href="#pensioen">Pensioen</a><a href="#winkels">Winkels in detail</a><a href="#fsa">FSA</a>
     <a href="#abonnementen">Abonnementen</a><a href="#vermogen">Vermogen</a><a href="#twijfel">Nog beoordelen</a>
   </nav>
 
@@ -181,6 +181,15 @@ footer { padding-block: 24px; color: var(--muted); font-size: 13px; border-top: 
       <div class="card"><h3>Zorgverzekering: Fugro of Babylist?</h3><div id="sp-zorg" class="small"></div></div>
       <div class="card"><h3>Aannames en wat er nog bij kan komen</h3><ul id="sp-aannames" class="small" style="margin:8px 0 0;padding-left:1.1em;display:grid;gap:6px"></ul></div>
     </div>
+  </section>
+
+  <section id="pensioen">
+    <header><h2>Pensioen</h2><p class="sub">Wat jullie straks krijgen, bruto per jaar vanaf ±68 jaar, in koopkracht van nu. Uitgangspunt: ±4 jaar VS (2026–2029), daarna terug naar Nederland.</p></header>
+    <div class="grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px" id="pens-personen"></div>
+    <div class="card"><h3>Wat leveren 4 jaar VS op, tegenover 4 jaar Nederland?</h3>
+      <div class="tablewrap" style="max-height:none;margin-top:10px"><table id="pens-vergelijk"></table></div>
+      <p class="small muted" id="pens-conclusie" style="margin-top:8px"></p></div>
+    <div class="card"><h3>Aannames en wat er nog bij komt</h3><ul id="pens-aannames" class="small" style="margin:8px 0 0;padding-left:1.1em;display:grid;gap:6px"></ul></div>
   </section>
 
   <section id="winkels">
@@ -512,6 +521,24 @@ if (D.spaarplan) {
     `Bill: Child Tax Credit ${usd(A.bill_ctc)} per jaar is meegerekend. Lily: met een ITIN komt er ${usd(A.odc)} per jaar bij.`,
     `Niet meegerekend: bonus en aandelen (Babylist en Fugro), de NL-belastingteruggave (±€9.000), Babylist-match op de 401(k), en wat er op de HSA overblijft (dat is ook gespaard geld voor later).`,
     `Huur Den Haag: aangifte in de VS met verrekening van de Nederlandse belasting; gerekend als neutraal. Laat KPMG dit bevestigen.`
+  ].map(t => `<li>${t}</li>`).join("");
+}
+if (D.pensioen) {
+  const P = D.pensioen, pe = n => "€" + Math.round(n).toLocaleString("nl-NL"), A = P.aannames;
+  $("#pens-personen").innerHTML = P.personen.map(p => `<div class="card"><h3>${esc(p.naam)}${p.schatting ? ' <span class="pill">schatting</span>' : ""}</h3>` +
+    p.regels.map(r => `<div class="line"><span>${esc(r.wat)}</span><span class="num">${pe(r.bedrag)}</span></div>`).join("") +
+    `<div class="line"><span><b>Totaal per jaar</b></span><span class="num"><b>${pe(p.totaal)}</b></span></div>` +
+    `<p class="small muted" style="margin-top:6px">Met ${Math.round(A.ss_korting * 100)}% minder Social Security: ${pe(p.totaal_ss_korting)}. 401(k) op je 68e: ±${pe(p.k401_kapitaal_eur)}.</p></div>`).join("");
+  $("#pens-vergelijk").innerHTML = `<thead><tr><th></th><th style="text-align:right">4 jaar VS</th><th style="text-align:right">4 jaar NL</th><th style="text-align:right">Verschil</th></tr></thead><tbody>` +
+    P.personen.map(p => `<tr><td><b>${esc(p.naam)}</b><div class="small muted">VS met ${Math.round(A.ss_korting * 100)}% minder Social Security: ${pe(p.vier_jaar_vs_korting)}</div></td><td class="num" style="text-align:right">${pe(p.vier_jaar_vs)}</td><td class="num" style="text-align:right">${pe(p.vier_jaar_nl)}</td><td class="num" style="text-align:right;color:var(--good)">+${pe(p.vier_jaar_vs - p.vier_jaar_nl)}</td></tr>`).join("") + "</tbody>";
+  $("#pens-conclusie").textContent = "VS: Social Security (dankzij het verdrag met Nederland krijg je ook na 4 jaar een uitkering) plus de 401(k). NL: 4 jaar AOW (2% per jaar) plus 4 jaar werkgeverspensioen. De VS-jaren kosten jullie dus geen pensioen, zolang jullie de 401(k) laten staan en blijven inleggen.";
+  $("#pens-aannames").innerHTML = [
+    `Myrthe: echte cijfers van mijnpensioenoverzicht.nl en a.s.r. (Doenpensioen Picnic gerekend tot eind 2025; wat Picnic in 2026 per ongeluk nog inlegt, telt niet mee).`,
+    `Jef: schatting. Altijd in NL gewerkt, in NL sinds 2016, Fugro NL bij Pensioenfonds PGB (middelloon, ±1,75% opbouw per jaar boven de franchise), salaris van €45.000 naar ±€95.000. Zijn echte bedragen staan op mijnpensioenoverzicht.nl (inloggen met DigiD).`,
+    `AOW: ${pe(A.aow_per_jaar)} per jaar wonen in Nederland (2% van de AOW voor samenwonenden). Na terugkeer in 2030 bouwen jullie weer op tot de AOW-leeftijd.`,
+    `Social Security: met minder dan 10 jaar VS krijg je via het verdrag tussen de VS en Nederland een deel (4 van de 35 jaar). Mogelijk ±${Math.round(A.ss_korting * 100)}% lager als het fonds rond 2033–2034 leeg is.`,
+    `401(k): ${Math.round(A.groei * 100)}% rendement per jaar boven inflatie, daarna ${Math.round(A.onttrekking * 100)}% per jaar opnemen. Jef 6% + 5% van Fugro; Myrthe ${Math.round(A.myrthe_401k_pct * 100)}% (de match van Babylist is nog onbekend en maakt het hoger).`,
+    `Niet meegerekend: werkgeverspensioen dat jullie na 2030 in Nederland opbouwen (dat wordt het grootste deel), belasting over het pensioen (de 401(k) wordt later in Nederland belast, vraag KPMG) en de Fugro-aandelen.`
   ].map(t => `<li>${t}</li>`).join("");
 }
 </script>

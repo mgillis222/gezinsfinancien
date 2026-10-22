@@ -200,6 +200,30 @@ Uiteindelijk willen we besparen, want sinds Bill naar de kinderopvang gaat, staa
 - Doel appartement Antwerpen (schoonmoeder): €300.000 all-in (incl. registratierechten, notaris), cash, geen lening (eventueel kort overbruggen via ouders Myrthe). Zoeken vanaf €250.000. Nu ±€100.000 (incl. schenking). Model: ANTWERPEN in spaarplan.py (2,5% rente, start dec 2026). Kopen: $140k → okt 2029, $155k → jun 2029, $170k → mrt 2029; met teruggave + Silver-zorgplan 4–5 maanden eerder.
 - Pensioen: kritische vergelijking NL/VS gegeven (19 okt). Staatspensioen licht positief door VS-jaren (Social Security-korting ±20% na 2033 mogelijk), werkgeverspensioen ±€12.700/jr minder dan in NL. Voorstel onderdeel "Pensioen" wacht op: geboortejaren, mijnpensioenoverzicht.nl-pdf, laatste NL-brutosalarissen, verwachte verblijfsduur VS.
 
+- Spaarplan 21 okt: Gold + HSA zit in de basis (ZORG_2027): Jef +$157/mnd netto (model), zorg eigen betalingen $0 (van HSA),
+  verzekeringen $334/mnd (GEICO $1.870 per half jaar jun/dec + leven NL + reis; was $259 te laag). Leefgeld nu +$282/mnd over
+  → gaat naar sparen. Sparen/jr: $140k → $76.6k (€68k), $155k → $86.3k (€77k), $170k → $96.0k (€85k).
+- Pensioenoverzicht NL Myrthe (data/pensioen/Pensioenoverzicht-21-10-2026.pdf; geboren 1993; AOW-leeftijd 67j3m):
+  AOW opgebouwd €3.206/jr; KLM Grondfonds (Stichting Algemeen Pensioenfonds KLM) €5.967 vanaf 67j3m; a.s.r. Doenpensioen
+  €3.001 + €2.249 opgebouwd vanaf 68 (tweede polis "actief", te bereiken €29.422 = alleen bij doorlopende inleg). Geen
+  inleg Doenpensioen gezien in de afschriften. Partnerpensioen bij overlijden nu €27.557/jr + €5.510 per kind.
+- UPO a.s.r. 2026 (data/pensioen/uniformpensioenoverzicht.pdf): polis 538512 = Picnic (in dienst 20 mei 2024, salaris
+  €79.000, franchise €18.475, premie 6,6% ≈ €4.000/jr), waarde 31-12-2025 €6.848. Gestopt per eind 2025: €1.400/jr vanaf 68.
+  FOUT: Picnic legt in 2026 nog steeds premie in. BESLUIT Myrthe 21 okt: ze meldt het niet bij Picnic (niets te verliezen).
+  Niet over beginnen. Wel niet meetellen (kan worden
+  teruggedraaid); partner-/wezenpensioen (€25.271 + €5.054 per kind) vervalt zodra het rechtgezet is. KPMG-vraag: is die
+  inleg na vertrek belast in de VS?
+- Vertrek uit NL: december 2025. Verwachte verblijfsduur VS: ±4 jaar in totaal. Jef geboren 1992.
+- Vrijwillige AOW: aanvragen binnen 1 jaar na vertrek (dus vóór ±dec 2026). Inschatting: 2% per jaar ≈ €240/jr bruto;
+  premie 17,9% van inkomen, max ±€5.700/jr (blog, verifiëren op svb.nl). 4 jaar ≈ €20k premie voor ≈ €960/jr → lijkt niet
+  lonend, eventueel alleen 2026. Agenda: 9 nov 2026 besluit.
+
+- Antwerpen constructie (21 okt): Jef heeft broer/zussen; Inneke heeft geen eigendom en geen vermogen. Daarom voorkeur
+  optie B (gesplitste aankoop: Jef naakte eigendom, Inneke vruchtgebruik; ±12% registratierechten, waarde + meerwaarde
+  zeker naar Jef, geen erfbelasting) of A (Jef koopt alles). C (Inneke koopt, 2%/3%, met lening Jef) valt af: meerwaarde
+  in nalatenschap, gedeeld met broer/zussen. 1% IER-tarief bestaat niet meer (compromis vanaf 2025) en gold nooit voor
+  niet-bewoners. E/F-label kan nog: lagere prijs, renovatieplicht ±6 jaar, premies. Notaris Antwerpen + KPMG nodig.
+
 ## Volgende sessie (na 19 okt 2026)
 - Onderdeel "Pensioen" bouwen (plan goedgekeurd? nog bevestigen): staatspensioen AOW/Social Security bij 2/4/10 jaar VS en blijven (ook −20%-variant), 401(k)-groei bij 3% reëel (nu vs maximum) tegenover NL-opbouw, benodigde extra inleg en effect op doel Antwerpen, risico's/KPMG-vragen. Myrthe levert: geboortejaren, mijnpensioenoverzicht.nl-pdf, laatste NL-brutosalarissen, verwachte verblijfsduur.
 - Daarna: vragenlijst voor KPMG (Trump Account Bill, backdoor Roth, AOW vrijwillig vóór dec 2026, afschrijving huis Den Haag, ITIN Lily, Antwerpen, box 3 bij terugkeer) en herinnering Pre-K Lily (Katy ISD, voorjaar 2027).
