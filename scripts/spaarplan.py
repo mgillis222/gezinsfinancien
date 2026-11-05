@@ -23,7 +23,7 @@ MEDICARE, EXTRA_MEDICARE, EXTRA_MEDICARE_GRENS = 0.0145, 0.009, 250_000
 CTC_PER_KIND = 2_200                           # Child Tax Credit (kind met SSN)
 ODC_PER_KIND = 500                             # Credit for Other Dependents (kind met ITIN)
 LIMIET_401K = 24_500
-HSA_GEZIN = 8_750
+HSA_GEZIN = 9_000             # 2027 (Rev. Proc. 2026-24); 2026 was $8.750
 
 # --- Jef: loonstrook Fugro 2–15 okt 2026 (data/werk/Loonstrook Jef.pdf), per salaris × 26 ---
 JEF = {
@@ -38,7 +38,8 @@ JEF = {
 # --- Zorgverzekering: andere Fugro-plannen (2024 Benefits Summary × 1,05² voor 2026; PPO-tarief klopt dan exact
 #     met de loonstrook: $392,35 × 1,1025 = $432,56). Gold en Silver zijn HSA-plannen. ---
 FUGRO_ZORG = {
-    "Gold (HSA)": {"premie": (129.43 * 1.1025 + 37.91) * 26, "hsa_werkgever": 500, "eigen_risico": "$1.750 / $3.500 gezin", "max": "$8.000 gezin"},
+    # Gold: gekozen 3 nov 2026, echte 2027-tarieven uit Workday (medical $149,83 + dental $39,53 per salaris)
+    "Gold (HSA)": {"premie": (149.83 + 39.53) * 26, "hsa_werkgever": 500, "eigen_risico": "$1.750 / $3.500 gezin", "max": "$8.000 gezin"},
     "Silver (HSA)": {"premie": (46.37 * 1.1025 + 37.91) * 26, "hsa_werkgever": 750, "eigen_risico": "$4.500 / $9.000 gezin", "max": "$13.100 gezin"},
 }
 
